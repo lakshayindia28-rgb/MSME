@@ -777,13 +777,16 @@ Format the report professionally with clear headings and bullet points.`;
     /* ── Step 2: Merge with shree.pdf template (cover + content + ending) ── */
     try {
       const templatePath = path.join(__dirname, 'templates', 'shree.pdf');
-      if (!fs.existsSync(templatePath)) {
-        logger.warn('Template PDF (shree.pdf) not found at ' + templatePath + ', returning content-only PDF');
-        return canSplit ? part1PdfBuffer : contentPdfBuffer;
+      const hasTemplate = fs.existsSync(templatePath);
+      if (!hasTemplate) {
+        logger.warn('Template PDF (shree.pdf) not found at ' + templatePath + ', will merge content parts without template');
       }
 
-      const templateBytes = fs.readFileSync(templatePath);
-      const templateDoc = await PdfLibDocument.load(templateBytes);
+      let templateDoc = null;
+      if (hasTemplate) {
+        const templateBytes = fs.readFileSync(templatePath);
+        templateDoc = await PdfLibDocument.load(templateBytes);
+      }
 
       // Load Udyam PDF for direct merge
       let udyamDoc = null;
@@ -917,7 +920,23 @@ Format the report professionally with clear headings and bullet points.`;
       return Buffer.from(pdfBytes);
 
     } catch (err) {
-      logger.error('PDF template merge failed, returning content-only PDF:', err.message);
+      logger.error('PDF template merge failed, attempting simple concatenation fallback:', err.message);
+      // Fallback: try to merge part1 + part2 without fancy footers/template
+      if (canSplit && part1PdfBuffer && part2PdfBuffer) {
+        try {
+          const fallbackDoc = await PdfLibDocument.create();
+          const fb1 = await PdfLibDocument.load(part1PdfBuffer);
+          const fb1Pages = await fallbackDoc.copyPages(fb1, fb1.getPageIndices());
+          fb1Pages.forEach(pg => fallbackDoc.addPage(pg));
+          const fb2 = await PdfLibDocument.load(part2PdfBuffer);
+          const fb2Pages = await fallbackDoc.copyPages(fb2, fb2.getPageIndices());
+          fb2Pages.forEach(pg => fallbackDoc.addPage(pg));
+          const fbBytes = await fallbackDoc.save();
+          return Buffer.from(fbBytes);
+        } catch (fbErr) {
+          logger.error('Fallback concatenation also failed:', fbErr.message);
+        }
+      }
       return canSplit ? part1PdfBuffer : contentPdfBuffer;
     }
   }
@@ -1265,18 +1284,6 @@ Format the report professionally with clear headings and bullet points.`;
     const keyDifferences = Array.isArray(financialAnalysis.key_differences) ? financialAnalysis.key_differences : [];
     const riskFlags = Array.isArray(financialAnalysis.risk_flags) ? financialAnalysis.risk_flags : [];
 
-    // ── DEBUG: Diagnostic logging for report sections ──
-    logger.info('[REPORT-DEBUG] modules keys: ' + JSON.stringify(Object.keys(modules || {})));
-    logger.info('[REPORT-DEBUG] modules.financial keys: ' + JSON.stringify(Object.keys(financialModule)));
-    logger.info('[REPORT-DEBUG] financialModule.years exists: ' + Array.isArray(financialModule.years) + ', length: ' + (financialModule.years?.length || 0));
-    logger.info('[REPORT-DEBUG] personalInfo keys: ' + JSON.stringify(Object.keys(personalInfo)));
-    logger.info('[REPORT-DEBUG] piApplicant.primary: ' + JSON.stringify(Object.keys(piApplicant.primary || {})));
-    logger.info('[REPORT-DEBUG] piPan.primary: ' + JSON.stringify(Object.keys(piPan.primary || {})));
-    logger.info('[REPORT-DEBUG] piAadhaar.primary: ' + JSON.stringify(Object.keys(piAadhaar.primary || {})));
-    logger.info('[REPORT-DEBUG] reportConfig.selectedModules: ' + JSON.stringify(p?.reportConfig?.selectedModules));
-    logger.info('[REPORT-DEBUG] reportConfig.selectedPersonalModules: ' + JSON.stringify(p?.reportConfig?.selectedPersonalModules));
-    logger.info('[REPORT-DEBUG] moduleSummaries keys: ' + JSON.stringify(Object.keys(moduleSummaries)));
-
     const doc1Extract = financialModule?.raw?.doc1?.extracted ?? financialModule?.raw?.doc1 ?? {};
     const doc2Extract = financialModule?.raw?.doc2?.extracted ?? financialModule?.raw?.doc2 ?? {};
 
@@ -1504,10 +1511,6 @@ Format the report professionally with clear headings and bullet points.`;
     const showFinancial = isModuleSelected('financial');
     const showCompliance = isModuleSelected('compliance');
 
-    logger.info('[REPORT-DEBUG] selectedModules: ' + JSON.stringify(selectedModules));
-    logger.info('[REPORT-DEBUG] selSet contents: ' + JSON.stringify([...selSet]));
-    logger.info('[REPORT-DEBUG] showFinancial: ' + showFinancial + ', showGst: ' + showGst + ', showMca: ' + showMca + ', showCompliance: ' + showCompliance);
-
     const dynamicModuleEntries = Object.entries(modules || {})
       .filter(([key, value]) => key && value != null)
       .filter(([key]) => key !== 'compliance' && key !== 'gst' && key !== 'financial' && key !== 'mca' && key !== 'udyam' && key !== 'itr')
@@ -1601,12 +1604,6 @@ Format the report professionally with clear headings and bullet points.`;
       return !!(ap.name || ap.mobile || ap.email || pn.pan_number || pn.name || aa.aadhaar_number || aa.name);
     })();
 
-    logger.info('[REPORT-DEBUG] hasPersonalInfo: ' + hasPersonalInfo);
-    logger.info('[REPORT-DEBUG] piApplicant.primary values: ' + JSON.stringify(piApplicant.primary || {}));
-    logger.info('[REPORT-DEBUG] piPan.primary keys: ' + JSON.stringify(Object.keys(piPan.primary || {})));
-    logger.info('[REPORT-DEBUG] hasItr: ' + hasItr + ', itrEntries.length: ' + itrEntries.length);
-    logger.info('[REPORT-DEBUG] hasUdyam: ' + hasUdyam + ', hasFieldData: ' + hasFieldData + ', hasSiteVisit: ' + hasSiteVisit);
-
     const udyamSecNum = hasUdyam ? ++_sn : 0;
     const fieldDataSecNum = hasFieldData ? ++_sn : 0;
     const siteVisitSecNum = hasSiteVisit ? ++_sn : 0;
@@ -1624,10 +1621,9 @@ Format the report professionally with clear headings and bullet points.`;
     const isPersonalModuleSelected = (key) => !personalSelSet.size || personalSelSet.has(key);
 
     const buildPersonalInfoHtml = () => {
-      logger.info('[REPORT-DEBUG] buildPersonalInfoHtml called — hasPersonalInfo: ' + hasPersonalInfo + ', personalSelSet.size: ' + personalSelSet.size + ', selectedPersonalModules arr: ' + JSON.stringify(selectedPersonalModules) + ', isArray: ' + Array.isArray(p?.reportConfig?.selectedPersonalModules));
-      if (!hasPersonalInfo) { logger.info('[REPORT-DEBUG] SKIPPING personal info — hasPersonalInfo is false'); return ''; }
+      if (!hasPersonalInfo) return '';
       // If personal modules were explicitly configured but none selected, skip entirely
-      if (personalSelSet.size === 0 && Array.isArray(p?.reportConfig?.selectedPersonalModules)) { logger.info('[REPORT-DEBUG] SKIPPING personal info — personalSelSet empty and selectedPersonalModules is array'); return ''; }
+      if (personalSelSet.size === 0 && Array.isArray(p?.reportConfig?.selectedPersonalModules)) return '';
       const ap = piApplicant.primary || {};
       const pn = piPan.primary || {};
       const aa = piAadhaar.primary || {};
@@ -3410,10 +3406,9 @@ Format the report professionally with clear headings and bullet points.`;
 
         <!-- ═══ FINANCIAL MODULE ═══ -->
         ${(() => {
-          logger.info('[REPORT-DEBUG] Financial gate: showFinancial=' + showFinancial + ', financialCalcHtml length=' + (financialCalcHtml || '').length + ', fSummary exists=' + !!(moduleSummaries['financial']));
           if (!showFinancial) return '';
           const fSummary = moduleSummaries['financial'] ? String(moduleSummaries['financial']).trim() : '';
-          if (!financialCalcHtml && !fSummary) { logger.info('[REPORT-DEBUG] SKIPPING Financial — no calcHtml and no summary'); return ''; }
+          if (!financialCalcHtml && !fSummary) return '';
           let fHtml = '<div class="sec">';
           fHtml += '<h2>Financial Analysis</h2>';
           // Financial currency/unit remark — shown before tables
