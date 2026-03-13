@@ -1804,6 +1804,9 @@
     })();
 
     renderRVImages();
+
+    // Expose so loadSnapshots can re-render after server data arrives
+    window._rvRenderImages = renderRVImages;
   }
 
   function initPersonalInfoBlock() {
@@ -5333,6 +5336,7 @@
             const rvImgs = rvD?.images || [];
             if (Array.isArray(rvImgs) && rvImgs.length) {
               residentVerificationImages = rvImgs;
+              try { if (typeof window._rvRenderImages === 'function') window._rvRenderImages(); } catch {}
             }
           }
 
@@ -5442,6 +5446,8 @@
           renderMcaFromIntegration();
           // Re-render personal ITR person list
           try { if (typeof window._pitrRebuildPersons === 'function') window._pitrRebuildPersons(); } catch {}
+          // Re-render resident verification images
+          try { if (typeof window._rvRenderImages === 'function') window._rvRenderImages(); } catch {}
           // Re-render personal info summaries
           try { if (typeof window._piRenderAllSummaries === 'function') window._piRenderAllSummaries(); } catch {}
         }

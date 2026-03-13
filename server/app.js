@@ -347,13 +347,16 @@ async function hydrateDueDiligencePayloadFromCase(rawPayload) {
     }
   }
 
-  // Hydrate Personal Block PAN/Aadhaar images — if frontend sent stripped images (attached:true, no data_url),
+  // Hydrate Personal Block PAN/Aadhaar images and RV verification_images —
+  // if frontend sent stripped images (attached:true/stripped, no data_url/dataUrl),
   // try to recover them from the server personal_info snapshot
   if (payload.personalInfo && typeof payload.personalInfo === 'object') {
-    const piModules = ['pan', 'aadhaar'];
+    const docModules = ['pan', 'aadhaar'];
     const docKeys = ['verified_document', 'verified_document_2'];
     let needsRecovery = false;
-    for (const mk of piModules) {
+
+    // Check PAN/Aadhaar docs
+    for (const mk of docModules) {
       const primary = payload.personalInfo[mk]?.primary;
       if (!primary) continue;
       for (const dk of docKeys) {
@@ -365,11 +368,25 @@ async function hydrateDueDiligencePayloadFromCase(rawPayload) {
       }
       if (needsRecovery) break;
     }
+
+    // Check resident_verification verification_images (primary + designated persons)
+    const rvMod = payload.personalInfo.resident_verification;
+    if (!needsRecovery && rvMod) {
+      const checkImgs = (imgs) => Array.isArray(imgs) && imgs.length > 0 && imgs.every(i => !i?.dataUrl);
+      if (checkImgs(rvMod.primary?.verification_images)) needsRecovery = true;
+      if (!needsRecovery && Array.isArray(rvMod.designatedPersons)) {
+        for (const dp of rvMod.designatedPersons) {
+          if (checkImgs(dp?.verification_images)) { needsRecovery = true; break; }
+        }
+      }
+    }
+
     if (needsRecovery) {
       try {
         const piSnap = await readLatestCaseModuleSnapshot(caseId, 'personal_info');
         if (piSnap && typeof piSnap === 'object') {
-          for (const mk of piModules) {
+          // Recover PAN/Aadhaar document images
+          for (const mk of docModules) {
             const primary = payload.personalInfo[mk]?.primary;
             const snapPrimary = piSnap[mk]?.primary;
             if (!primary || !snapPrimary) continue;
@@ -382,6 +399,25 @@ async function hydrateDueDiligencePayloadFromCase(rawPayload) {
                   logger.info(`Personal ${mk} ${dk} image recovered from snapshot`);
                 }
               }
+            }
+          }
+          // Recover resident_verification verification_images (primary + designated persons)
+          const snapRv = piSnap.resident_verification;
+          if (snapRv && rvMod) {
+            const recoverImgs = (target, source) => {
+              if (!target || !source) return;
+              if (Array.isArray(target.verification_images) && target.verification_images.length && target.verification_images.every(i => !i?.dataUrl)) {
+                if (Array.isArray(source.verification_images) && source.verification_images.some(i => i?.dataUrl)) {
+                  target.verification_images = source.verification_images;
+                  logger.info('Personal RV verification_images recovered from snapshot');
+                }
+              }
+            };
+            recoverImgs(rvMod.primary, snapRv.primary);
+            if (Array.isArray(rvMod.designatedPersons) && Array.isArray(snapRv.designatedPersons)) {
+              rvMod.designatedPersons.forEach((dp, idx) => {
+                recoverImgs(dp, snapRv.designatedPersons[idx]);
+              });
             }
           }
         }
