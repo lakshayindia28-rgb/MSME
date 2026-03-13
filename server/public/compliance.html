@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>Compliance & Risk Intelligence - Automated Verification</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/theme.css" />
+    <style>
+        .cv-main { padding: 22px 0 56px; }
+        .hero-wrap { padding: 18px 0 10px; }
+        .hero-title { margin: 10px 0 0; font-size: 30px; line-height: 1.12; letter-spacing: -0.02em; }
+        .hero-subtitle { margin: 8px 0 0; color: var(--muted); max-width: 70ch; }
+        .hero-actions { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: end; }
+        @media (max-width: 900px){ .form-grid { grid-template-columns: 1fr; } }
+
+        .loading { display:none; }
+        .loading .spinner { width: 56px; height: 56px; border: 6px solid var(--border); border-top: 6px solid var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 14px; }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .result-section { display:none; }
+
+        .summary-box { margin-top: 12px; border: 1px solid var(--border); background: var(--bg-2); border-radius: 14px; padding: 16px; }
+        .summary-title { margin: 0; font-size: 16px; letter-spacing: -0.01em; }
+        .summary-grid { display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+        @media (max-width: 900px){ .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+        .summary-item { text-align:center; padding: 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow-sm); }
+        .summary-value { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; color: var(--text); }
+        .summary-value--primary { color: var(--accent); }
+        .summary-value--adverse { color: #b91c1c; }
+        .summary-value--clean { color: #0f766e; }
+        .summary-value--warn { color: #b45309; }
+        .summary-label { color: var(--muted); font-size: 12.5px; margin-top: 6px; font-weight: 650; }
+        .summary-meta { margin-top: 12px; display:flex; gap: 10px; flex-wrap: wrap; color: var(--muted); font-weight: 650; }
+
+        .risk-table { width:100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--border); border-radius: 14px; overflow:hidden; background: var(--bg); }
+        .risk-table th { background: var(--bg-2); color: var(--muted); padding: 12px 14px; text-align:left; font-weight: 800; font-size: 12.5px; }
+        .risk-table td { padding: 12px 14px; border-top: 1px solid var(--border); vertical-align: top; }
+        .risk-table tr:hover { background: var(--bg-2); }
+
+        .risk-flag { display:inline-flex; align-items:center; justify-content:center; padding: 6px 10px; border-radius: 999px; font-weight: 800; font-size: 12.5px; border: 1px solid var(--border); }
+        .flag-clean { background: rgba(15, 118, 110, 0.10); color: #0f766e; border-color: rgba(15, 118, 110, 0.18); }
+        .flag-adverse { background: rgba(185, 28, 28, 0.10); color: #b91c1c; border-color: rgba(185, 28, 28, 0.18); }
+        .flag-error { background: rgba(180, 83, 9, 0.10); color: #b45309; border-color: rgba(180, 83, 9, 0.18); }
+
+        .navlink { text-decoration:none; }
+        .navlink.is-active { border-color: rgba(37,99,235,.45); box-shadow: var(--shadow-sm); }
+    </style>
+</head>
+<body class="cv">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="navbar" role="banner">
+        <div class="container navbar-inner">
+            <a class="brand" href="/" aria-label="CrediVerify 360 Home">
+                <span class="brand-mark" aria-hidden="true">CV</span>
+                <span>
+                    <div class="brand-title">CrediVerify 360</div>
+                    <div class="brand-subtitle">Compliance & risk intelligence</div>
+                </span>
+            </a>
+
+            <div class="nav-actions" aria-label="Navigation">
+                <a class="btn btn-secondary navlink" href="/">Dashboard</a>
+                <a class="btn btn-secondary navlink" href="/gst.html">GST</a>
+                <a class="btn btn-secondary navlink" href="/mca.html">MCA</a>
+                <a class="btn btn-secondary navlink is-active" href="/compliance.html" aria-current="page">Compliance</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" class="cv-main" role="main">
+        <div class="container">
+            <section class="hero-wrap" aria-label="Compliance overview">
+                <div class="hero-card">
+                    <div class="kicker">Real-time checks across official sources</div>
+                    <h1 class="hero-title">Compliance & Risk Intelligence</h1>
+                    <p class="hero-subtitle">Run a single compliance scan across commonly used public/official sources and record time-stamped findings for review.</p>
+                    <div class="logos" role="list" aria-label="Trust signals">
+                        <div class="logo-pill" role="listitem">Audit-friendly</div>
+                        <div class="logo-pill" role="listitem">Time-stamped</div>
+                        <div class="logo-pill" role="listitem">Evidence-backed</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card card-pad" aria-label="Compliance search">
+                <div class="form-grid">
+                    <div class="field">
+                        <label class="label" for="companyInput">Company Name or CIN</label>
+                        <input
+                            type="text"
+                            id="companyInput"
+                            class="input"
+                            placeholder="Enter company name or CIN (e.g., L01234MH2020PLC123456)"
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <button id="searchBtn" class="btn btn-primary" onclick="searchCompliance()">Check Compliance Records</button>
+                </div>
+            </section>
+
+            <section class="card card-pad loading" id="loading" aria-label="Loading">
+                <div class="spinner" aria-hidden="true"></div>
+                <h2 class="h2" style="margin:0;">Fetching from sources…</h2>
+                <p class="p">Checking NCLT, SEBI, courts, NSE, BSE and more.</p>
+            </section>
+
+            <section class="result-section" id="resultSection" aria-label="Results">
+                <div class="summary-box">
+                    <h2 class="summary-title">Verification Summary</h2>
+                    <div id="summaryContent"></div>
+                </div>
+
+                <div class="page-head" style="margin-top:16px;">
+                    <h2 class="h2">Detailed Findings</h2>
+                    <p class="p">Each record includes the source, category, and a risk flag for quick review.</p>
+                </div>
+
+                <table class="risk-table" aria-label="Risk findings">
+                    <thead>
+                        <tr>
+                            <th>Source</th>
+                            <th>Category</th>
+                            <th>Risk Flag</th>
+                            <th>Details</th>
+                            <th>Checked At</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsBody"></tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <p class="footer-title">CrediVerify 360</p>
+                    <p class="footer-text">Internal compliance screening with consistent formatting, better readability, and review-ready outputs.</p>
+                    <div class="footer-meta">
+                        <span>Internal Use Only</span>
+                        <span>•</span>
+                        <span>Compliance Intelligence</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="footer-title">Tools</p>
+                    <div class="footer-links">
+                        <a href="/gst.html">GST</a>
+                        <a href="/mca.html">MCA</a>
+                    </div>
+                </div>
+                <div>
+                    <p class="footer-title">Support</p>
+                    <div class="footer-links">
+                        <a href="mailto:support@credverify.local">support@credverify.local</a>
+                        <a href="#" onclick="return false;">Docs (internal)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        async function searchCompliance() {
+            const companyInput = document.getElementById('companyInput').value.trim();
+            
+            if (!companyInput) {
+                alert('Please enter a company name or CIN');
+                return;
+            }
+
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('searchBtn').disabled = true;
+
+            try {
+                const response = await fetch('/api/check-compliance', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        companyIdentifier: companyInput
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    displayResults(result.data);
+                } else {
+                    alert(result.error || 'Failed to fetch compliance data');
+                }
+            } catch (error) {
+                console.error('Compliance search error:', error);
+                alert('Network error. Please try again.');
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('searchBtn').disabled = false;
+            }
+        }
+
+        function displayResults(data) {
+            // Display summary
+            const summaryContent = document.getElementById('summaryContent');
+            summaryContent.innerHTML = `
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="summary-value summary-value--primary">${data.summary.total_checks}</div>
+                        <div class="summary-label">Total Checks</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value summary-value--adverse">${data.summary.adverse_records}</div>
+                        <div class="summary-label">Adverse Records</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value summary-value--clean">${data.summary.clean_records}</div>
+                        <div class="summary-label">Clean Records</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value summary-value--warn">${data.summary.verification_errors}</div>
+                        <div class="summary-label">Verification Errors</div>
+                    </div>
+                </div>
+                <div class="summary-meta">
+                    <span><strong>Company:</strong> ${data.companyName}</span>
+                    ${data.cin ? `<span><strong>CIN:</strong> ${data.cin}</span>` : ''}
+                    <span><strong>Status:</strong> ${data.summary.overall_status}</span>
+                </div>
+            `;
+
+            // Display findings table
+            const tbody = document.getElementById('resultsBody');
+            tbody.innerHTML = '';
+
+            data.findings.forEach(finding => {
+                const row = tbody.insertRow();
+                const flagClass = finding.match_found === true ? 'flag-adverse' : 
+                                 finding.match_found === false ? 'flag-clean' : 'flag-error';
+                
+                row.innerHTML = `
+                    <td style="font-weight: 600;">${finding.source}</td>
+                    <td>${finding.category}</td>
+                    <td><span class="risk-flag ${flagClass}">${finding.risk_flag}</span></td>
+                    <td>${finding.details}</td>
+                    <td>${new Date(finding.checked_at).toLocaleString('en-IN')}</td>
+                `;
+            });
+
+            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

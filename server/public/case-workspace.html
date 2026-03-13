@@ -1,0 +1,2941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>CrediVerify 360 — Case Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/case-workspace.css?v=20260302_fix7" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="app-header" role="banner">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">CV</div>
+      <div class="brand-text">
+        <div class="brand-title">CrediVerify 360</div>
+        <div class="brand-subtitle">Case Workspace Dashboard</div>
+      </div>
+    </div>
+
+    <div class="case-meta" aria-label="Case details">
+      <div class="meta-item">
+        <div class="meta-label">Case ID</div>
+        <div class="meta-value" data-bind="caseId">CV360-2026-00001</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Business Name</div>
+        <div class="meta-value" data-bind="businessName">—</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Business Type</div>
+        <div class="meta-value" data-bind="businessType">—</div>
+      </div>
+    </div>
+
+    <div class="case-status" aria-label="Overall status">
+      <div class="status-row">
+        <a class="btn btn-secondary" href="/" title="Back to dashboard">Dashboard</a>
+        <span class="status-pill" data-ui-build style="border-style:dashed" title="UI build/version">UI v20260212_7</span>
+        <span class="status-pill" data-bind="overallStatus" data-status="draft">Draft</span>
+        <button class="btn btn-secondary" type="button" data-action="print">Print</button>
+      </div>
+
+      <div class="progress" role="progressbar" aria-label="Overall progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="progress-track">
+          <div class="progress-fill" style="width: 0%" data-bind-style="progressWidth"></div>
+        </div>
+        <div class="progress-meta">
+          <span class="progress-label">Overall progress</span>
+          <span class="progress-value" data-bind="overallProgress">0%</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell" data-workbench="vscode">
+    <main id="main" class="content" data-view="all" role="main">
+      <section class="block-picker" data-ui="block-picker" aria-label="Select information block">
+        <div class="block-picker-card">
+          <div class="block-picker-title">Choose a block to start</div>
+          <div class="block-picker-subtitle">After creating a case, start by selecting the block you want to verify first.</div>
+          <div class="block-picker-grid" role="list">
+            <button class="block-choice" type="button" data-block-choice="case_overview" role="listitem">
+              <div class="block-choice-head">
+                <div class="block-choice-title">Case Overview</div>
+                <div class="block-choice-pill">Manual</div>
+              </div>
+              <div class="block-choice-desc">Entity name, business activity, turnover, bank reference & other executive-level data for the report first page.</div>
+            </button>
+
+            <button class="block-choice" type="button" data-block-choice="business" role="listitem">
+              <div class="block-choice-head">
+                <div class="block-choice-title">Business Details Blocks</div>
+                <div class="block-choice-pill">Modules</div>
+              </div>
+              <div class="block-choice-desc">GST, MCA, Compliance, PAN, Udyam, ITR, Bank Statement, Field Data</div>
+            </button>
+
+            <button class="block-choice" type="button" data-block-choice="personal" role="listitem">
+              <div class="block-choice-head">
+                <div class="block-choice-title">Personal Information Block</div>
+              </div>
+              <div class="block-choice-desc">Applicant, PAN, Aadhaar modules.</div>
+            </button>
+
+            <button class="block-choice" type="button" data-block-choice="report" role="listitem">
+              <div class="block-choice-head">
+                <div class="block-choice-title">Report Block</div>
+                <div class="block-choice-pill">Final</div>
+              </div>
+              <div class="block-choice-desc">Select module-wise data for final report and preview in real time.</div>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <nav class="tracker tracker-tabs" aria-label="Verification modules" data-tracker="business" hidden>
+        <button class="tracker-item" type="button" data-module="gst">
+          <span class="tracker-dot" data-status-dot></span>
+          <span class="tracker-text">
+            <span class="tracker-name">GST</span>
+            <span class="tracker-status" data-status-text>Pending</span>
+          </span>
+        </button>
+
+        <button class="tracker-item" type="button" data-module="mca">
+          <span class="tracker-dot" data-status-dot></span>
+          <span class="tracker-text">
+            <span class="tracker-name">MCA</span>
+            <span class="tracker-status" data-status-text>Pending</span>
+          </span>
+        </button>
+
+        <button class="tracker-item" type="button" data-module="compliance">
+          <span class="tracker-dot" data-status-dot></span>
+          <span class="tracker-text">
+            <span class="tracker-name">Compliance</span>
+            <span class="tracker-status" data-status-text>Pending</span>
+          </span>
+        </button>
+
+        <button class="tracker-item" type="button" data-module="pan">
+          <span class="tracker-dot" data-status-dot></span>
+          <span class="tracker-text">
+            <span class="tracker-name">PAN Details</span>
+            <span class="tracker-status" data-status-text>Pending</span>
+          </span>
+        </button>
+
+        <button class="tracker-item" type="button" data-module="udyam">
+          <span class="tracker-dot" data-status-dot></span>
+          <span class="tracker-text">
+            <span class="tracker-name">Udyam Details</span>
+            <span class="tracker-status" data-status-text>Pending</span>
+          </span>
+        </button>
+
+        <button class="tracker-item" type="button" data-module="itr">
+          <span class="tracker-dot" data-status-dot></span>
+          <span class="tracker-text">
+            <span class="tracker-name">ITR</span>
+            <span class="tracker-status" data-status-text>Pending</span>
+          </span>
+        </button>
+
+        <button class="tracker-item" type="button" data-module="bank_statement">
+          <span class="tracker-dot" data-status-dot></span>
+          <span class="tracker-text">
+            <span class="tracker-name">Bank Statement</span>
+            <span class="tracker-status" data-status-text>Pending</span>
+          </span>
+        </button>
+
+        <button class="tracker-item" type="button" data-module="financial">
+          <span class="tracker-dot" data-status-dot></span>
+          <span class="tracker-text">
+            <span class="tracker-name">Financial</span>
+            <span class="tracker-status" data-status-text>Pending</span>
+          </span>
+        </button>
+
+        <button class="tracker-item" type="button" data-module="field_data">
+          <span class="tracker-dot" data-status-dot></span>
+          <span class="tracker-text">
+            <span class="tracker-name">Field Data</span>
+            <span class="tracker-status" data-status-text>Pending</span>
+          </span>
+        </button>
+
+        <button class="tracker-item" type="button" data-module="business_summary">
+          <span class="tracker-dot" data-status-dot></span>
+          <span class="tracker-text">
+            <span class="tracker-name">Business Summary</span>
+            <span class="tracker-status" data-status-text>Pending</span>
+          </span>
+        </button>
+
+        <button class="tracker-item" type="button" data-module="additional_details">
+          <span class="tracker-dot" data-status-dot></span>
+          <span class="tracker-text">
+            <span class="tracker-name">Additional Details</span>
+            <span class="tracker-status" data-status-text>Pending</span>
+          </span>
+        </button>
+
+      </nav>
+
+      <nav class="tracker tracker-tabs" aria-label="Personal information modules" data-tracker="personal" hidden>
+        <button class="tracker-item" type="button" data-personal-module="applicant">
+          <span class="tracker-dot" aria-hidden="true"></span>
+          <span class="tracker-text">
+            <span class="tracker-name">Applicant</span>
+            <span class="tracker-status">Details</span>
+          </span>
+        </button>
+        <button class="tracker-item" type="button" data-personal-module="pan">
+          <span class="tracker-dot" aria-hidden="true"></span>
+          <span class="tracker-text">
+            <span class="tracker-name">PAN</span>
+            <span class="tracker-status">Module</span>
+          </span>
+        </button>
+        <button class="tracker-item" type="button" data-personal-module="aadhaar">
+          <span class="tracker-dot" aria-hidden="true"></span>
+          <span class="tracker-text">
+            <span class="tracker-name">Aadhaar</span>
+            <span class="tracker-status">Module</span>
+          </span>
+        </button>
+        <button class="tracker-item" type="button" data-personal-module="resident_verification">
+          <span class="tracker-dot" aria-hidden="true"></span>
+          <span class="tracker-text">
+            <span class="tracker-name">Resident Verify</span>
+            <span class="tracker-status">Module</span>
+          </span>
+        </button>
+        <button class="tracker-item" type="button" data-personal-module="personal_itr">
+          <span class="tracker-dot" aria-hidden="true"></span>
+          <span class="tracker-text">
+            <span class="tracker-name">ITR</span>
+            <span class="tracker-status">Module</span>
+          </span>
+        </button>
+      </nav>
+
+      <div class="module-nav" data-module-nav aria-label="Module navigation shortcuts" hidden>
+        <button class="btn btn-secondary" type="button" data-module-nav-btn="prev" aria-label="Previous module">← Previous</button>
+        <div class="module-nav-current" data-module-nav-label>Module 1/1</div>
+        <button class="btn btn-secondary" type="button" data-module-nav-btn="next" aria-label="Next module">Next →</button>
+        <button class="btn btn-secondary" type="button" data-switch-block aria-label="Switch to other block">Go to Personal Block</button>
+      </div>
+
+      <section class="overview" aria-label="Case overview" hidden>
+        <div class="overview-card">
+          <div class="overview-title">Case Overview</div>
+          <div class="overview-grid">
+            <div class="kv">
+              <div class="k">Primary Identifier</div>
+              <div class="v" data-bind="primaryIdentifier">GSTIN / CIN</div>
+            </div>
+            <div class="kv">
+              <div class="k">Assigned Analyst</div>
+              <div class="v" data-bind="assignedTo">—</div>
+            </div>
+            <div class="kv">
+              <div class="k">Last Updated</div>
+              <div class="v" data-bind="lastUpdated">—</div>
+            </div>
+            <div class="kv">
+              <div class="k">Risk Summary</div>
+              <div class="v" data-bind="riskSummary">—</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="blocks" aria-label="Information blocks" hidden>
+
+        <!-- ═══ CASE OVERVIEW BLOCK ═══ -->
+        <section class="block" data-block="case_overview" aria-label="Case overview" hidden>
+          <header class="block-head">
+            <div>
+              <h2 class="block-title">Case Overview</h2>
+              <p class="block-subtitle">Fill in the entity-level data manually. This information appears as the first page table in the final PDF report (after the cover page).</p>
+            </div>
+            <div class="block-head-actions">
+              <button class="btn btn-secondary" type="button" data-cross-switch="business">Go to Business Block</button>
+              <button class="btn btn-secondary" type="button" data-cross-switch="personal">Go to Personal Block</button>
+              <button class="btn btn-secondary" type="button" data-cross-switch="report">Go to Report Block</button>
+            </div>
+          </header>
+
+          <div class="block-body">
+            <section class="module" id="module-case-overview" data-module-section="case_overview">
+              <header class="module-head">
+                <div>
+                  <h2 class="module-title">Entity Overview Data</h2>
+                  <p class="module-subtitle">This information is entered manually by the executive and will be shown as a table on the first page of the report.</p>
+                </div>
+                <div class="module-head-actions">
+                  <button class="btn btn-primary" type="button" id="btnSaveCaseOverview">Save</button>
+                </div>
+              </header>
+
+              <div class="module-body">
+                <div class="form-grid form-grid-2col" id="caseOverviewForm">
+                  <div class="field">
+                    <label class="field-label" for="co_entityName">Name of the Entity</label>
+                    <input class="field-input" type="text" id="co_entityName" name="entityName" placeholder="e.g. M/s ABC Enterprises Pvt. Ltd." autocomplete="off" />
+                  </div>
+
+                  <div class="field">
+                    <label class="field-label" for="co_businessActivity">Business Activity</label>
+                    <input class="field-input" type="text" id="co_businessActivity" name="businessActivity" placeholder="e.g. Manufacturing of steel pipes" autocomplete="off" />
+                  </div>
+
+                  <div class="field">
+                    <label class="field-label" for="co_operationStatus">Operation Status</label>
+                    <select class="field-input" id="co_operationStatus" name="operationStatus">
+                      <option value="">-- Select --</option>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                      <option value="Under Suspension">Under Suspension</option>
+                      <option value="Dissolved">Dissolved</option>
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
+                      <input class="field-input" type="text" id="co_unitLocationLabel" name="unitLocationLabel" value="Unit Location" style="font-size:11px;font-weight:700;color:var(--navy,#0b1f3a);padding:2px 6px;border:1px dashed var(--border,#e5e7eb);border-radius:4px;width:auto;max-width:200px;background:rgba(15,118,110,0.04)" title="Edit this label name" />
+                      <span style="font-size:9px;color:#94a3b8;font-style:italic">(editable label)</span>
+                    </div>
+                    <input class="field-input" type="text" id="co_unitLocation" name="unitLocation" placeholder="e.g. Plot No. 12, RIICO Industrial Area, Jaipur" autocomplete="off" />
+                  </div>
+
+                  <div class="field">
+                    <label class="field-label" for="co_pastYearTurnover">Past Year Turnover</label>
+                    <input class="field-input" type="text" id="co_pastYearTurnover" name="pastYearTurnover" placeholder="e.g. ₹5,20,00,000" autocomplete="off" />
+                  </div>
+
+                  <div class="field">
+                    <label class="field-label" for="co_turnoverFY">Turnover F.Y. Reference</label>
+                    <input class="field-input" type="text" id="co_turnoverFY" name="turnoverFY" placeholder="e.g. 2023-24" autocomplete="off" />
+                  </div>
+
+                  <div class="field">
+                    <label class="field-label" for="co_bankReference">Branch Name (Br. Code)</label>
+                    <input class="field-input" type="text" id="co_bankReference" name="bankReference" placeholder="e.g. Jaipur Main (0451)" autocomplete="off" />
+                  </div>
+
+                  <div class="field">
+                    <label class="field-label" for="co_incorporationDate">Incorporation Date</label>
+                    <input class="field-input" type="date" id="co_incorporationDate" name="incorporationDate" />
+                  </div>
+
+                  <div class="field">
+                    <label class="field-label" for="co_reportDate">Report Date</label>
+                    <input class="field-input" type="date" id="co_reportDate" name="reportDate" />
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="block" data-block="business" aria-label="Business details">
+          <header class="block-head">
+            <div>
+              <h2 class="block-title">Business Details Blocks</h2>
+              <p class="block-subtitle">Complete the business verification modules below. Each module captures structured outputs + raw evidence for the final report.</p>
+            </div>
+            <div class="block-head-actions">
+              <label class="select">
+                <span class="sr-only">Select personal module</span>
+                <select data-cross-target="personal">
+                  <option value="applicant">Applicant</option>
+                  <option value="pan">PAN</option>
+                  <option value="aadhaar">Aadhaar</option>
+                  <option value="resident_verification">Resident Verification</option>
+                </select>
+              </label>
+              <button class="btn btn-secondary" type="button" data-cross-switch="case_overview">Go to Case Overview</button>
+              <button class="btn btn-secondary" type="button" data-cross-switch="report">Go to Report Block</button>
+              <button class="btn btn-secondary" type="button" data-cross-switch="personal">Go to Personal Block</button>
+            </div>
+          </header>
+
+          <div class="block-body">
+            <!-- Business Modules -->
+            <section class="module" id="module-gst" data-module-section="gst">
+        <header class="module-head">
+          <div>
+            <h2 class="module-title">GST Verification</h2>
+            <p class="module-subtitle">Government portal verification flow (captcha-assisted)</p>
+          </div>
+          <div class="module-head-actions">
+            <span class="status-pill" data-module-status="gst" data-status="pending">Pending</span>
+            <label class="select">
+              <span class="sr-only">GST status</span>
+              <select data-status-select="gst">
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </label>
+            <a class="btn btn-secondary" href="gst.html" target="_blank" rel="noopener">Open Tool</a>
+          </div>
+        </header>
+
+        <div class="module-body">
+          <div class="panel">
+            <div class="panel-title">Key Outputs</div>
+            <div class="panel-grid">
+              <div class="kv"><div class="k">GSTIN</div><div class="v" data-bind="gstin">—</div></div>
+              <div class="kv"><div class="k">Legal Name</div><div class="v" data-bind="gstLegalName">—</div></div>
+              <div class="kv"><div class="k">Constitution</div><div class="v" data-bind="gstConstitution">—</div></div>
+              <div class="kv"><div class="k">Status</div><div class="v" data-bind="gstStatus">—</div></div>
+            </div>
+            <div class="panel-actions">
+              <button class="btn btn-secondary" type="button" data-action="toggle-embed" data-target="gst">Show embedded tool</button>
+
+            </div>
+
+            <!-- Hidden notes storage -->
+            <textarea style="display:none;" data-notes="gst"></textarea>
+          </div>
+
+
+
+          <div class="panel" data-gst-filing-panel>
+            <div class="panel-title">GST Filed Data for Report</div>
+            <div class="panel-subtitle">Fetch ke baad year/month filing rows tick karo. Sirf selected rows report payload me add hongi.</div>
+            <div class="report-included-list" data-gst-filing-list>
+              <div class="muted">Fetch GST record first to load filing rows.</div>
+            </div>
+          </div>
+
+          <div class="embed" data-embed="gst" hidden>
+            <div class="embed-head">
+              <div class="embed-title">GST Tool (Embedded)</div>
+              <div class="embed-hint">If the portal blocks embedding, use “Open Tool”.</div>
+            </div>
+            <iframe title="GST Verification" src="gst.html?embedded=1" loading="lazy"></iframe>
+          </div>
+        </div>
+        </section>
+
+        <section class="module" id="module-mca" data-module-section="mca">
+        <header class="module-head">
+          <div>
+            <h2 class="module-title">MCA Verification</h2>
+            <p class="module-subtitle">Company master data + directors lookup</p>
+          </div>
+          <div class="module-head-actions">
+            <span class="status-pill" data-module-status="mca" data-status="pending">Pending</span>
+            <label class="select">
+              <span class="sr-only">MCA status</span>
+              <select data-status-select="mca">
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </label>
+            <a class="btn btn-secondary" href="mca.html?v=20260216_1" target="_blank" rel="noopener">Open Tool</a>
+          </div>
+        </header>
+
+        <div class="module-body">
+          <div class="panel">
+            <div class="panel-title">Key Outputs</div>
+            <div class="panel-grid">
+              <div class="kv"><div class="k">Company Name</div><div class="v" data-bind="mcaCompanyName">—</div></div>
+              <div class="kv"><div class="k">CIN</div><div class="v" data-bind="mcaCIN">—</div></div>
+              <div class="kv"><div class="k">Incorporation</div><div class="v" data-bind="mcaIncorp">—</div></div>
+              <div class="kv"><div class="k">Company Status</div><div class="v" data-bind="mcaStatus">—</div></div>
+            </div>
+            <div class="panel-actions">
+              <button class="btn btn-secondary" type="button" data-action="fetch-mca-record">Fetch Record</button>
+              <button class="btn btn-secondary" type="button" data-action="toggle-embed" data-target="mca">Show embedded tool</button>
+            </div>
+
+            <!-- Hidden notes storage -->
+            <textarea style="display:none;" data-notes="mca"></textarea>
+          </div>
+
+
+
+          <div class="embed" data-embed="mca" hidden>
+            <div class="embed-head">
+              <div class="embed-title">MCA Tool (Embedded)</div>
+              <div class="embed-hint">Use “Open Tool” if embedded view is blocked.</div>
+            </div>
+            <iframe title="MCA Verification" src="mca.html?embedded=1&v=20260216_1" loading="lazy"></iframe>
+          </div>
+
+          <!-- Director / Promoter Picker for Report -->
+          <div class="panel" id="mcaDirectorPickerPanel" style="border-left:3px solid #2563eb;display:none">
+            <div class="panel-title">Select Directors / Promoters for Report</div>
+            <div class="panel-subtitle">Tick the directors whose details should appear in the Company Snapshot (Page 4) of the report. Unticked directors will be excluded. If none are selected, manually entered promoters from Additional Details will be used instead.</div>
+            <div id="mcaDirectorCheckboxList" style="margin-top:10px">
+              <!-- Dynamically populated with checkboxes -->
+            </div>
+            <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+              <button class="btn btn-primary" type="button" id="btnSaveMcaDirectorSelection">Save Selection</button>
+              <span class="muted" id="mcaDirSaveStatus" style="font-size:12px"></span>
+            </div>
+          </div>
+        </div>
+        </section>
+
+        <section class="module" id="module-compliance" data-module-section="compliance">
+        <header class="module-head">
+          <div>
+            <h2 class="module-title">Compliance Check</h2>
+            <p class="module-subtitle">Automated public-web check (official domains) + manual verification where required</p>
+          </div>
+          <div class="module-head-actions">
+            <span class="status-pill" data-module-status="compliance" data-status="pending">Pending</span>
+            <label class="select">
+              <span class="sr-only">Compliance status</span>
+              <select data-status-select="compliance">
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </label>
+            <a class="btn btn-secondary" href="compliance.html" target="_blank" rel="noopener">Open Tool</a>
+          </div>
+        </header>
+
+        <div class="module-body">
+          <div class="module-grid">
+            <div class="panel">
+              <div class="panel-title">Compliance Checklist</div>
+              <div class="muted">Run automated compliance check to verify company against NCLT, SEBI, Court records, and Exchange defaulter lists.</div>
+
+              <div class="callout" role="note" style="margin-top:10px;">
+                <div class="callout-title">Real Official Sources (Used for Check)</div>
+                <div class="callout-text">
+                  <div><a href="https://nclt.gov.in" target="_blank" rel="noopener">NCLT (nclt.gov.in)</a></div>
+                  <div><a href="https://www.sebi.gov.in" target="_blank" rel="noopener">SEBI (sebi.gov.in)</a></div>
+                  <div><a href="https://ecourts.gov.in" target="_blank" rel="noopener">eCourts (ecourts.gov.in)</a> & <a href="https://main.sci.gov.in" target="_blank" rel="noopener">Supreme Court (sci.gov.in)</a></div>
+                  <div><a href="https://www.nseindia.com" target="_blank" rel="noopener">NSE (nseindia.com)</a> & <a href="https://www.bseindia.com" target="_blank" rel="noopener">BSE (bseindia.com)</a></div>
+                </div>
+              </div>
+
+              <div class="panel-actions" style="margin-top:10px">
+                <button class="btn btn-secondary" type="button" data-action="run-compliance">Run Automated Compliance Check</button>
+              </div>
+
+              <div id="complianceResults" style="margin-top:20px;display:none;">
+                <div class="subsection-title" style="margin-bottom:12px;">Check Results</div>
+                <div style="display:grid;gap:12px;">
+                  <div class="callout" id="ncltResult" style="display:none;">
+                    <div class="callout-title">NCLT Check</div>
+                    <div class="callout-text" data-result="nclt"></div>
+                  </div>
+                  <div class="callout" id="sebiResult" style="display:none;">
+                    <div class="callout-title">SEBI Check</div>
+                    <div class="callout-text" data-result="sebi"></div>
+                  </div>
+                  <div class="callout" id="courtResult" style="display:none;">
+                    <div class="callout-title">Court / Litigation Check</div>
+                    <div class="callout-text" data-result="court"></div>
+                  </div>
+                  <div class="callout" id="exchangeResult" style="display:none;">
+                    <div class="callout-title">NSE / BSE Defaulter Check</div>
+                    <div class="callout-text" data-result="exchange"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hidden storage fields -->
+              <div style="display:none;">
+                <input type="radio" name="ncltAdverse" value="yes" data-store="compliance.nclt.adverse" />
+                <input type="radio" name="ncltAdverse" value="no" data-store="compliance.nclt.adverse" />
+                <input type="date" data-store="compliance.nclt.date" />
+                <textarea data-store="compliance.nclt.remarks"></textarea>
+
+                <input type="radio" name="sebiAdverse" value="yes" data-store="compliance.sebi.adverse" />
+                <input type="radio" name="sebiAdverse" value="no" data-store="compliance.sebi.adverse" />
+                <input type="date" data-store="compliance.sebi.date" />
+                <textarea data-store="compliance.sebi.remarks"></textarea>
+
+                <input type="radio" name="courtAdverse" value="yes" data-store="compliance.court.adverse" />
+                <input type="radio" name="courtAdverse" value="no" data-store="compliance.court.adverse" />
+                <input type="date" data-store="compliance.court.date" />
+                <textarea data-store="compliance.court.remarks"></textarea>
+
+                <input type="radio" name="exchangeAdverse" value="yes" data-store="compliance.exchange.adverse" />
+                <input type="radio" name="exchangeAdverse" value="no" data-store="compliance.exchange.adverse" />
+                <input type="date" data-store="compliance.exchange.date" />
+                <textarea data-store="compliance.exchange.remarks"></textarea>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-title">Compliance Summary</div>
+              <div class="summary-box" aria-label="Compliance summary">
+                <div class="summary-row">
+                  <div class="summary-k">Total checks performed</div>
+                  <div class="summary-v" data-summary="compliance.total">0</div>
+                </div>
+                <div class="summary-row">
+                  <div class="summary-k">Adverse observation found</div>
+                  <div class="summary-v" data-summary="compliance.adverse">No</div>
+                </div>
+              </div>
+
+              <div class="callout" role="note">
+                <div class="callout-title">Disclaimer</div>
+                <div class="callout-text">Automated results are indicative and based on publicly available pages as of the search date; verify context manually before final conclusion.</div>
+              </div>
+
+              <div class="module-actions">
+                <button class="btn btn-primary" type="button" data-action="save-compliance">Save Compliance Data</button>
+                <button class="btn btn-secondary" type="button" data-action="mark-completed" data-modules="compliance">Mark Compliance Completed</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </section>
+
+        <section class="module" id="module-pan" data-module-section="pan">
+        <header class="module-head">
+          <div>
+            <h2 class="module-title">PAN Details</h2>
+            <p class="module-subtitle">Filled by executive</p>
+          </div>
+          <div class="module-head-actions">
+            <span class="status-pill" data-module-status="pan" data-status="pending">Pending</span>
+            <label class="select">
+              <span class="sr-only">PAN status</span>
+              <select data-status-select="pan">
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </label>
+            <button class="btn btn-secondary" type="button" data-action="save-pan">Save PAN Details</button>
+          </div>
+        </header>
+
+        <div class="module-body">
+          <div class="panel">
+            <div class="panel-title">Entry Form</div>
+            <div class="form-grid">
+              <div class="field">
+                <label for="panNumber">PAN Number</label>
+                <input id="panNumber" class="input" type="text" placeholder="e.g., AVOPA4637N" data-pan-field="pan_number" />
+              </div>
+
+              <div class="field">
+                <label for="panName">Name</label>
+                <input id="panName" class="input" type="text" placeholder="e.g., ALUPAC VENTURES PRIVATE LIMITED" data-pan-field="name" />
+              </div>
+
+              <div class="field">
+                <label for="panCitizen">Indian Citizen</label>
+                <select id="panCitizen" class="input" data-pan-field="indian_citizen">
+                  <option value="">Select</option>
+                  <option value="YES">YES</option>
+                  <option value="NO">NO</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="panStatus">Status</label>
+                <select id="panStatus" class="input" data-pan-field="status" required>
+                  <option value="">Select</option>
+                  <option value="ACTIVE">ACTIVE</option>
+                  <option value="INACTIVE">INACTIVE</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="panDob">Date of Birth</label>
+                <input id="panDob" class="input" type="date" data-pan-field="date_of_birth" />
+              </div>
+
+              <div class="field">
+                <label for="panMobile">Mobile Number as per PAN</label>
+                <input id="panMobile" class="input" type="text" placeholder="e.g., 7869962575" data-pan-field="mobile_number" />
+              </div>
+
+              <div class="field full">
+                <label for="panAddress">Address as per PAN</label>
+                <textarea id="panAddress" class="notes" rows="3" placeholder="Full address" data-pan-field="address"></textarea>
+              </div>
+
+              <div class="field full">
+                <label for="panVerifiedPhoto">PAN Image 1</label>
+                <input id="panVerifiedPhoto" class="input" type="file" accept="image/*" data-pan-verified-photo />
+                <div class="hint">Upload first PAN image (e.g., front side).</div>
+              </div>
+
+              <div class="field full">
+                <label for="panVerifiedPhoto2">PAN Image 2</label>
+                <input id="panVerifiedPhoto2" class="input" type="file" accept="image/*" data-pan-verified-photo-2 />
+                <div class="hint">Upload second PAN image (e.g., back side).</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Preview</div>
+
+            <div class="pan-preview">
+              <table class="pan-table" aria-label="PAN details preview">
+                <tbody>
+                  <tr>
+                    <th>PAN Number</th>
+                    <td data-pan-out="pan_number">—</td>
+                    <td class="pan-photo-cell" rowspan="9">
+                      <div class="pan-photo-wrap">
+                        <div class="pan-photo-block">
+                          <div class="pan-photo-label">PAN Image 1</div>
+                          <img class="pan-photo" data-pan-verified-photo-preview alt="PAN image 1" />
+                          <div class="pan-photo-empty" data-pan-verified-photo-empty>No image 1 uploaded</div>
+                        </div>
+                        <div class="pan-photo-block" style="margin-top:12px">
+                          <div class="pan-photo-label">PAN Image 2</div>
+                          <img class="pan-photo" data-pan-verified-photo-2-preview alt="PAN image 2" />
+                          <div class="pan-photo-empty" data-pan-verified-photo-2-empty>No image 2 uploaded</div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr><th>Name</th><td data-pan-out="name">—</td></tr>
+                  <tr><th>Indian Citizen</th><td data-pan-out="indian_citizen">—</td></tr>
+                  <tr><th>Status</th><td data-pan-out="status">—</td></tr>
+                  <tr><th>Date of Birth</th><td data-pan-out="date_of_birth">—</td></tr>
+                  <tr><th>Address as per PAN</th><td data-pan-out="address">—</td></tr>
+                  <tr><th>PAN Image 1</th><td data-pan-out="verified_photograph_label">—</td></tr>
+                  <tr><th>PAN Image 2</th><td data-pan-out="verified_photograph_2_label">—</td></tr>
+                  <tr><th>Mobile Number as per PAN</th><td data-pan-out="mobile_number">—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        </section>
+
+        <section class="module" id="module-udyam" data-module-section="udyam">
+        <header class="module-head">
+          <div>
+            <h2 class="module-title">Udyam Details</h2>
+            <p class="module-subtitle">Filled by executive + Udyam PDF attachment</p>
+          </div>
+          <div class="module-head-actions">
+            <span class="status-pill" data-module-status="udyam" data-status="pending">Pending</span>
+            <label class="select">
+              <span class="sr-only">Udyam status</span>
+              <select data-status-select="udyam">
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </label>
+            <button class="btn btn-secondary" type="button" data-action="save-udyam">Save Udyam Details</button>
+          </div>
+        </header>
+
+        <div class="module-body">
+          <div class="panel">
+            <div class="panel-title">Entry Form</div>
+            <div class="form-grid">
+              <div class="field full">
+                <label for="udyamNumber">Udyam Registration/Reference Number</label>
+                <input
+                  id="udyamNumber"
+                  class="input"
+                  type="text"
+                  placeholder="UDYAM-XX-00-0000000"
+                  data-udyam-field="udyam_number"
+                  pattern="^UDYAM-[A-Z]{2}-[0-9]{2}-[0-9]{7}$"
+                  required
+                />
+                <div class="hint">Enter 19-digit Udyam number in this format: UDYAM-XX-00-0000000</div>
+              </div>
+
+              <div class="field">
+                <label for="udyamEnterpriseType">Enterprise Type</label>
+                <select id="udyamEnterpriseType" class="input" data-udyam-field="enterprise_type">
+                  <option value="">Select</option>
+                  <option value="Micro">Micro</option>
+                  <option value="Small">Small</option>
+                  <option value="Medium">Medium</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="udyamMajorActivity">Major Activity</label>
+                <select id="udyamMajorActivity" class="input" data-udyam-field="major_activity">
+                  <option value="">Select</option>
+                  <option value="Manufacturing">Manufacturing</option>
+                  <option value="Services">Services</option>
+                  <option value="Trading">Trading</option>
+                </select>
+              </div>
+
+              <div class="field full">
+                <label for="udyamNatureOfActivity">Nature of Business Activity</label>
+                <input id="udyamNatureOfActivity" class="input" type="text" placeholder="e.g., Manufacture of Plastic Products" data-udyam-field="nature_of_activity" />
+                <div class="hint">Describe the primary business activity as per Udyam certificate.</div>
+              </div>
+
+              <div class="field">
+                <label for="udyamNicCode">NIC Code (2-digit)</label>
+                <input id="udyamNicCode" class="input" type="text" placeholder="e.g., 22" data-udyam-field="nic_2_digit" />
+              </div>
+
+              <div class="field">
+                <label for="udyamCategory">Category</label>
+                <input id="udyamCategory" class="input" type="text" placeholder="e.g., Proprietorship" data-udyam-field="category" />
+              </div>
+
+              <div class="field full">
+                <label for="udyamPdf">Upload Udyam PDF</label>
+                <input id="udyamPdf" class="input" type="file" accept="application/pdf,.pdf" data-udyam-pdf />
+                <div class="hint">Upload Udyam registration certificate PDF (optional).</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Preview</div>
+            <div class="udyam-preview">
+              <table class="udyam-table" aria-label="Udyam details preview">
+                <tbody>
+                  <tr>
+                    <th>Udyam Number</th>
+                    <td data-udyam-out="udyam_number">—</td>
+                    <td class="udyam-doc-cell" rowspan="6">
+                      <div class="udyam-doc-wrap">
+                        <div class="udyam-doc-block">
+                          <div class="udyam-doc-label">Udyam PDF</div>
+                          <iframe class="udyam-pdf" data-udyam-pdf-preview title="Udyam PDF preview"></iframe>
+                          <div class="udyam-doc-empty" data-udyam-pdf-empty>No PDF uploaded</div>
+                          <a class="btn btn-secondary" data-udyam-pdf-link target="_blank" rel="noopener" style="margin-top:10px; display:none;">Open PDF</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr><th>Enterprise Type</th><td data-udyam-out="enterprise_type">—</td></tr>
+                  <tr><th>Major Activity</th><td data-udyam-out="major_activity">—</td></tr>
+                  <tr><th>Nature of Activity</th><td data-udyam-out="nature_of_activity">—</td></tr>
+                  <tr><th>NIC Code</th><td data-udyam-out="nic_2_digit">—</td></tr>
+                  <tr><th>Udyam PDF Attachment</th><td data-udyam-out="pdf_label">—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        </section>
+
+        <section class="module" id="module-itr" data-module-section="itr">
+        <header class="module-head">
+          <div>
+            <h2 class="module-title">Income Tax Return Verification Report</h2>
+            <p class="module-subtitle">Separate report for each ITR (Assessment Year)</p>
+          </div>
+          <div class="module-head-actions">
+            <span class="status-pill" data-module-status="itr" data-status="pending">Pending</span>
+            <label class="select">
+              <span class="sr-only">ITR status</span>
+              <select data-status-select="itr">
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </label>
+            <button class="btn btn-secondary" type="button" data-action="save-itr">Save ITR Report</button>
+            <button class="btn btn-primary" type="button" data-action="add-itr-year" style="background:#059669">+ Add &amp; Next Year</button>
+          </div>
+        </header>
+
+        <div class="module-body">
+          <div class="panel">
+            <div class="panel-title">Entry Form</div>
+            <div class="form-grid">
+              <div class="field">
+                <label for="itrAy">Assessment Year</label>
+                <select id="itrAy" class="input" data-itr-input="assessment_year" required>
+                  <option value="">Select</option>
+                </select>
+                <div class="hint">Select Assessment Year (current to previous years).</div>
+              </div>
+
+              <div class="field">
+                <label for="itrWard">Ward</label>
+                <input id="itrWard" class="input" type="text" placeholder="e.g., E-FILLING" data-itr-input="ward" />
+              </div>
+
+              <div class="field">
+                <label for="itrReturnFiledOn">Return filed on</label>
+                <input id="itrReturnFiledOn" class="input" type="date" data-itr-input="return_filed_on" />
+              </div>
+
+              <div class="field">
+                <label for="itrTotalIncome">Total Income (as per return filed)</label>
+                <input id="itrTotalIncome" class="input" type="text" placeholder="e.g., 0" data-itr-input="total_income" />
+              </div>
+
+              <div class="field">
+                <label for="itrTaxPaid">Tax Paid on Total Income (as per return filed)</label>
+                <input id="itrTaxPaid" class="input" type="text" placeholder="e.g., 89,813" data-itr-input="tax_paid" />
+              </div>
+
+              <div class="field full">
+                <label for="itrAck">Acknowledgement No.</label>
+                <input id="itrAck" class="input" type="text" placeholder="e.g., 742408801211022" data-itr-input="acknowledgement_no" />
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Preview</div>
+            <div class="itr-preview">
+              <table class="itr-table" aria-label="ITR verification preview table">
+                <thead>
+                  <tr>
+                    <th>Assessment Year</th>
+                    <th>Ward</th>
+                    <th>Return filed on</th>
+                    <th>Total Income</th>
+                    <th>Tax Paid</th>
+                    <th>Acknowledgement No.</th>
+                    <th style="width:90px;text-align:center">Action</th>
+                  </tr>
+                </thead>
+                <tbody data-itr-rows>
+                  <tr data-itr-empty>
+                    <td colspan="7" class="muted">No ITR entries saved yet.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        </section>
+
+        <section class="module" id="module-bank-statement" data-module-section="bank_statement">
+        <header class="module-head">
+          <div>
+            <h2 class="module-title">Bank Statement Verification</h2>
+            <p class="module-subtitle">Filled by executive (remark can be auto-generated)</p>
+          </div>
+          <div class="module-head-actions">
+            <span class="status-pill" data-module-status="bank_statement" data-status="pending">Pending</span>
+            <label class="select">
+              <span class="sr-only">Bank Statement status</span>
+              <select data-status-select="bank_statement">
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </label>
+            <button class="btn btn-secondary" type="button" data-action="save-bank-statement">Save Bank Statement</button>
+          </div>
+        </header>
+
+        <div class="module-body">
+          <div class="panel">
+            <div class="panel-title">Entry Form</div>
+            <div class="form-grid">
+              <div class="field full">
+                <label for="bankApplicant">Applicant Name</label>
+                <input id="bankApplicant" class="input" type="text" placeholder="e.g., ALUPAC VENTURES PRIVATE LIMITED" data-bank-field="applicant_name" />
+              </div>
+
+              <div class="field">
+                <label for="bankName">Name of Bank</label>
+                <input id="bankName" class="input" type="text" placeholder="e.g., STATE BANK OF INDIA" data-bank-field="bank_name" />
+              </div>
+
+              <div class="field">
+                <label for="bankBranch">Branch & Address</label>
+                <input id="bankBranch" class="input" type="text" placeholder="e.g., NA" data-bank-field="branch_address" />
+              </div>
+
+              <div class="field">
+                <label for="bankAccountNo">A/c No.</label>
+                <input id="bankAccountNo" class="input" type="text" placeholder="e.g., 40729178535" data-bank-field="account_number" />
+              </div>
+
+              <div class="field">
+                <label for="bankAccountType">Type of account</label>
+                <input id="bankAccountType" class="input" type="text" placeholder="e.g., SAVING ACCOUNT" data-bank-field="account_type" />
+              </div>
+
+              <div class="field full">
+                <label>Status (latest entries)</label>
+                <div class="bank-status-grid" data-bank-status-editor></div>
+                <div class="quick-actions quick-actions-secondary">
+                  <button class="btn btn-secondary" type="button" data-action="bank-status-add">Add entry</button>
+                </div>
+                <div class="muted">Entries are flexible (add/remove). Minimum 3 rows.</div>
+              </div>
+
+              <div class="field full">
+                <label for="bankRemark">Remark</label>
+                <textarea id="bankRemark" class="notes" rows="3" placeholder="Auto-generated remark will be filled here" data-bank-field="remark"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Preview</div>
+
+            <div class="bank-preview">
+              <table class="bank-table" aria-label="Bank statement verification preview">
+                <tbody>
+                  <tr><th>Applicant Name</th><td data-bank-out="applicant_name">—</td></tr>
+                  <tr><th>Name of Bank</th><td data-bank-out="bank_name">—</td></tr>
+                  <tr><th>Branch & Address</th><td data-bank-out="branch_address">—</td></tr>
+                  <tr><th>A/c No.</th><td data-bank-out="account_number">—</td></tr>
+                  <tr><th>Type of account</th><td data-bank-out="account_type">—</td></tr>
+                </tbody>
+              </table>
+
+              <table class="bank-table" aria-label="Bank statement status entries" style="margin-top:12px">
+                <thead>
+                  <tr><th style="width:40%">Status Date</th><th style="width:40%">Amount</th><th style="width:20%">Type</th></tr>
+                </thead>
+                <tbody data-bank-status-rows>
+                  <tr data-bank-status-empty>
+                    <td colspan="3" class="muted">No status entries</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table class="bank-table" aria-label="Bank statement verification remarks" style="margin-top:12px">
+                <tbody>
+                  <tr><th>Remark</th><td data-bank-out="remark">—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+            </section>
+
+        <section class="module" id="module-financial" data-module-section="financial">
+        <header class="module-head">
+          <div>
+            <h2 class="module-title">Financial Calculation Engine</h2>
+            <p class="module-subtitle">Enter financial data per year. Engine computes all ratios, metrics &amp; MSME eligibility using Excel-identical formulas.</p>
+          </div>
+          <div class="module-head-actions">
+            <span class="status-pill" data-module-status="financial" data-status="pending">Pending</span>
+            <label class="select">
+              <span class="sr-only">Financial status</span>
+              <select data-status-select="financial">
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </label>
+            <button class="btn btn-primary" type="button" data-action="run-financial-calc">⚡ Calculate All Ratios</button>
+          </div>
+        </header>
+
+        <div class="module-body">
+          <!-- ── Year Tabs ── -->
+          <div class="fc-year-tabs" data-fc-year-tabs>
+            <button class="fc-year-tab active" type="button" data-fc-year="0">Year 1 (Latest)</button>
+            <button class="fc-year-tab" type="button" data-fc-year="1">Year 2</button>
+            <button class="fc-year-tab" type="button" data-fc-year="2">Year 3</button>
+            <button class="btn btn-sm btn-secondary" type="button" data-fc-add-year title="Add Year (max 5)">+ Add Year</button>
+          </div>
+
+          <!-- ── Year Data Forms (dynamically populated from schema) ── -->
+          <div class="fc-year-forms" data-fc-year-forms>
+            <div class="muted" style="padding:24px;text-align:center">Loading financial schema…</div>
+          </div>
+
+          <!-- ── Action Bar ── -->
+          <div class="fc-action-bar">
+            <button class="btn btn-primary btn-lg" type="button" data-action="run-financial-calc">
+              <span style="font-size:16px">⚡</span> Calculate All Ratios
+            </button>
+            <button class="btn btn-secondary" type="button" data-fc-clear>Clear All</button>
+            <button class="btn btn-secondary" type="button" data-fc-sample>Load Sample Data</button>
+            <span class="muted" data-fc-status style="margin-left:auto">Ready</span>
+          </div>
+
+          <!-- ── Results Section (hidden until calculated) ── -->
+          <div data-fc-results hidden>
+            <!-- Eligibility Summary -->
+            <div class="panel" style="margin-top:14px">
+              <div class="panel-title">Eligibility Summary</div>
+              <div class="fc-summary-cards" data-fc-eligibility-cards></div>
+            </div>
+
+            <!-- Ratio Panels -->
+            <div class="fc-ratio-grid">
+              <div class="panel fc-ratio-panel">
+                <div class="panel-title" style="padding:10px 16px;border-bottom:1px solid var(--border)">Profitability Ratios</div>
+                <div data-fc-ratio="profitability"></div>
+              </div>
+              <div class="panel fc-ratio-panel">
+                <div class="panel-title" style="padding:10px 16px;border-bottom:1px solid var(--border)">Liquidity Ratios</div>
+                <div data-fc-ratio="liquidity"></div>
+              </div>
+              <div class="panel fc-ratio-panel">
+                <div class="panel-title" style="padding:10px 16px;border-bottom:1px solid var(--border)">Leverage / Solvency</div>
+                <div data-fc-ratio="leverage"></div>
+              </div>
+              <div class="panel fc-ratio-panel">
+                <div class="panel-title" style="padding:10px 16px;border-bottom:1px solid var(--border)">Growth Ratios (%)</div>
+                <div data-fc-ratio="growth"></div>
+              </div>
+              <div class="panel fc-ratio-panel">
+                <div class="panel-title" style="padding:10px 16px;border-bottom:1px solid var(--border)">Turnover Ratios</div>
+                <div data-fc-ratio="turnover"></div>
+              </div>
+              <div class="panel fc-ratio-panel">
+                <div class="panel-title" style="padding:10px 16px;border-bottom:1px solid var(--border)">Derived Metrics</div>
+                <div data-fc-ratio="derived"></div>
+              </div>
+            </div>
+
+            <!-- Year-wise Detailed Computation -->
+            <div class="panel" style="margin-top:14px">
+              <div class="panel-title">Year-wise Detailed Computation</div>
+              <div class="fc-yearwise-detail" data-fc-yearwise></div>
+            </div>
+
+
+          </div>
+
+          <!-- ── Financial Remark (currency/unit note for report) ── -->
+          <div class="panel" style="margin-top:12px;border-left:3px solid #f59e0b;padding:10px 14px">
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;color:#92400e">📌 Financial Remark <span style="font-weight:400;font-size:11px;color:var(--muted)">(appears before tables in report)</span></div>
+            <select id="fcRemarkSelect" class="input" style="width:100%;margin-bottom:6px">
+              <option value="">-- Select preset --</option>
+              <option value="All figures are in ₹ (Rupees)">All figures are in ₹ (Rupees)</option>
+              <option value="All figures are in ₹ Lakhs">All figures are in ₹ Lakhs</option>
+              <option value="All figures are in ₹ Crores">All figures are in ₹ Crores</option>
+              <option value="All figures are in ₹ Thousands">All figures are in ₹ Thousands</option>
+              <option value="custom">Custom...</option>
+            </select>
+            <input type="text" id="fcRemarkCustom" class="input" style="width:100%;display:none" placeholder="Enter custom remark e.g. All figures in ₹ Lakhs unless stated otherwise" />
+          </div>
+
+          <!-- ── Include in report ── -->
+          <div class="panel-actions" style="margin-top:12px">
+            <label class="muted" style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+              <input type="checkbox" data-fin-include-report />
+              Executive: Include Financial details in final report
+            </label>
+          </div>
+
+
+        </div>
+        </section>
+
+        <!-- ── Field Data Module ── -->
+        <section class="module" id="module-field_data" data-module-section="field_data">
+          <header class="module-head">
+            <div>
+              <h2 class="module-title">Business Field Data</h2>
+              <p class="module-subtitle">Upload site photos, shop images, and field verification images</p>
+            </div>
+            <div class="module-head-actions">
+              <span class="status-pill" data-module-status="field_data" data-status="pending">Pending</span>
+              <label class="select">
+                <span class="sr-only">Field Data status</span>
+                <select data-status-select="field_data">
+                  <option value="pending">Pending</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </label>
+            </div>
+          </header>
+
+          <div class="module-body">
+            <div class="panel">
+              <div class="panel-title">Upload Field Images</div>
+              <div class="panel-subtitle">Add labelled images from field verification. Each image will appear in the final report's Business Field Data section.</div>
+              <div style="display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin-top:10px">
+                <label style="flex:1;min-width:180px">
+                  <span class="muted" style="font-size:12px;display:block;margin-bottom:4px">Image Label (optional for bulk)</span>
+                  <input type="text" data-field-img-label placeholder="e.g. Shop Front, Factory Interior…" style="width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;background:var(--surface);color:var(--text)" />
+                </label>
+                <label style="flex:0 0 auto">
+                  <span class="muted" style="font-size:12px;display:block;margin-bottom:4px">Image Files (multi-select)</span>
+                  <input type="file" data-field-img-file accept="image/*" multiple style="font-size:13px" />
+                </label>
+                <button class="btn btn-secondary" type="button" data-action="add-field-image" style="height:36px">+ Add Images</button>
+              </div>
+              <div class="muted" style="font-size:11px;margin-top:6px">💡 Tip: Select multiple images at once. Drag &amp; drop cards below to reorder.</div>
+              <div data-field-img-list style="margin-top:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px"></div>
+              <div data-field-img-empty class="muted" style="margin-top:10px;font-size:13px">No images uploaded yet.</div>
+              <div class="panel-actions" style="margin-top:10px">
+                <span class="muted" style="font-size:12px">Total images: <strong data-field-img-count>0</strong></span>
+                <button class="btn btn-secondary" type="button" data-action="save-field-data" style="margin-left:auto">Save to Server</button>
+              </div>
+            </div>
+
+            <div class="panel" style="margin-top:16px">
+              <div class="panel-title">Field Data Summary</div>
+              <div class="panel-subtitle">Write a summary of the field visit observations. This will appear in the report after field data photos.</div>
+              <div style="margin-top:12px">
+                <textarea id="fieldDataSummaryTextarea" class="field-input" rows="6" style="width:100%;resize:vertical;font-size:12px;line-height:1.7" placeholder="Describe field visit observations, site condition, key findings from field verification…"></textarea>
+              </div>
+              <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+                <button class="btn btn-primary" type="button" id="btnSaveFieldDataSummary" style="font-size:11px;padding:5px 14px">💾 Save Summary</button>
+                <span class="muted" id="fieldDataSummaryStatus" style="font-size:11px"></span>
+              </div>
+            </div>
+
+
+          </div>
+        </section>
+
+        <!-- ── Business Summary Module ── -->
+        <section class="module" id="module-business_summary" data-module-section="business_summary">
+          <header class="module-head">
+            <div>
+              <h2 class="module-title">Business Summary</h2>
+              <p class="module-subtitle">Write or generate a summary about the business. This appears after the field photos in the final report.</p>
+            </div>
+            <div class="module-head-actions">
+              <span class="status-pill" data-module-status="business_summary" data-status="pending">Pending</span>
+              <label class="select">
+                <span class="sr-only">Business Summary status</span>
+                <select data-status-select="business_summary">
+                  <option value="pending">Pending</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </label>
+            </div>
+          </header>
+
+          <div class="module-body">
+            <div class="panel">
+              <div class="panel-title">📝 Business Summary</div>
+              <div class="panel-subtitle">Enter or auto-generate the business summary. This will appear on a separate page after field data photos in the report.</div>
+              <div style="margin-top:12px">
+                <textarea id="businessSummaryTextarea" class="field-input" rows="10" style="width:100%;resize:vertical;font-size:12px;line-height:1.7" placeholder="Enter business summary here — describe the business operations, observations from field visit, key findings…"></textarea>
+              </div>
+              <div style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                <button class="btn btn-secondary" type="button" id="btnGenerateBusinessSummaryAI" style="font-size:11px;padding:5px 14px">📝 Generate Summary</button>
+                <button class="btn btn-primary" type="button" id="btnSaveBusinessSummary" style="font-size:11px;padding:5px 14px">💾 Save to Server</button>
+                <span class="muted" id="businessSummaryStatus" style="font-size:11px"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── Additional Details Module ── -->
+        <section class="module" id="module-additional_details" data-module-section="additional_details">
+          <header class="module-head">
+            <div>
+              <h2 class="module-title">Additional Business Details</h2>
+              <p class="module-subtitle">Enter supplementary business information (LEI Code, MSME Category, Contact details, etc.) for the "Details of Business Entity" report section.</p>
+            </div>
+            <div class="module-head-actions">
+              <span class="status-pill" data-module-status="additional_details" data-status="pending">Pending</span>
+              <label class="select">
+                <span class="sr-only">Additional Details status</span>
+                <select data-status-select="additional_details">
+                  <option value="pending">Pending</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </label>
+            </div>
+          </header>
+
+          <div class="module-body">
+            <div class="panel">
+              <div class="panel-title">Additional Entity Parameters</div>
+              <div class="panel-subtitle">These fields supplement the auto-fetched GST / MCA / Udyam data. They appear in the "Details of Business Entity" table in the final report.</div>
+
+              <div class="form-grid-2col" id="additionalDetailsForm" style="margin-top:12px">
+                <div class="field">
+                  <label class="field-label" for="ad_leiCode">LEI Code</label>
+                  <input class="field-input" type="text" id="ad_leiCode" name="leiCode" placeholder="e.g. 984500I9O7FEED5E5672" autocomplete="off" />
+                </div>
+
+                <div class="field">
+                  <label class="field-label" for="ad_natureOfActivity">Nature of Activity</label>
+                  <input class="field-input" type="text" id="ad_natureOfActivity" name="natureOfActivity" placeholder="e.g. Manufacturing, Trading, Services" autocomplete="off" />
+                </div>
+
+                <div class="field">
+                  <label class="field-label" for="ad_msmeCategory">MSME Category (based on UAM)</label>
+                  <select class="field-input" id="ad_msmeCategory" name="msmeCategory">
+                    <option value="">-- Select --</option>
+                    <option value="Micro">Micro</option>
+                    <option value="Small">Small</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Not Applicable">Not Applicable</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label class="field-label" for="ad_investmentPlantMachinery">Investment in Plant & Machinery (as per last year audited BS)</label>
+                  <input class="field-input" type="text" id="ad_investmentPlantMachinery" name="investmentPlantMachinery" placeholder="e.g. ₹50,00,000/-" autocomplete="off" />
+                </div>
+
+                <div class="field">
+                  <label class="field-label" for="ad_turnoverAuditedBS">Turnover (as per last year audited Balance Sheet)</label>
+                  <input class="field-input" type="text" id="ad_turnoverAuditedBS" name="turnoverAuditedBS" placeholder="e.g. 35,11,93,089/-" autocomplete="off" />
+                </div>
+
+                <div class="field">
+                  <label class="field-label" for="ad_industry">Industry</label>
+                  <input class="field-input" type="text" id="ad_industry" name="industry" placeholder="e.g. MICRO SCALE INDUSTRY" autocomplete="off" />
+                </div>
+
+                <div class="field">
+                  <label class="field-label" for="ad_branchOffices">Branch Offices</label>
+                  <input class="field-input" type="text" id="ad_branchOffices" name="branchOffices" placeholder="e.g. Mumbai, Delhi or 'No Branch Offices'" autocomplete="off" />
+                </div>
+
+                <div class="field">
+                  <label class="field-label" for="ad_contactNo">Contact No. (Landline & Mobile)</label>
+                  <input class="field-input" type="text" id="ad_contactNo" name="contactNo" placeholder="e.g. 9782362458" autocomplete="off" />
+                </div>
+
+                <div class="field">
+                  <label class="field-label" for="ad_emailId">Email Id</label>
+                  <input class="field-input" type="email" id="ad_emailId" name="emailId" placeholder="e.g. marketing@alupac.com" autocomplete="off" />
+                </div>
+
+                <div class="field">
+                  <label class="field-label" for="ad_website">Website</label>
+                  <input class="field-input" type="url" id="ad_website" name="website" placeholder="e.g. https://www.example.com" autocomplete="off" />
+                </div>
+              </div>
+              <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+                <button class="btn btn-primary btn-save-ad-section" type="button" style="font-size:11px;padding:4px 14px">Save Details</button>
+                <span class="ad-section-save-status muted" style="font-size:11px"></span>
+              </div>
+
+              <div class="panel-title" style="margin-top:20px;padding-top:14px;border-top:2px solid var(--border,#d9e1ea)">Company Snapshot (Page 4)</div>
+              <div class="panel-subtitle">Fields auto-filled from MCA/GST show a <span class="field-source-tag" style="font-size:9px;padding:0 4px">MCA</span> tag. Remaining fields can be filled manually — they show as <span class="field-manual-tag" style="font-size:9px;padding:0 4px">EXECUTIVE</span> in the report.</div>
+              <div style="margin:8px 0 4px;padding:8px 12px;background:color-mix(in srgb, var(--primary-2) 5%, #fff);border:1px solid color-mix(in srgb, var(--primary-2) 15%, var(--border));border-radius:8px;font-size:11px;color:var(--muted)">
+                <strong>Auto-fill Status:</strong> <span id="adAutoFillSummary" style="font-weight:700">Checking…</span>
+                <button type="button" class="btn btn-secondary" id="btnAutoFillFromMCA" style="margin-left:10px;font-size:11px;padding:3px 10px">Re-sync from MCA</button>
+              </div>
+
+              <div class="form-grid-2col" style="margin-top:12px">
+                <div class="field" style="grid-column:1/-1" data-ad-param="projectDescription">
+                  <div class="field-status-row">
+                    <label class="field-label" for="ad_projectDescription">Project Description</label>
+                    <span class="ad-param-tick empty" data-tick="projectDescription"></span>
+                  </div>
+                  <textarea class="field-input" id="ad_projectDescription" name="projectDescription" rows="3" style="width:100%;resize:vertical" placeholder="e.g. THE APPLICANT IS ENGAGED IN THE BUSINESS OF MANUFACTURER & SUPPLIER OF..."></textarea>
+                </div>
+
+                <div class="field" data-ad-param="projectLocation">
+                  <div class="field-status-row">
+                    <label class="field-label" for="ad_projectLocation">Location of Project</label>
+                    <span class="ad-param-tick empty" data-tick="projectLocation"></span>
+                  </div>
+                  <input class="field-input" type="text" id="ad_projectLocation" name="projectLocation" placeholder="e.g. Plot No.12, RIICO Industrial Area, Jaipur" autocomplete="off" />
+                </div>
+
+                <div class="field" data-ad-param="keyRegulatoryApprovals">
+                  <div class="field-status-row">
+                    <label class="field-label" for="ad_keyRegulatoryApprovals">Key regulatory approvals, certifications & membership</label>
+                    <span class="ad-param-tick empty" data-tick="keyRegulatoryApprovals"></span>
+                  </div>
+                  <textarea class="field-input" id="ad_keyRegulatoryApprovals" name="keyRegulatoryApprovals" rows="2" style="width:100%;resize:vertical" placeholder="e.g. UDYAM ADHAR, GST CERTIFICATE, INCORPORATION CERTIFICATE"></textarea>
+                </div>
+
+                <div class="field" data-ad-param="majorBrands">
+                  <div class="field-status-row">
+                    <label class="field-label" for="ad_majorBrands">Major Brands</label>
+                    <span class="ad-param-tick empty" data-tick="majorBrands"></span>
+                  </div>
+                  <input class="field-input" type="text" id="ad_majorBrands" name="majorBrands" placeholder="e.g. aluSHIELD" autocomplete="off" />
+                </div>
+
+                <div class="field" data-ad-param="auditorName">
+                  <div class="field-status-row">
+                    <label class="field-label" for="ad_auditorName">Name of the Auditor</label>
+                    <span class="ad-param-tick empty" data-tick="auditorName"></span>
+                  </div>
+                  <input class="field-input" type="text" id="ad_auditorName" name="auditorName" placeholder="e.g. R.R BAJAJ & ASSOCIATES" autocomplete="off" />
+                </div>
+
+                <div class="field" data-ad-param="existingBankers">
+                  <div class="field-status-row">
+                    <label class="field-label" for="ad_existingBankers">Major Existing Bankers</label>
+                    <span class="ad-param-tick empty" data-tick="existingBankers"></span>
+                  </div>
+                  <input class="field-input" type="text" id="ad_existingBankers" name="existingBankers" placeholder="e.g. STATE BANK OF INDIA" autocomplete="off" />
+                </div>
+
+                <div class="field" data-ad-param="totalEmployees">
+                  <div class="field-status-row">
+                    <label class="field-label" for="ad_totalEmployees">Total number of employees</label>
+                    <span class="ad-param-tick empty" data-tick="totalEmployees"></span>
+                  </div>
+                  <input class="field-input" type="text" id="ad_totalEmployees" name="totalEmployees" placeholder="e.g. 35 APPROX" autocomplete="off" />
+                </div>
+
+                <div class="field" data-ad-param="totalIncomeFY">
+                  <div class="field-status-row">
+                    <label class="field-label" for="ad_totalIncomeFY">Total income for last / Latest FY</label>
+                    <span class="ad-param-tick empty" data-tick="totalIncomeFY"></span>
+                  </div>
+                  <input class="field-input" type="text" id="ad_totalIncomeFY" name="totalIncomeFY" placeholder="e.g. F.Y 2023-24 AMT: 0" autocomplete="off" />
+                </div>
+
+                <div class="field" data-ad-param="promoters">
+                  <div class="field-status-row">
+                    <label class="field-label" for="ad_promoters">Promoters (comma separated names)</label>
+                    <span class="ad-param-tick empty" data-tick="promoters"></span>
+                  </div>
+                  <textarea class="field-input" id="ad_promoters" name="promoters" rows="2" style="width:100%;resize:vertical" placeholder="e.g. MR. HARDIK HIMANSHU PANDYA, MR. KRUNAL HIMANSHU PANDYA"></textarea>
+                </div>
+
+                <div class="field" data-ad-param="wilfulDefaulterStatus">
+                  <div class="field-status-row">
+                    <label class="field-label" for="ad_wilfulDefaulterStatus">Wilful defaulter verification</label>
+                    <span class="ad-param-tick empty" data-tick="wilfulDefaulterStatus"></span>
+                  </div>
+                  <input class="field-input" type="text" id="ad_wilfulDefaulterStatus" name="wilfulDefaulterStatus" placeholder="e.g. THE APPLICANT NAME DOES NOT REFLECT IN THE WILFUL DEFAULTER LIST." autocomplete="off" />
+                </div>
+
+                <div class="field" data-ad-param="externalRatingDetails">
+                  <div class="field-status-row">
+                    <label class="field-label" for="ad_externalRatingDetails">External Rating Details</label>
+                    <span class="ad-param-tick empty" data-tick="externalRatingDetails"></span>
+                  </div>
+                  <input class="field-input" type="text" id="ad_externalRatingDetails" name="externalRatingDetails" placeholder="e.g. THE APPLICANT HAS NOT RECEIVED ANY EXTERNAL RATINGS." autocomplete="off" />
+                </div>
+
+                <div class="field" data-ad-param="epfDefaulterStatus">
+                  <div class="field-status-row">
+                    <label class="field-label" for="ad_epfDefaulterStatus">EPF (Employee Provident Fund) Defaulters' List Status</label>
+                    <span class="ad-param-tick empty" data-tick="epfDefaulterStatus"></span>
+                  </div>
+                  <input class="field-input" type="text" id="ad_epfDefaulterStatus" name="epfDefaulterStatus" placeholder="e.g. -" autocomplete="off" />
+                </div>
+
+
+              </div>
+
+              <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+                <button class="btn btn-primary btn-save-ad-section" type="button" style="font-size:11px;padding:4px 14px">Save Details</button>
+                <span class="ad-section-save-status muted" style="font-size:11px"></span>
+              </div>
+
+              <!-- ─── Organisation & Management (Page 5) ─── -->
+              <div class="panel-title" style="margin-top:24px;padding-top:14px;border-top:2px solid var(--border,#d9e1ea)">Organisation &amp; Management (Page 5)</div>
+              <div class="panel-subtitle">Details of key promoters and management personnel. Auto-filled from MCA directors where available. Executive fills remaining fields.</div>
+
+              <!-- Promoters Table -->
+              <div style="margin-top:14px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                  <label class="field-label" style="margin:0;font-weight:700;font-size:13px">Details of Key Promoters</label>
+                  <div style="display:flex;gap:6px">
+                    <button type="button" class="btn btn-secondary" id="btnAutoFillPromoters" style="font-size:11px;padding:3px 10px">Auto-fill from MCA</button>
+                    <button type="button" class="btn btn-primary" id="btnAddPromoterRow" style="font-size:11px;padding:3px 10px">+ Add Row</button>
+                  </div>
+                </div>
+                <div style="overflow-x:auto">
+                  <table class="promoter-mgmt-table" id="promoterTable" style="width:100%;border-collapse:collapse;font-size:11px">
+                    <thead>
+                      <tr style="background:var(--navy,#0b1f3a);color:#fff">
+                        <th style="padding:6px 8px;text-align:left;min-width:130px">Name</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:50px">Age</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:110px">Designation</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:120px">Educational Qualification</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:60px">Total Exp (Yrs)</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:60px">Yrs with Company</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:110px">PAN / DIN</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:140px">Role &amp; Responsibilities</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:100px">Wilful Defaulter</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:100px">Litigations</th>
+                        <th style="padding:6px 8px;text-align:center;width:36px"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="promoterTableBody">
+                      <!-- Dynamic rows added by JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Promoter Comments -->
+              <div style="margin-top:10px">
+                <label class="field-label" for="ad_promoterComments">Comments (Promoters)</label>
+                <textarea class="field-input" id="ad_promoterComments" name="promoterComments" rows="3" style="width:100%;resize:vertical" placeholder="Any additional comments about the promoters..."></textarea>
+              </div>
+
+              <!-- Management Personnel Table -->
+              <div style="margin-top:18px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                  <label class="field-label" style="margin:0;font-weight:700;font-size:13px">Details of Key Management Personnel</label>
+                  <div style="display:flex;gap:6px">
+                    <button type="button" class="btn btn-secondary" id="btnAutoFillManagement" style="font-size:11px;padding:3px 10px">Auto-fill from MCA</button>
+                    <button type="button" class="btn btn-primary" id="btnAddManagementRow" style="font-size:11px;padding:3px 10px">+ Add Row</button>
+                  </div>
+                </div>
+                <div style="overflow-x:auto">
+                  <table class="promoter-mgmt-table" id="managementTable" style="width:100%;border-collapse:collapse;font-size:11px">
+                    <thead>
+                      <tr style="background:var(--navy,#0b1f3a);color:#fff">
+                        <th style="padding:6px 8px;text-align:left;min-width:130px">Name</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:50px">Age</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:110px">Designation</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:110px">PAN No.</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:120px">Educational Qualification</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:60px">Total Exp (Yrs)</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:120px">Date of Appointment / Yrs with Company</th>
+                        <th style="padding:6px 8px;text-align:center;width:36px"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="managementTableBody">
+                      <!-- Dynamic rows added by JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Business Entity Summary (Manual + AI) -->
+              <div style="margin-top:18px;padding:14px 16px;background:linear-gradient(135deg,rgba(11,31,58,0.02),rgba(15,118,110,0.04));border:1px solid rgba(11,31,58,0.12);border-radius:10px">
+                <label class="field-label" for="ad_businessEntitySummary" style="margin:0 0 6px 0;font-weight:700;font-size:13px;color:var(--navy,#0b1f3a)">📝 Business Entity Summary</label>
+                <div class="field-hint" style="font-size:11px;color:#64748b;margin-bottom:8px">Write or generate a summary about the business entity, promoters, and management. This will appear on Page 5 of the report.</div>
+                <textarea class="field-input" id="ad_businessEntitySummary" name="businessEntitySummary" rows="6" style="width:100%;resize:vertical;font-size:12px;line-height:1.65" placeholder="Enter business entity summary manually or click 'Generate Summary' to auto-generate from available data..."></textarea>
+                <div style="margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                  <button class="btn btn-secondary" type="button" id="btnGenerateEntitySummary" style="font-size:11px;padding:5px 14px">📝 Generate Summary</button>
+                  <span class="muted" id="entitySummaryStatus" style="font-size:11px"></span>
+                </div>
+              </div>
+
+              <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+                <button class="btn btn-primary btn-save-ad-section" type="button" style="font-size:11px;padding:4px 14px">Save Details</button>
+                <span class="ad-section-save-status muted" style="font-size:11px"></span>
+              </div>
+
+              <!-- ═══ Board of Directors (Page 6) ═══ -->
+              <div style="margin-top:24px;border-top:2px solid var(--navy,#0b1f3a);padding-top:16px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                  <div>
+                    <label class="field-label" style="margin:0;font-weight:700;font-size:14px;color:var(--navy,#0b1f3a)">📋 Details of the Board of Directors</label>
+                    <div class="field-hint" style="font-size:11px;color:#64748b;margin-top:2px">Auto-fills from MCA data. Fill remaining fields manually. This appears on a separate page in the report.</div>
+                  </div>
+                  <div style="display:flex;gap:6px">
+                    <button type="button" class="btn btn-secondary" id="btnAutoFillBOD" style="font-size:11px;padding:3px 10px">Auto-fill from MCA</button>
+                    <button type="button" class="btn btn-primary" id="btnAddBODRow" style="font-size:11px;padding:3px 10px">+ Add Row</button>
+                  </div>
+                </div>
+                <div style="overflow-x:auto">
+                  <table class="promoter-mgmt-table" id="bodTable" style="width:100%;border-collapse:collapse;font-size:11px">
+                    <thead>
+                      <tr style="background:var(--navy,#0b1f3a);color:#fff">
+                        <th style="padding:6px 8px;text-align:left;min-width:130px">Name</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:50px">Age</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:110px">Position / Category</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:100px">Educational Qualification</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:80px">Total Exp (Yrs)</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:120px">Date of Appointment / Yrs with Company</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:120px">Past Experience</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:120px">Other Directorships</th>
+                        <th style="padding:6px 8px;text-align:center;width:36px"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="bodTableBody">
+                      <!-- Dynamic rows added by JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Board of Directors Comments -->
+              <div style="margin-top:10px">
+                <label class="field-label" for="ad_bodComments">Comments (Board of Directors)</label>
+                <textarea class="field-input" id="ad_bodComments" name="bodComments" rows="3" style="width:100%;resize:vertical" placeholder="e.g. All the Designated Directors are well qualified & having good experience..."></textarea>
+              </div>
+
+              <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+                <button class="btn btn-primary btn-save-ad-section" type="button" style="font-size:11px;padding:4px 14px">Save Details</button>
+                <span class="ad-section-save-status muted" style="font-size:11px"></span>
+              </div>
+
+              <!-- ═══ Management & Ownership Structure ═══ -->
+              <div style="margin-top:18px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                  <div>
+                    <label class="field-label" style="margin:0;font-weight:700;font-size:14px;color:var(--navy,#0b1f3a)">🏢 Management &amp; Ownership Structure</label>
+                    <div class="field-hint" style="font-size:11px;color:#64748b;margin-top:2px">Shareholding pattern of promoters. Add rows manually or auto-fill from MCA if available.</div>
+                  </div>
+                  <div style="display:flex;gap:6px">
+                    <button type="button" class="btn btn-secondary" id="btnAutoFillOwnership" style="font-size:11px;padding:3px 10px">Auto-fill from MCA</button>
+                    <button type="button" class="btn btn-primary" id="btnAddOwnershipRow" style="font-size:11px;padding:3px 10px">+ Add Row</button>
+                  </div>
+                </div>
+                <div style="overflow-x:auto">
+                  <table class="promoter-mgmt-table" id="ownershipTable" style="width:100%;border-collapse:collapse;font-size:11px">
+                    <thead>
+                      <tr style="background:var(--navy,#0b1f3a);color:#fff">
+                        <th style="padding:6px 8px;text-align:left;min-width:200px">Promoters</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:120px">Shareholding Pattern (as on)</th>
+                        <th style="padding:6px 8px;text-align:center;width:36px"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="ownershipTableBody">
+                      <!-- Dynamic rows added by JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+                <button class="btn btn-primary btn-save-ad-section" type="button" style="font-size:11px;padding:4px 14px">Save Details</button>
+                <span class="ad-section-save-status muted" style="font-size:11px"></span>
+              </div>
+
+              <!-- ═══ Group Company & Sister Concern Details ═══ -->
+              <div style="margin-top:24px;border-top:2px solid var(--navy,#0b1f3a);padding-top:16px">
+                <div>
+                  <label class="field-label" style="margin:0;font-weight:700;font-size:14px;color:var(--navy,#0b1f3a)">Group Company &amp; Sister Concern Details</label>
+                  <div class="field-hint" style="font-size:11px;color:#64748b;margin-top:2px">Enter details of group / sister concern companies. If none, leave blank or add a comment.</div>
+                </div>
+                <div class="form-grid-2col" style="margin-top:12px">
+                  <div class="field">
+                    <label class="field-label" for="ad_groupCompanyName">Name of the Group Company</label>
+                    <input class="field-input" type="text" id="ad_groupCompanyName" name="groupCompanyName" placeholder="e.g. ABC Industries Pvt Ltd" autocomplete="off" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="ad_groupCompanyDOI">Date of Incorporation</label>
+                    <input class="field-input" type="text" id="ad_groupCompanyDOI" name="groupCompanyDOI" placeholder="e.g. 15-Mar-2020" autocomplete="off" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="ad_groupCompanyRegOffice">Registered Office</label>
+                    <input class="field-input" type="text" id="ad_groupCompanyRegOffice" name="groupCompanyRegOffice" placeholder="e.g. Plot No 12, Industrial Area" autocomplete="off" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="ad_groupCompanyNature">Nature of Business</label>
+                    <input class="field-input" type="text" id="ad_groupCompanyNature" name="groupCompanyNature" placeholder="e.g. Manufacturing" autocomplete="off" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="ad_groupCompanyFY">Financial Year</label>
+                    <input class="field-input" type="text" id="ad_groupCompanyFY" name="groupCompanyFY" placeholder="e.g. 2024-25" autocomplete="off" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="ad_groupCompanyTotalIncome">Total Income</label>
+                    <input class="field-input" type="text" id="ad_groupCompanyTotalIncome" name="groupCompanyTotalIncome" placeholder="e.g. 5,00,00,000" autocomplete="off" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="ad_groupCompanyNetProfit">Net Profit</label>
+                    <input class="field-input" type="text" id="ad_groupCompanyNetProfit" name="groupCompanyNetProfit" placeholder="e.g. 50,00,000" autocomplete="off" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="ad_groupCompanyNetWorth">Net Worth</label>
+                    <input class="field-input" type="text" id="ad_groupCompanyNetWorth" name="groupCompanyNetWorth" placeholder="e.g. 2,00,00,000" autocomplete="off" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="ad_groupCompanyTotalDebt">Total Debt</label>
+                    <input class="field-input" type="text" id="ad_groupCompanyTotalDebt" name="groupCompanyTotalDebt" placeholder="e.g. 1,00,00,000" autocomplete="off" />
+                  </div>
+                </div>
+                <div style="margin-top:10px">
+                  <label class="field-label" for="ad_groupCompanyComments">Comments (Group Company)</label>
+                  <textarea class="field-input" id="ad_groupCompanyComments" name="groupCompanyComments" rows="3" style="width:100%;resize:vertical" placeholder="e.g. As per discussion with the applicant, the applicant firm has no group of companies."></textarea>
+                </div>
+              </div>
+
+              <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+                <button class="btn btn-primary btn-save-ad-section" type="button" style="font-size:11px;padding:4px 14px">Save Details</button>
+                <span class="ad-section-save-status muted" style="font-size:11px"></span>
+              </div>
+
+              <!-- ═══ List of Certifications (Dynamic Table) ═══ -->
+              <div style="margin-top:24px;border-top:2px solid var(--navy,#0b1f3a);padding-top:16px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                  <div>
+                    <label class="field-label" style="margin:0;font-weight:700;font-size:14px;color:var(--navy,#0b1f3a)">List of Certifications</label>
+                    <div class="field-hint" style="font-size:11px;color:#64748b;margin-top:2px">Add certifications held by the entity (UDYAM, GST Certificate, Incorporation Certificate, etc.). Auto-filled from available data.</div>
+                  </div>
+                  <div style="display:flex;gap:6px">
+                    <button type="button" class="btn btn-secondary" id="btnAutoFillCertifications" style="font-size:11px;padding:3px 10px">Auto-fill</button>
+                    <button type="button" class="btn btn-primary" id="btnAddCertificationRow" style="font-size:11px;padding:3px 10px">+ Add Row</button>
+                  </div>
+                </div>
+                <div style="overflow-x:auto">
+                  <table class="promoter-mgmt-table" id="certificationTable" style="width:100%;border-collapse:collapse;font-size:11px">
+                    <thead>
+                      <tr style="background:var(--navy,#0b1f3a);color:#fff">
+                        <th style="padding:6px 8px;text-align:left;min-width:160px">Certificate Name</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:180px">Certificate Number</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:160px">Validity Period (From – Till)</th>
+                        <th style="padding:6px 8px;text-align:center;width:36px"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="certificationTableBody">
+                      <!-- Dynamic rows added by JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+                <button class="btn btn-primary btn-save-ad-section" type="button" style="font-size:11px;padding:4px 14px">Save Details</button>
+                <span class="ad-section-save-status muted" style="font-size:11px"></span>
+              </div>
+
+              <!-- ═══ Statutory Taxation & Filing Verification Status ═══ -->
+              <div style="margin-top:24px;border-top:2px solid var(--navy,#0b1f3a);padding-top:16px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                  <div>
+                    <label class="field-label" style="margin:0;font-weight:700;font-size:14px;color:var(--navy,#0b1f3a)">Statutory Taxation &amp; Filing Verification Status</label>
+                    <div class="field-hint" style="font-size:11px;color:#64748b;margin-top:2px">Verification status for EPFO, GST filings, etc. Auto-filled from GST data where possible.</div>
+                  </div>
+                  <div style="display:flex;gap:6px">
+                    <button type="button" class="btn btn-secondary" id="btnAutoFillStatutoryTax" style="font-size:11px;padding:3px 10px">Auto-fill</button>
+                    <button type="button" class="btn btn-primary" id="btnAddStatutoryTaxRow" style="font-size:11px;padding:3px 10px">+ Add Row</button>
+                  </div>
+                </div>
+                <div style="overflow-x:auto">
+                  <table class="promoter-mgmt-table" id="statutoryTaxTable" style="width:100%;border-collapse:collapse;font-size:11px">
+                    <thead>
+                      <tr style="background:var(--navy,#0b1f3a);color:#fff">
+                        <th style="padding:6px 8px;text-align:left;min-width:160px">Name</th>
+                        <th style="padding:6px 8px;text-align:left;min-width:300px">Observation</th>
+                        <th style="padding:6px 8px;text-align:center;width:36px"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="statutoryTaxTableBody">
+                      <!-- Dynamic rows added by JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- ═══ Business Profile & Operations Details ═══ -->
+              <div style="margin-top:24px;border-top:2px solid var(--navy,#0b1f3a);padding-top:16px">
+                <div style="margin-bottom:12px">
+                  <label class="field-label" style="margin:0;font-weight:700;font-size:14px;color:var(--navy,#0b1f3a)">Business Profile &amp; Operations Details</label>
+                  <div class="field-hint" style="font-size:11px;color:#64748b;margin-top:2px">Business operations overview filled manually by the executive.</div>
+                </div>
+                <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px">
+                  <div class="field"><label class="field-label" for="ad_bpBusinessAge">Business Age</label><input class="input" id="ad_bpBusinessAge" placeholder="e.g. 4 YEAR" /></div>
+                  <div class="field"><label class="field-label" for="ad_bpNatureOfBusinessActivity">Nature of Business Activity</label><input class="input" id="ad_bpNatureOfBusinessActivity" placeholder="e.g. MANUFACTURER & SUPPLIER OF ALUMINUM FOIL CONTAINERS" /></div>
+                  <div class="field"><label class="field-label" for="ad_bpIndustrySegment">Industry Segment / Business Group</label><input class="input" id="ad_bpIndustrySegment" placeholder="e.g. MICRO" /></div>
+                  <div class="field"><label class="field-label" for="ad_bpProductsServices">Products / Services Offered</label><input class="input" id="ad_bpProductsServices" placeholder="e.g. MANUFACTURER & SUPPLIER" /></div>
+                  <div class="field" style="grid-column:1/-1"><label class="field-label" for="ad_bpRegisteredOfficeLocation">Registered Office Location</label><textarea class="input" id="ad_bpRegisteredOfficeLocation" rows="2" placeholder="Full address..."></textarea></div>
+                  <div class="field"><label class="field-label" for="ad_bpAreaOfOffice">Area of the Office</label><div style="display:flex;gap:6px"><input class="input" id="ad_bpAreaOfOffice" placeholder="e.g. 15000" style="flex:1" /><select class="input" id="ad_bpAreaOfOfficeUnit" style="width:auto;min-width:90px"><option value="SQ. FT">SQ. FT</option><option value="SQ. MT">SQ. MT</option><option value="SQ. YD">SQ. YD</option><option value="ACRES">ACRES</option><option value="HECTARES">HECTARES</option><option value="GAJAM">GAJAM</option></select></div></div>
+                  <div class="field"><label class="field-label" for="ad_bpOwnershipOfOffice">Ownership of Office</label><select class="input" id="ad_bpOwnershipOfOffice"><option value="">-- Select --</option><option value="OWNED">OWNED</option><option value="RENTED">RENTED</option><option value="LEASED">LEASED</option><option value="SHARED">SHARED</option></select></div>
+                  <div class="field"><label class="field-label" for="ad_bpEmployeesAtLocation">Employees at Location / Across</label><input class="input" id="ad_bpEmployeesAtLocation" placeholder="e.g. 35 APROX" /></div>
+                  <div class="field"><label class="field-label" for="ad_bpLocationAdvantage">Location Advantage</label><select class="input" id="ad_bpLocationAdvantage"><option value="">-- Select --</option><option value="YES">YES</option><option value="NO">NO</option></select></div>
+                  <div class="field" style="grid-column:1/-1"><label class="field-label" for="ad_bpMarketingSetup">Marketing Setup</label><textarea class="input" id="ad_bpMarketingSetup" rows="3" placeholder="Describe marketing setup observed..."></textarea></div>
+                  <div class="field" style="grid-column:1/-1"><label class="field-label" for="ad_bpComments">Comments</label><textarea class="input" id="ad_bpComments" rows="2" placeholder="Any additional comments..."></textarea></div>
+                </div>
+                <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+                  <button class="btn btn-primary btn-save-ad-section" type="button" style="font-size:11px;padding:4px 14px">Save Details</button>
+                  <span class="ad-section-save-status muted" style="font-size:11px"></span>
+                </div>
+              </div>
+
+              <!-- ═══ Business Activity Details ═══ -->
+              <div style="margin-top:24px;border-top:2px solid var(--navy,#0b1f3a);padding-top:16px">
+                <div style="margin-bottom:12px">
+                  <label class="field-label" style="margin:0;font-weight:700;font-size:14px;color:var(--navy,#0b1f3a)">Business Activity Details</label>
+                  <div class="field-hint" style="font-size:11px;color:#64748b;margin-top:2px">Details about raw materials, certifications &amp; value addition.</div>
+                </div>
+                <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px">
+                  <div class="field" style="grid-column:1/-1"><label class="field-label" for="ad_baKeyRawMaterials">Key Raw Materials</label><input class="input" id="ad_baKeyRawMaterials" placeholder="e.g. ALUMINIUM SHEET" /></div>
+                  <div class="field"><label class="field-label" for="ad_baRawMaterialPriceFluctuation">Level of Raw Material Price Fluctuation Risk</label><select class="input" id="ad_baRawMaterialPriceFluctuation"><option value="">-- Select --</option><option value="LOW">LOW</option><option value="MEDIUM">MEDIUM</option><option value="HIGH">HIGH</option><option value="-">-</option></select></div>
+                  <div class="field"><label class="field-label" for="ad_baQualityCertification">Quality Certification</label><input class="input" id="ad_baQualityCertification" placeholder="e.g. ISO 9001:2015 or NOT FOUND" /></div>
+                  <div class="field"><label class="field-label" for="ad_baLevelOfValueAddition">Level of Value Addition</label><select class="input" id="ad_baLevelOfValueAddition"><option value="">-- Select --</option><option value="LOW">LOW</option><option value="MEDIUM">MEDIUM</option><option value="HIGH">HIGH</option><option value="NOT FOUND">NOT FOUND</option></select></div>
+                  <div class="field" style="grid-column:1/-1"><label class="field-label" for="ad_baComments">Comment</label><textarea class="input" id="ad_baComments" rows="2" placeholder="Any additional comments..."></textarea></div>
+                </div>
+              </div>
+
+              <!-- ═══ Supply Side Analysis ═══ -->
+              <div style="margin-top:24px;border-top:2px solid var(--navy,#0b1f3a);padding-top:16px">
+                <div style="margin-bottom:12px">
+                  <label class="field-label" style="margin:0;font-weight:700;font-size:14px;color:var(--navy,#0b1f3a)">Supply Side Analysis</label>
+                  <div class="field-hint" style="font-size:11px;color:#64748b;margin-top:2px">Supplier &amp; creditor analysis parameters.</div>
+                </div>
+                <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px">
+                  <div class="field"><label class="field-label" for="ad_ssAvgCreditorDays">Average Creditor Days</label><input class="input" id="ad_ssAvgCreditorDays" placeholder="e.g. 30 DAYS" /></div>
+                  <div class="field"><label class="field-label" for="ad_ssRawMaterialAvailability">Raw Material Availability</label><select class="input" id="ad_ssRawMaterialAvailability"><option value="">-- Select --</option><option value="LOW">LOW</option><option value="MEDIUM">MEDIUM</option><option value="HIGH">HIGH</option><option value="EASILY AVAILABLE">EASILY AVAILABLE</option><option value="NOT CONFIRM">NOT CONFIRM</option></select></div>
+                  <div class="field"><label class="field-label" for="ad_ssImportAsPercentOfRM">Import as a % of Raw Material Purchase</label><input class="input" id="ad_ssImportAsPercentOfRM" placeholder="e.g. 10% or NIL" /></div>
+                </div>
+              </div>
+
+              <!-- ═══ Site Visit Report ═══ -->
+              <div style="margin-top:24px;border-top:2px solid var(--navy,#0b1f3a);padding-top:16px">
+                <div style="margin-bottom:12px">
+                  <label class="field-label" style="margin:0;font-weight:700;font-size:14px;color:var(--navy,#0b1f3a)">Site Visit Report</label>
+                  <div class="field-hint" style="font-size:11px;color:#64748b;margin-top:2px">Site visit observations, facility adequacy &amp; machinery details.</div>
+                </div>
+
+                <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px">
+                  <div class="field" style="grid-column:1/-1"><label class="field-label" for="ad_svProjectLocation">Location of the Project</label><input class="input" id="ad_svProjectLocation" placeholder="e.g. Plot No.12, RIICO Industrial Area, Jaipur" /></div>
+                </div>
+
+                <!-- Information of Operational Facilities -->
+                <div style="margin-top:14px;margin-bottom:6px;font-size:12px;font-weight:700;color:var(--navy,#0b1f3a)">Information of Operational Facilities</div>
+                <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px">
+                  <div class="field"><label class="field-label" for="ad_svSitesVisited">Sites Visited</label><select class="input" id="ad_svSitesVisited"><option value="">-- Select --</option><option value="YES">YES</option><option value="NO">NO</option></select></div>
+                  <div class="field"><label class="field-label" for="ad_svStatusOfOperation">Status of Operation</label><input class="input" id="ad_svStatusOfOperation" placeholder="e.g. EASY" /></div>
+                  <div class="field"><label class="field-label" for="ad_svAreaOfUnit">Area of the Unit</label><input class="input" id="ad_svAreaOfUnit" placeholder="e.g. 15000 SQ FT APROX" /></div>
+                  <div class="field"><label class="field-label" for="ad_svEmployeesAtSite">No. of Employees at Site</label><input class="input" id="ad_svEmployeesAtSite" placeholder="e.g. 10" /></div>
+                  <div class="field"><label class="field-label" for="ad_svPlantMachinery">Plant &amp; Machinery</label><select class="input" id="ad_svPlantMachinery"><option value="">-- Select --</option><option value="SEEN">SEEN</option><option value="NOT SEEN">NOT SEEN</option></select></div>
+                  <div class="field"><label class="field-label" for="ad_svOwnershipOfPremises">Ownership of Premises</label><select class="input" id="ad_svOwnershipOfPremises"><option value="">-- Select --</option><option value="OWNED">OWNED</option><option value="RENTED">RENTED</option><option value="LEASED">LEASED</option></select></div>
+                  <div class="field"><label class="field-label" for="ad_svOtherFacilities">Other Facilities</label><input class="input" id="ad_svOtherFacilities" placeholder="e.g. NOT FOUND" /></div>
+                  <div class="field"><label class="field-label" for="ad_svAccessibilityToTransport">Accessibility to Transport</label><select class="input" id="ad_svAccessibilityToTransport"><option value="">-- Select --</option><option value="SEEN">SEEN</option><option value="NOT SEEN">NOT SEEN</option><option value="YES">YES</option><option value="NO">NO</option></select></div>
+                </div>
+
+                <!-- Adequacy of Facilities -->
+                <div style="margin-top:14px;margin-bottom:6px;font-size:12px;font-weight:700;color:var(--navy,#0b1f3a)">Adequacy of Facilities</div>
+                <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px">
+                  <div class="field"><label class="field-label" for="ad_svLandForExpansion">Availability of Land for Future Expansion</label><input class="input" id="ad_svLandForExpansion" placeholder="e.g. NA" /></div>
+                  <div class="field"><label class="field-label" for="ad_svSiteLayout">Site Layout</label><input class="input" id="ad_svSiteLayout" placeholder="e.g. 15000 SQ FT" /></div>
+                  <div class="field"><label class="field-label" for="ad_svInsuranceCoverage">Adequacy of Insurance Coverage</label><input class="input" id="ad_svInsuranceCoverage" placeholder="e.g. NOT CONFIRM" /></div>
+                  <div class="field"><label class="field-label" for="ad_svSourceOfPower">Source of Power</label><input class="input" id="ad_svSourceOfPower" placeholder="e.g. TORRENT" /></div>
+                  <div class="field"><label class="field-label" for="ad_svAdequacyOfPower">Adequacy of Power</label><input class="input" id="ad_svAdequacyOfPower" placeholder="e.g. TORRENT" /></div>
+                  <div class="field"><label class="field-label" for="ad_svSourceOfWater">Source of Water</label><input class="input" id="ad_svSourceOfWater" placeholder="e.g. GOVERMENT" /></div>
+                  <div class="field"><label class="field-label" for="ad_svTypeOfFuel">Type of Fuel Used</label><input class="input" id="ad_svTypeOfFuel" placeholder="e.g. NOT CONFIRM" /></div>
+                  <div class="field"><label class="field-label" for="ad_svLabourUnion">Presence of Labour Union</label><input class="input" id="ad_svLabourUnion" placeholder="e.g. NOT FOUND" /></div>
+                  <div class="field"><label class="field-label" for="ad_svIndustrialRelations">Industrial Relations</label><input class="input" id="ad_svIndustrialRelations" placeholder="e.g. NOT CONFIRM" /></div>
+                  <div class="field"><label class="field-label" for="ad_svWorkSafety">Level of Work Safety</label><input class="input" id="ad_svWorkSafety" placeholder="e.g. NOT CONFIRM" /></div>
+                  <div class="field"><label class="field-label" for="ad_svStorageFacilities">Adequacy of Storage Facilities</label><select class="input" id="ad_svStorageFacilities"><option value="">-- Select --</option><option value="YES">YES</option><option value="NO">NO</option><option value="NOT APPLICABLE">NOT APPLICABLE</option></select></div>
+                  <div class="field"><label class="field-label" for="ad_svOperationalStatusPlant">Operational Status of Plant(s)</label><input class="input" id="ad_svOperationalStatusPlant" placeholder="e.g. NOT APPLICABLE" /></div>
+                  <div class="field" style="grid-column:1/-1"><label class="field-label" for="ad_svSiteVisitComment">Comment &amp; Attach Photos of Site Visit with Date</label><textarea class="input" id="ad_svSiteVisitComment" rows="3" placeholder="Comments about site visit, photo references..."></textarea></div>
+                </div>
+
+                <!-- Major Machineries -->
+                <div style="margin-top:14px;margin-bottom:6px;font-size:12px;font-weight:700;color:var(--navy,#0b1f3a)">Major Machineries Used by the Company</div>
+                <div class="table-container" style="border:1.5px solid var(--border,#e5e7eb);border-radius:8px;overflow:hidden">
+                  <table class="data-table" style="width:100%;border-collapse:collapse;font-size:11px">
+                    <thead>
+                      <tr style="background:var(--navy,#0b1f3a);color:#fff">
+                        <th style="padding:6px 8px;text-align:left;width:40%">Name of Machinery</th>
+                        <th style="padding:6px 8px;text-align:left;width:25%">Year of Purchase</th>
+                        <th style="padding:6px 8px;text-align:left;width:30%">Value as on Date (Rs. in Lakh)</th>
+                        <th style="padding:6px 8px;text-align:center;width:36px"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="machineryTableBody">
+                      <!-- Dynamic rows added by JS -->
+                    </tbody>
+                  </table>
+                </div>
+                <div style="margin-top:6px;display:flex;gap:6px">
+                  <button class="btn btn-secondary" type="button" id="btnAddMachineryRow" style="font-size:10px;padding:3px 10px">+ Add Machinery</button>
+                </div>
+
+                <!-- Interaction with Machinery Supplier -->
+                <div style="margin-top:14px;margin-bottom:6px;font-size:12px;font-weight:700;color:var(--navy,#0b1f3a)">Interaction with Machinery Supplier</div>
+                <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px">
+                  <div class="field"><label class="field-label" for="ad_svVendorName">Name of the Vendor</label><input class="input" id="ad_svVendorName" placeholder="e.g. ABC Suppliers Pvt Ltd" /></div>
+                  <div class="field"><label class="field-label" for="ad_svVendorContactPerson">Contact Person</label><input class="input" id="ad_svVendorContactPerson" placeholder="e.g. NOT CONFIRMED" /></div>
+                  <div class="field"><label class="field-label" for="ad_svVendorContactDetails">Contact Details</label><input class="input" id="ad_svVendorContactDetails" placeholder="e.g. -" /></div>
+                  <div class="field" style="grid-column:1/-1"><label class="field-label" for="ad_svVendorComments">Comments / Remarks</label><textarea class="input" id="ad_svVendorComments" rows="2" placeholder="e.g. NOT CONFIRMED"></textarea></div>
+                </div>
+
+                <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+                  <button class="btn btn-primary btn-save-ad-section" type="button" style="font-size:11px;padding:4px 14px">Save Details</button>
+                  <span class="ad-section-save-status muted" style="font-size:11px"></span>
+                </div>
+              </div>
+
+              <div style="margin-top:14px;display:flex;gap:8px;align-items:center">
+                <button class="btn btn-primary" type="button" id="btnSaveAdditionalDetails">Save</button>
+                <span class="muted" id="adSaveStatus" style="font-size:12px"></span>
+              </div>
+            </div>
+
+
+          </div>
+        </section>
+          </div>
+        </section>
+
+        <section class="block" data-block="report" aria-label="Final report builder" hidden>
+          <header class="block-head">
+            <div>
+              <h2 class="block-title">Report Block</h2>
+              <p class="block-subtitle">Select module data to include in final report. Preview updates in real time so you can verify exactly what will be included.</p>
+            </div>
+            <div class="block-head-actions">
+              <label class="select">
+                <span class="sr-only">Select business module</span>
+                <select data-cross-target="business">
+                  <option value="gst">GST</option>
+                  <option value="mca">MCA</option>
+                  <option value="compliance">Compliance</option>
+                  <option value="pan">PAN Details</option>
+                  <option value="udyam">Udyam Details</option>
+                  <option value="itr">ITR</option>
+                  <option value="bank_statement">Bank Statement</option>
+                  <option value="financial">Financial</option>
+                  <option value="field_data">Field Data</option>
+                  <option value="business_summary">Business Summary</option>
+                  <option value="additional_details">Additional Details</option>
+                </select>
+              </label>
+              <button class="btn btn-secondary" type="button" data-cross-switch="case_overview">Go to Case Overview</button>
+              <button class="btn btn-secondary" type="button" data-cross-switch="business">Go to Business Block</button>
+              <button class="btn btn-secondary" type="button" data-cross-switch="personal">Go to Personal Block</button>
+            </div>
+          </header>
+
+          <div class="block-body">
+            <div class="module">
+              <header class="module-head">
+                <div>
+                  <h2 class="module-title">Final Report Builder</h2>
+                  <p class="module-subtitle">Only selected modules below will appear in the module-wise section of the final PDF report.</p>
+                </div>
+                <div class="module-head-actions">
+                  <span class="status-pill" data-report-selected-count>0 selected</span>
+                  <button class="btn btn-secondary" type="button" data-action="refresh-report-preview">Refresh Preview</button>
+                  <button class="btn btn-primary" type="button" data-action="generate-due-diligence-report">Generate Final Report PDF</button>
+                  <span class="run-estimate" data-report-estimate hidden>
+                    <span class="run-estimate-dot" aria-hidden="true"></span>
+                    <span data-report-estimate-text>Estimated completion in ~00:00</span>
+                  </span>
+                </div>
+              </header>
+
+              <div class="module-body">
+                <div class="panel">
+                  <div class="panel-title">Module Selection</div>
+                  <div class="panel-subtitle">Pick modules whose data should go to final report. Case Overview &amp; Business Entity appear as first pages; other modules form the module-wise section.</div>
+                  <div class="report-module-list" data-report-module-list></div>
+                  <pre data-report-preview-json style="display:none"></pre>
+                </div>
+
+                <div class="panel">
+                  <div class="panel-title">Cover, Signature &amp; Stamp</div>
+                  <div class="panel-subtitle">Upload custom signature and stamp images for the report. Defaults are used if not changed.</div>
+                  <div style="margin-bottom:12px">
+                    <label style="font-size:12px;font-weight:700;color:#334155;margin-bottom:4px;display:block">Prepared By</label>
+                    <input type="text" class="text-input" data-report-prepared-by placeholder="Enter name of person who prepared this report" style="width:100%;padding:8px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:13px" />
+                  </div>
+                  <div class="report-sign-wrap">
+                    <div class="report-sign-card">
+                      <div class="k">Signature</div>
+                      <img id="reportSignatureImg" src="assets/SIGN.jpeg" alt="Officer signature" class="report-sign-img" />
+                      <label class="btn btn-secondary" style="margin-top:8px;font-size:12px;cursor:pointer">
+                        Upload Signature
+                        <input type="file" accept="image/*" data-action="upload-signature" style="display:none" />
+                      </label>
+                      <button class="btn btn-secondary" type="button" data-action="reset-signature" style="margin-top:4px;font-size:11px">Reset Default</button>
+                    </div>
+                    <div class="report-sign-card">
+                      <div class="k">Stamp</div>
+                      <img id="reportStampImg" src="assets/stamp.png" alt="Company stamp" class="report-sign-img" />
+                      <label class="btn btn-secondary" style="margin-top:8px;font-size:12px;cursor:pointer">
+                        Upload Stamp
+                        <input type="file" accept="image/*" data-action="upload-stamp" style="display:none" />
+                      </label>
+                      <button class="btn btn-secondary" type="button" data-action="reset-stamp" style="margin-top:4px;font-size:11px">Reset Default</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div data-report-included-list style="display:none"></div>
+
+                <div class="panel">
+                  <div class="panel-title">Overall Observation / Conclusion</div>
+                  <div class="panel-subtitle">Enter or generate an overall observation that will appear as a dedicated page in the final report (after all modules &amp; personal block). Leave blank to skip.</div>
+                  <textarea class="notes" rows="6" placeholder="Overall observation — summary of all modules, key findings, recommendation…" data-report-overall-observation></textarea>
+                  <div style="margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                    <button class="btn btn-secondary" type="button" data-action="generate-overall-observation">Generate Overall Observation</button>
+                    <button class="btn btn-primary" type="button" data-action="save-overall-observation" style="background:#059669;font-weight:700">💾 Save to Report</button>
+                    <span class="muted" data-overall-obs-status></span>
+                  </div>
+                </div>
+
+                <!-- ═══ FINAL: Preview & Download ═══ -->
+                <div class="panel" style="border:2px solid var(--primary, #2563eb);background:linear-gradient(135deg,rgba(37,99,235,0.03),rgba(37,99,235,0.08));border-radius:12px">
+                  <div class="panel-title" style="font-size:16px;color:var(--primary,#2563eb)">📄 Final Report — Preview &amp; Download</div>
+                  <div class="panel-subtitle">Generate the complete PDF report. You can preview it in-browser before downloading.</div>
+
+                  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;align-items:center">
+                    <button class="btn btn-primary" type="button" data-action="preview-report-pdf" style="font-size:14px;padding:10px 24px;font-weight:700">
+                      🔍 Preview Report PDF
+                    </button>
+                    <button class="btn btn-primary" type="button" data-action="generate-due-diligence-report" style="font-size:14px;padding:10px 24px;font-weight:700;background:#059669">
+                      ⬇ Download Report PDF
+                    </button>
+                    <button class="btn btn-primary" type="button" data-action="print-report-pdf" style="font-size:14px;padding:10px 24px;font-weight:700;background:#7c3aed">
+                      🖨 Print Report PDF
+                    </button>
+                    <span class="run-estimate" data-report-estimate-bottom hidden>
+                      <span class="run-estimate-dot" aria-hidden="true"></span>
+                      <span data-report-estimate-text-bottom>Generating…</span>
+                    </span>
+                    <span class="muted" data-report-final-status></span>
+                  </div>
+
+                  <!-- In-browser PDF preview -->
+                  <div data-report-pdf-preview-wrap style="margin-top:16px;display:none">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                      <span style="font-weight:700;font-size:13px;color:var(--text)">Report Preview</span>
+                      <div style="display:flex;gap:8px">
+                        <button class="btn btn-secondary" type="button" data-action="download-previewed-pdf" style="font-size:12px">⬇ Download This PDF</button>
+                        <button class="btn btn-secondary" type="button" data-action="close-report-preview" style="font-size:12px">✕ Close Preview</button>
+                      </div>
+                    </div>
+                    <iframe data-report-pdf-iframe style="width:100%;height:700px;border:1px solid var(--border);border-radius:8px;background:#fff" title="Report PDF Preview"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="block" data-block="personal" aria-label="Personal information" hidden>
+          <header class="block-head">
+            <div>
+              <h2 class="block-title">Personal Information Block</h2>
+              <p class="block-subtitle">This section will contain modules for business-related people (directors / proprietors / key contacts).</p>
+            </div>
+            <div class="block-head-actions">
+              <label class="select">
+                <span class="sr-only">Select business module</span>
+                <select data-cross-target="business">
+                  <option value="gst">GST</option>
+                  <option value="mca">MCA</option>
+                  <option value="compliance">Compliance</option>
+                  <option value="pan">PAN Details</option>
+                  <option value="udyam">Udyam Details</option>
+                  <option value="itr">ITR</option>
+                  <option value="bank_statement">Bank Statement</option>
+                  <option value="financial">Financial</option>
+                  <option value="additional_details">Additional Details</option>
+                  <option value="report">Report Block</option>
+                </select>
+              </label>
+              <button class="btn btn-secondary" type="button" data-cross-switch="case_overview">Go to Case Overview</button>
+              <button class="btn btn-secondary" type="button" data-cross-switch="business">Go to Business Block</button>
+              <button class="btn btn-secondary" type="button" data-cross-switch="report">Go to Report Block</button>
+            </div>
+          </header>
+          <div class="block-body" data-personal-grid>
+              <section class="module" id="module-person-applicant" data-personal-section="applicant">
+                <header class="module-head">
+                  <div>
+                    <h2 class="module-title">Applicant Details</h2>
+                    <p class="module-subtitle">Primary applicant + designated persons (promoters, co-applicants, guarantors, etc.)</p>
+                  </div>
+                  <div class="module-head-actions">
+                    <label class="module-complete-toggle" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted,#64748b);cursor:pointer;user-select:none;margin-right:8px">
+                      <input type="checkbox" data-personal-complete-toggle="applicant" style="accent-color:var(--completed,#10b981);width:16px;height:16px;cursor:pointer" />
+                      Module Complete
+                    </label>
+                    <button class="btn btn-secondary" type="button" data-dp-add="applicant">+ Add Designated Person</button>
+                    <button class="btn btn-primary" type="button" data-action="save-personal-module" data-personal-save="applicant">💾 Save Applicant</button>
+                  </div>
+                </header>
+
+                <div class="module-body">
+                  <div class="panel" data-primary-panel>
+                    <div class="panel-title">Primary Applicant</div>
+                    <div class="form-grid">
+                      <div class="field">
+                        <label for="piApplicantLabel">Role / Title</label>
+                        <input id="piApplicantLabel" class="input" type="text" placeholder="e.g., Primary Applicant, Promoter, Proprietor" data-pi-field="applicant.primary.primary_label" />
+                        <div class="hint">This label will appear in the report (default: Primary Applicant)</div>
+                      </div>
+                      <div class="field">
+                        <label for="piApplicantName">Full Name</label>
+                        <input id="piApplicantName" class="input" type="text" placeholder="e.g., Rahul Sharma" data-pi-field="applicant.primary.name" />
+                      </div>
+                      <div class="field">
+                        <label for="piApplicantMobile">Mobile</label>
+                        <input id="piApplicantMobile" class="input" type="text" placeholder="e.g., 9876543210" data-pi-field="applicant.primary.mobile" />
+                      </div>
+                      <div class="field">
+                        <label for="piApplicantEmail">Email</label>
+                        <input id="piApplicantEmail" class="input" type="text" placeholder="e.g., rahul@email.com" data-pi-field="applicant.primary.email" />
+                      </div>
+                      <div class="field full">
+                        <label for="piApplicantAddress">Address</label>
+                        <textarea id="piApplicantAddress" class="notes" rows="3" placeholder="Full address" data-pi-field="applicant.primary.address"></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="panel">
+                    <div class="repeat-head">
+                      <div class="repeat-title">Designated Persons</div>
+                      <div class="repeat-actions">
+                        <button class="btn btn-secondary" type="button" data-dp-add="applicant">+ Add Designated Person</button>
+                      </div>
+                    </div>
+                    <div class="dp-list" data-dp-list="applicant"></div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="module" id="module-person-pan" data-personal-section="pan">
+                <header class="module-head">
+                  <div>
+                    <h2 class="module-title">PAN Module</h2>
+                    <p class="module-subtitle">Entry form + live preview for applicant PAN details</p>
+                  </div>
+                  <div class="module-head-actions">
+                    <label class="module-complete-toggle" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted,#64748b);cursor:pointer;user-select:none;margin-right:8px">
+                      <input type="checkbox" data-personal-complete-toggle="pan" style="accent-color:var(--completed,#10b981);width:16px;height:16px;cursor:pointer" />
+                      Module Complete
+                    </label>
+                    <button class="btn btn-secondary" type="button" data-dp-add="pan">+ Add Designated Person</button>
+                    <button class="btn btn-primary" type="button" data-action="save-personal-module" data-personal-save="pan">💾 Save PAN</button>
+                  </div>
+                </header>
+
+                <div class="module-body">
+                  <div class="panel">
+                    <div class="panel-title">Entry Form</div>
+                    <div class="form-grid">
+                      <div class="field">
+                        <label for="piPanNumber">PAN Number</label>
+                        <input id="piPanNumber" class="input" type="text" placeholder="e.g., AVOPA4637N" data-pi-field="pan.primary.pan_number" />
+                      </div>
+
+                      <div class="field">
+                        <label for="piPanName">Name</label>
+                        <input id="piPanName" class="input" type="text" placeholder="e.g., ALUPAC VENTURES PRIVATE LIMITED" data-pi-field="pan.primary.name" />
+                      </div>
+
+                      <div class="field">
+                        <label for="piPanIndianCitizen">Indian Citizen</label>
+                        <select id="piPanIndianCitizen" class="input" data-pi-field="pan.primary.indian_citizen">
+                          <option value="">Select</option>
+                          <option value="YES">YES</option>
+                          <option value="NO">NO</option>
+                        </select>
+                      </div>
+
+                      <div class="field">
+                        <label for="piPanStatus">Status</label>
+                        <select id="piPanStatus" class="input" data-pi-field="pan.primary.status">
+                          <option value="">Select</option>
+                          <option value="ACTIVE">ACTIVE</option>
+                          <option value="INACTIVE">INACTIVE</option>
+                        </select>
+                      </div>
+
+                      <div class="field">
+                        <label for="piPanDob">Date of Birth</label>
+                        <input id="piPanDob" class="input" type="date" placeholder="dd/mm/yyyy" data-pi-field="pan.primary.date_of_birth" />
+                      </div>
+
+                      <div class="field">
+                        <label for="piPanMobile">Mobile Number as per PAN</label>
+                        <input id="piPanMobile" class="input" type="text" placeholder="e.g., 7869962575" data-pi-field="pan.primary.mobile_number" />
+                      </div>
+
+                      <div class="field full">
+                        <label for="piPanAddress">Address as per PAN</label>
+                        <textarea id="piPanAddress" class="notes" rows="3" placeholder="Full address" data-pi-field="pan.primary.address"></textarea>
+                      </div>
+
+                      <div class="field full">
+                        <label for="piPanVerifiedDoc">PAN Image 1</label>
+                        <input id="piPanVerifiedDoc" class="input" type="file" accept="image/*,application/pdf,.pdf" data-pi-upload="pan.primary.verified_document" data-pi-upload-module="pan" />
+                        <div class="hint">Upload first PAN image or PDF (e.g., front side).</div>
+                      </div>
+
+                      <div class="field full">
+                        <label for="piPanVerifiedDoc2">PAN Image 2</label>
+                        <input id="piPanVerifiedDoc2" class="input" type="file" accept="image/*,application/pdf,.pdf" data-pi-upload="pan.primary.verified_document_2" data-pi-upload-module="pan" />
+                        <div class="hint">Upload second PAN image or PDF (e.g., back side).</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="panel">
+                    <div class="panel-title">Preview</div>
+                    <div class="pi-preview">
+                      <table class="pi-table" aria-label="Personal PAN details preview">
+                        <tbody>
+                          <tr>
+                            <th>PAN Number</th>
+                            <td data-pi-out="pan.pan_number">—</td>
+                            <td class="pi-doc-cell" rowspan="9">
+                              <div class="pi-doc-wrap">
+                                <div class="pi-doc-block">
+                                  <div class="pi-doc-label">PAN Image 1</div>
+                                  <img class="pi-doc-image" data-pi-doc-image="pan" alt="PAN document 1" />
+                                  <iframe class="pi-doc-pdf" data-pi-doc-pdf="pan" title="PAN PDF preview 1"></iframe>
+                                  <div class="pi-doc-empty" data-pi-doc-empty="pan">No PAN image 1 uploaded</div>
+                                  <a class="btn btn-secondary" data-pi-doc-link="pan" target="_blank" rel="noopener" style="margin-top:10px;display:none;">Open attachment</a>
+                                </div>
+                                <div class="pi-doc-block" style="margin-top:12px">
+                                  <div class="pi-doc-label">PAN Image 2</div>
+                                  <img class="pi-doc-image" data-pi-doc-image="pan_2" alt="PAN document 2" />
+                                  <iframe class="pi-doc-pdf" data-pi-doc-pdf="pan_2" title="PAN PDF preview 2"></iframe>
+                                  <div class="pi-doc-empty" data-pi-doc-empty="pan_2">No PAN image 2 uploaded</div>
+                                  <a class="btn btn-secondary" data-pi-doc-link="pan_2" target="_blank" rel="noopener" style="margin-top:10px;display:none;">Open attachment</a>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr><th>Name</th><td data-pi-out="pan.name">—</td></tr>
+                          <tr><th>Indian Citizen</th><td data-pi-out="pan.indian_citizen">—</td></tr>
+                          <tr><th>Status</th><td data-pi-out="pan.status">—</td></tr>
+                          <tr><th>Date of Birth</th><td data-pi-out="pan.date_of_birth">—</td></tr>
+                          <tr><th>Address as per PAN</th><td data-pi-out="pan.address">—</td></tr>
+                          <tr><th>PAN Image 1</th><td data-pi-out="pan.verified_document_label">—</td></tr>
+                          <tr><th>PAN Image 2</th><td data-pi-out="pan.verified_document_2_label">—</td></tr>
+                          <tr><th>Mobile Number as per PAN</th><td data-pi-out="pan.mobile_number">—</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="panel">
+                    <div class="repeat-head">
+                      <div class="repeat-title">Designated Persons (PAN)</div>
+                      <div class="repeat-actions">
+                        <button class="btn btn-secondary" type="button" data-dp-add="pan">+ Add Designated Person</button>
+                      </div>
+                    </div>
+                    <div class="dp-list" data-dp-list="pan"></div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="module" id="module-person-aadhaar" data-personal-section="aadhaar">
+                <header class="module-head">
+                  <div>
+                    <h2 class="module-title">Aadhaar Module</h2>
+                    <p class="module-subtitle">Aadhaar details + verified document upload</p>
+                  </div>
+                  <div class="module-head-actions">
+                    <label class="module-complete-toggle" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted,#64748b);cursor:pointer;user-select:none;margin-right:8px">
+                      <input type="checkbox" data-personal-complete-toggle="aadhaar" style="accent-color:var(--completed,#10b981);width:16px;height:16px;cursor:pointer" />
+                      Module Complete
+                    </label>
+                    <button class="btn btn-secondary" type="button" data-dp-add="aadhaar">+ Add Designated Person</button>
+                    <button class="btn btn-primary" type="button" data-action="save-personal-module" data-personal-save="aadhaar">💾 Save Aadhaar</button>
+                  </div>
+                </header>
+
+                <div class="module-body">
+                  <div class="panel">
+                    <div class="panel-title">Applicant Aadhaar</div>
+                    <div class="form-grid">
+                      <div class="field">
+                        <label for="piAadhaarApplicantName">Name</label>
+                        <input id="piAadhaarApplicantName" class="input" type="text" placeholder="e.g., Rahul Sharma" data-pi-field="aadhaar.primary.name" />
+                      </div>
+                      <div class="field">
+                        <label for="piAadhaarApplicantNumber">Aadhaar Number</label>
+                        <input id="piAadhaarApplicantNumber" class="input" type="text" placeholder="e.g., 1234 5678 9012" data-pi-field="aadhaar.primary.aadhaar_number" />
+                      </div>
+                      <div class="field">
+                        <label for="piAadhaarApplicantStatus">Status</label>
+                        <select id="piAadhaarApplicantStatus" class="input" data-pi-field="aadhaar.primary.status"><option value="">-- Select --</option><option value="ACTIVE">ACTIVE</option><option value="INACTIVE">INACTIVE</option></select>
+                      </div>
+                      <div class="field full">
+                        <label for="piAadhaarVerifiedDoc">Verified Aadhaar Image/PDF</label>
+                        <input id="piAadhaarVerifiedDoc" class="input" type="file" accept="image/*,application/pdf,.pdf" data-pi-upload="aadhaar.primary.verified_document" data-pi-upload-module="aadhaar" />
+                        <div class="hint">Upload verified Aadhaar image or PDF. This will be attached with final report data.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="panel">
+                    <div class="panel-title">Preview</div>
+                    <div class="pi-preview">
+                      <table class="pi-table" aria-label="Personal Aadhaar details preview">
+                        <tbody>
+                          <tr>
+                            <th>Name</th>
+                            <td data-pi-out="aadhaar.name">—</td>
+                            <td class="pi-doc-cell" rowspan="4">
+                              <div class="pi-doc-wrap">
+                                <div class="pi-doc-block">
+                                  <div class="pi-doc-label">Verified Aadhaar</div>
+                                  <img class="pi-doc-image" data-pi-doc-image="aadhaar" alt="Verified Aadhaar document" />
+                                  <iframe class="pi-doc-pdf" data-pi-doc-pdf="aadhaar" title="Verified Aadhaar PDF preview"></iframe>
+                                  <div class="pi-doc-empty" data-pi-doc-empty="aadhaar">No verified Aadhaar document uploaded</div>
+                                  <a class="btn btn-secondary" data-pi-doc-link="aadhaar" target="_blank" rel="noopener" style="margin-top:10px;display:none;">Open attachment</a>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr><th>Aadhaar Number</th><td data-pi-out="aadhaar.aadhaar_number">—</td></tr>
+                          <tr><th>Status</th><td data-pi-out="aadhaar.status">—</td></tr>
+                          <tr><th>Verified Aadhaar Image/PDF</th><td data-pi-out="aadhaar.verified_document_label">—</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="panel">
+                    <div class="repeat-head">
+                      <div class="repeat-title">Designated Persons (Aadhaar)</div>
+                      <div class="repeat-actions">
+                        <button class="btn btn-secondary" type="button" data-dp-add="aadhaar">+ Add Designated Person</button>
+                      </div>
+                    </div>
+                    <div class="dp-list" data-dp-list="aadhaar"></div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- ── Resident Verification Module ── -->
+              <section class="module" id="module-person-resident_verification" data-personal-section="resident_verification">
+                <header class="module-head">
+                  <div>
+                    <h2 class="module-title">Resident Verification</h2>
+                    <p class="module-subtitle">Complete field verification of applicant's residence</p>
+                  </div>
+                  <div class="module-head-actions">
+                    <label class="module-complete-toggle" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted,#64748b);cursor:pointer;user-select:none;margin-right:8px">
+                      <input type="checkbox" data-personal-complete-toggle="resident_verification" style="accent-color:var(--completed,#10b981);width:16px;height:16px;cursor:pointer" />
+                      Module Complete
+                    </label>
+                    <button class="btn btn-secondary" type="button" data-dp-add="resident_verification">+ Add Designated Person</button>
+                    <button class="btn btn-primary" type="button" data-action="save-personal-module" data-personal-save="resident_verification">💾 Save RV</button>
+                  </div>
+                </header>
+
+                <div class="module-body">
+
+                  <!-- ═══ SECTION 1: Personal Details (Loan Application) — Promoter ═══ -->
+                  <div class="panel">
+                    <div class="panel-title">Personal Details (As given in the Loan Application)</div>
+                    <div class="panel-subtitle">Promoter / Applicant details as per original loan application.</div>
+                    <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px">
+                      <div class="field" style="grid-column:span 2">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Promoter / Applicant Name</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.promoter_name" placeholder="e.g., HARDIK HIMANSHU PANDYA" />
+                      </div>
+                      <div class="field" style="grid-column:span 2">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Permanent Address</label>
+                        <textarea class="notes" rows="3" style="width:100%" data-pi-field="resident_verification.primary.permanent_address" placeholder="e.g., A-401/402 VIVANTA GREEN OPP NITI PARK NR SOHAM BANGLOW…"></textarea>
+                      </div>
+                      <div class="field" style="grid-column:span 2">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Present Address (If other than the Permanent)</label>
+                        <textarea class="notes" rows="2" style="width:100%" data-pi-field="resident_verification.primary.present_address" placeholder="e.g., NOT CONFIRM or enter full present address"></textarea>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Phone</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.phone" placeholder="e.g., NA" />
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Mobile</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.mobile" placeholder="e.g., 9782362458" />
+                      </div>
+                      <div class="field" style="grid-column:span 2">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Email</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.email" placeholder="e.g., applicant@email.com or NA" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ═══ SECTION 2: Personal Details — Applicant Verification ═══ -->
+                  <div class="panel">
+                    <div class="panel-title">Personal Details — Applicant Verification</div>
+                    <div class="panel-subtitle">Details verified during field visit.</div>
+                    <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px">
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Residing at the address given in the application?</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.residing_at_address">
+                          <option value="">— Select —</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Ownership of the present house</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.ownership">
+                          <option value="">— Select —</option>
+                          <option value="Own">Own</option>
+                          <option value="Rented">Rented</option>
+                          <option value="Ancestral">Ancestral</option>
+                        </select>
+                      </div>
+                      <div class="field" style="grid-column:span 2">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Present address (only if other than as given in the application)</label>
+                        <textarea class="notes" rows="2" style="width:100%" data-pi-field="resident_verification.primary.present_address_verification" placeholder="NA"></textarea>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Since when residing in the present address</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.residing_since" placeholder="e.g., SINCE BIRTH, 5 YEARS" />
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Number of Family Members / Persons staying</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.family_members" placeholder="e.g., 4 or NOT CONFIRM" />
+                      </div>
+                      <div class="field" style="grid-column:span 2">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Special remarks / findings, if any</label>
+                        <textarea class="notes" rows="2" style="width:100%" data-pi-field="resident_verification.primary.special_remarks" placeholder="NA"></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ═══ SECTION 3: Locality ═══ -->
+                  <div class="panel">
+                    <div class="panel-title">Locality</div>
+                    <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px">
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Landmark</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.landmark" placeholder="e.g., Near Metro Station or NA" />
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Locality Type</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.locality_type">
+                          <option value="">— Select —</option>
+                          <option value="Residential">Residential</option>
+                          <option value="Trouble area">Trouble area</option>
+                          <option value="Chawl">Chawl</option>
+                          <option value="Village area">Village area</option>
+                          <option value="Community dominated">Community dominated</option>
+                          <option value="Industrial area">Industrial area</option>
+                          <option value="Slum">Slum</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ═══ SECTION 4: Residence Details ═══ -->
+                  <div class="panel">
+                    <div class="panel-title">Residence Details</div>
+                    <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px">
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Name of Society Board</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.society_board">
+                          <option value="">— Select —</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Name Plate sighted (In applicant Name)</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.name_plate_sighted">
+                          <option value="">— Select —</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Type of Residence</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.residence_type">
+                          <option value="">— Select —</option>
+                          <option value="House">House</option>
+                          <option value="Apartment">Apartment</option>
+                          <option value="Flat">Flat</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">No. of Storied</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.no_of_storied" placeholder="e.g., G+4TH" />
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Lift</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.lift">
+                          <option value="">— Select —</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">External Appearance of House / Building</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.external_appearance">
+                          <option value="">— Select —</option>
+                          <option value="Good">Good</option>
+                          <option value="Average">Average</option>
+                          <option value="Poor">Poor</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Construction of House</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.construction_type">
+                          <option value="">— Select —</option>
+                          <option value="Pakka">Pakka</option>
+                          <option value="Kaccha">Kaccha</option>
+                          <option value="Semi Pakka">Semi Pakka</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Internal appearance of the house</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.internal_appearance">
+                          <option value="">— Select —</option>
+                          <option value="Well maintained">Well maintained</option>
+                          <option value="Painted">Painted</option>
+                          <option value="Poorly maintained">Poorly maintained</option>
+                          <option value="NOT CONFIRM">NOT CONFIRM</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Residence seen internally by verifier?</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.residence_seen_internally">
+                          <option value="">— Select —</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Area of Residence</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.area_of_residence">
+                          <option value="">— Select —</option>
+                          <option value="High Income">High Income</option>
+                          <option value="Middle Income">Middle Income</option>
+                          <option value="Low Income">Low Income</option>
+                        </select>
+                      </div>
+                      <div class="field" style="grid-column:span 2">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Residence confirmed with Secretary / Treasurer / President of Society?</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.residence_confirmed_society">
+                          <option value="">— Select —</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ═══ SECTION 5: Assets Seen ═══ -->
+                  <div class="panel">
+                    <div class="panel-title">Assets Seen</div>
+                    <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px">
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Television</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.asset_television">
+                          <option value="">— Select —</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Refrigerator</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.asset_refrigerator">
+                          <option value="">— Select —</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Air Conditioner</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.asset_ac">
+                          <option value="">— Select —</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Music System</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.asset_music_system">
+                          <option value="">— Select —</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ═══ SECTION 6: Vehicles ═══ -->
+                  <div class="panel">
+                    <div class="panel-title">Vehicles</div>
+                    <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:10px">
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">4 Wheelers</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.vehicle_4wheeler">
+                          <option value="">— Select —</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Two Wheelers</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.vehicle_2wheeler">
+                          <option value="">— Select —</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Others</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.vehicle_others">
+                          <option value="">— Select —</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div class="field" style="grid-column:span 3">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Make and Type</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.vehicle_make_type" placeholder="e.g., Maruti Swift, Honda Activa or NA" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ═══ SECTION 7: Document Verified for Address Confirmation ═══ -->
+                  <div class="panel">
+                    <div class="panel-title">Document Verified for Confirmation of Address</div>
+                    <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:10px">
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Telephone Bill</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.doc_telephone_bill">
+                          <option value="No">No</option>
+                          <option value="Yes">Yes</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Electricity Bill</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.doc_electricity_bill">
+                          <option value="No">No</option>
+                          <option value="Yes">Yes</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Society Bill</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.doc_society_bill">
+                          <option value="No">No</option>
+                          <option value="Yes">Yes</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Tax Receipt</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.doc_tax_receipt">
+                          <option value="No">No</option>
+                          <option value="Yes">Yes</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Aadhaar Card</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.doc_aadhaar_card">
+                          <option value="No">No</option>
+                          <option value="Yes">Yes</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Voter Card</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.doc_voter_card">
+                          <option value="No">No</option>
+                          <option value="Yes">Yes</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Title Deeds</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.doc_title_deeds">
+                          <option value="No">No</option>
+                          <option value="Yes">Yes</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Bank Passbook</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.doc_bank_passbook">
+                          <option value="No">No</option>
+                          <option value="Yes">Yes</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Any Other (Specify)</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.doc_other" placeholder="e.g., Passport, Driving Licence or NA" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ═══ SECTION 8: Property Details (Rent / Ownership) ═══ -->
+                  <div class="panel">
+                    <div class="panel-title">Property Details</div>
+                    <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px">
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Approximate Rent in the area (If Property owned)</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.approx_rent" placeholder="e.g., ₹15,000 or NA" />
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Approximate Value (If Property owned)</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.approx_value" placeholder="e.g., ₹50,00,000 or NA" />
+                      </div>
+                      <div class="field" style="grid-column:span 2">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">If House/Flat is leased/rented out and tenant is residing</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.tenant_residing" placeholder="NA" />
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Name of the Tenant</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.tenant_name" placeholder="NA" />
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Since when tenant is staying</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.tenant_since" placeholder="NA" />
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Rent</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.tenant_rent" placeholder="NA" />
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Documents Verified</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.tenant_docs_verified">
+                          <option value="">— Select —</option>
+                          <option value="Lease agreement">Lease agreement</option>
+                          <option value="Rent payment receipt">Rent payment receipt</option>
+                          <option value="Any other">Any other</option>
+                          <option value="NA">NA</option>
+                        </select>
+                      </div>
+                      <div class="field" style="grid-column:span 2">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Whether the Tenant confirms that the Applicant is the owner of the house?</label>
+                        <select class="input" style="width:100%" data-pi-field="resident_verification.primary.tenant_confirms_owner">
+                          <option value="">— Select —</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                          <option value="NA">NA</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ═══ SECTION 9: Manual Summary ═══ -->
+                  <div class="panel">
+                    <div class="panel-title">Manual Summary</div>
+                    <div class="panel-subtitle">Write a manual summary for the resident verification. This will appear in the final report.</div>
+                    <div style="margin-top:10px">
+                      <div class="field" style="grid-column:span 2">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Resident Verification Summary</label>
+                        <textarea class="notes" rows="5" style="width:100%;resize:vertical;font-size:12px;line-height:1.65" data-pi-field="resident_verification.primary.manual_summary" placeholder="Enter a summary of the resident verification findings, observations, and conclusions…"></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ═══ SECTION 10: Neighbour Feedback ═══ -->
+                  <div class="panel">
+                    <div class="panel-title">Neighbour Feedback</div>
+                    <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px">
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Reference [1] Name</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.neighbour1_name" placeholder="NA" />
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Reference [1] Phone</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.neighbour1_phone" placeholder="NA" />
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Reference [2] Name</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.neighbour2_name" placeholder="NA" />
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Reference [2] Phone</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.neighbour2_phone" placeholder="NA" />
+                      </div>
+                      <div class="field" style="grid-column:span 2">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Findings from the enquiry, if any, made with neighbours</label>
+                        <textarea class="notes" rows="2" style="width:100%" data-pi-field="resident_verification.primary.neighbour_findings" placeholder="NA"></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ═══ SECTION 11: Verification Images ═══ -->
+                  <div class="panel">
+                    <div class="panel-title">Verification Images (Address Proof / House Photos)</div>
+                    <div class="panel-subtitle">Add labelled images from residence verification. Each image will appear in the final report.</div>
+                    <div style="display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin-top:10px">
+                      <label style="flex:1;min-width:180px">
+                        <span class="muted" style="font-size:12px;display:block;margin-bottom:4px">Image Label (optional for bulk)</span>
+                        <input type="text" data-rv-img-label placeholder="e.g. House Front, Name Plate, Street View…" style="width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;background:var(--surface);color:var(--text)" />
+                      </label>
+                      <label style="flex:0 0 auto">
+                        <span class="muted" style="font-size:12px;display:block;margin-bottom:4px">Image Files (multi-select)</span>
+                        <input type="file" data-rv-img-file accept="image/*" multiple style="font-size:13px" />
+                      </label>
+                      <button class="btn btn-secondary" type="button" data-action="add-rv-image" style="height:36px">+ Add Images</button>
+                    </div>
+                    <div data-rv-dropzone style="margin-top:10px;border:2px dashed var(--border);border-radius:10px;padding:28px 16px;text-align:center;color:var(--muted);font-size:13px;cursor:pointer;transition:border-color 0.2s,background 0.2s">
+                      📷 Drag &amp; drop images here or click to browse
+                      <input type="file" data-rv-dropzone-input accept="image/*" multiple style="display:none" />
+                    </div>
+                    <div class="muted" style="font-size:11px;margin-top:6px">💡 Tip: Select multiple images at once. Drag &amp; drop cards below to reorder.</div>
+                    <div data-rv-img-list style="margin-top:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px"></div>
+                    <div data-rv-img-empty class="muted" style="margin-top:10px;font-size:13px">No verification images uploaded yet.</div>
+                    <div class="panel-actions" style="margin-top:10px">
+                      <span class="muted" style="font-size:12px">Total images: <strong data-rv-img-count>0</strong></span>
+                      <button class="btn btn-secondary" type="button" data-action="save-rv-images" style="margin-left:auto">Save to Server</button>
+                    </div>
+                    <div class="hint" style="font-size:11px;color:var(--muted);margin-top:4px">Upload labelled photos of the residence, address board, or address proof documents.</div>
+                  </div>
+
+                  <!-- ═══ Preview ═══ -->
+                  <div class="panel">
+                    <div class="panel-title">Preview</div>
+                    <div class="pi-preview">
+                      <table class="pi-table" aria-label="Resident verification preview">
+                        <tbody>
+                          <tr><th colspan="2" style="background:var(--surface);font-size:13px;color:var(--accent)">Personal Details (Loan Application)</th></tr>
+                          <tr><th>Promoter Name</th><td data-pi-out="resident_verification.promoter_name">—</td></tr>
+                          <tr><th>Permanent Address</th><td data-pi-out="resident_verification.permanent_address">—</td></tr>
+                          <tr><th>Present Address</th><td data-pi-out="resident_verification.present_address">—</td></tr>
+                          <tr><th>Phone</th><td data-pi-out="resident_verification.phone">—</td></tr>
+                          <tr><th>Mobile</th><td data-pi-out="resident_verification.mobile">—</td></tr>
+                          <tr><th>Email</th><td data-pi-out="resident_verification.email">—</td></tr>
+                          <tr><th colspan="2" style="background:var(--surface);font-size:13px;color:var(--accent)">Applicant Verification</th></tr>
+                          <tr><th>Residing at address?</th><td data-pi-out="resident_verification.residing_at_address">—</td></tr>
+                          <tr><th>Ownership</th><td data-pi-out="resident_verification.ownership">—</td></tr>
+                          <tr><th>Residing Since</th><td data-pi-out="resident_verification.residing_since">—</td></tr>
+                          <tr><th>Family Members</th><td data-pi-out="resident_verification.family_members">—</td></tr>
+                          <tr><th>Special Remarks</th><td data-pi-out="resident_verification.special_remarks">—</td></tr>
+                          <tr><th colspan="2" style="background:var(--surface);font-size:13px;color:var(--accent)">Locality & Residence</th></tr>
+                          <tr><th>Landmark</th><td data-pi-out="resident_verification.landmark">—</td></tr>
+                          <tr><th>Locality Type</th><td data-pi-out="resident_verification.locality_type">—</td></tr>
+                          <tr><th>Residence Type</th><td data-pi-out="resident_verification.residence_type">—</td></tr>
+                          <tr><th>Construction</th><td data-pi-out="resident_verification.construction_type">—</td></tr>
+                          <tr><th>External Appearance</th><td data-pi-out="resident_verification.external_appearance">—</td></tr>
+                          <tr><th>Area of Residence</th><td data-pi-out="resident_verification.area_of_residence">—</td></tr>
+                          <tr><th colspan="2" style="background:var(--surface);font-size:13px;color:var(--accent)">Neighbour Feedback</th></tr>
+                          <tr><th>Ref [1]</th><td data-pi-out="resident_verification.neighbour1_name">—</td></tr>
+                          <tr><th>Ref [2]</th><td data-pi-out="resident_verification.neighbour2_name">—</td></tr>
+                          <tr><th>Findings</th><td data-pi-out="resident_verification.neighbour_findings">—</td></tr>
+                          <tr><th colspan="2" style="background:var(--surface);font-size:13px;color:var(--accent)">Summary</th></tr>
+                          <tr><th>Manual Summary</th><td data-pi-out="resident_verification.manual_summary" style="white-space:pre-wrap">—</td></tr>
+                          <tr><th>Verification Images</th><td data-rv-preview-images><span class="muted">No images uploaded</span></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="panel">
+                    <div class="repeat-head">
+                      <div class="repeat-title">Designated Persons (Resident Verification)</div>
+                      <div class="repeat-actions">
+                        <button class="btn btn-secondary" type="button" data-dp-add="resident_verification">+ Add Designated Person</button>
+                      </div>
+                    </div>
+                    <div class="dp-list" data-dp-list="resident_verification"></div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- ── Personal ITR Module ── -->
+              <section class="module" id="module-person-personal_itr" data-personal-section="personal_itr">
+                <header class="module-head">
+                  <div>
+                    <h2 class="module-title">Personal ITR</h2>
+                    <p class="module-subtitle">Income Tax Return details for applicant &amp; designated persons (synced from Applicant module)</p>
+                  </div>
+                  <div class="module-head-actions">
+                    <label class="module-complete-toggle" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted,#64748b);cursor:pointer;user-select:none;margin-right:8px">
+                      <input type="checkbox" data-personal-complete-toggle="personal_itr" style="accent-color:var(--completed,#10b981);width:16px;height:16px;cursor:pointer" />
+                      Module Complete
+                    </label>
+                    <button class="btn btn-primary" type="button" data-action="save-personal-module" data-personal-save="personal_itr">💾 Save Personal ITR</button>
+                  </div>
+                </header>
+
+                <div class="module-body">
+                  <!-- Person selector -->
+                  <div class="panel">
+                    <div class="panel-title">Select Person</div>
+                    <div class="form-grid">
+                      <div class="field full">
+                        <label for="pitrPersonSelect">Person (Applicant / Designated Person)</label>
+                        <select id="pitrPersonSelect" class="input" data-pitr-person-select>
+                          <option value="primary">Primary Applicant</option>
+                        </select>
+                        <div class="hint">Persons are synced from the Applicant module. Select a person to add/view their ITR entries.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ITR Entry Form -->
+                  <div class="panel" data-pitr-form-panel>
+                    <div class="panel-title">ITR Entry Form</div>
+                    <div class="form-grid">
+                      <div class="field">
+                        <label for="pitrAy">Assessment Year</label>
+                        <select id="pitrAy" class="input" data-pitr-input="assessment_year" required>
+                          <option value="">Select</option>
+                        </select>
+                        <div class="hint">Select Assessment Year (current to previous years).</div>
+                      </div>
+
+                      <div class="field">
+                        <label for="pitrWard">Ward</label>
+                        <input id="pitrWard" class="input" type="text" placeholder="e.g., E-FILLING" data-pitr-input="ward" />
+                      </div>
+
+                      <div class="field">
+                        <label for="pitrReturnFiledOn">Return filed on</label>
+                        <input id="pitrReturnFiledOn" class="input" type="date" data-pitr-input="return_filed_on" />
+                      </div>
+
+                      <div class="field">
+                        <label for="pitrTotalIncome">Total Income (as per return filed)</label>
+                        <input id="pitrTotalIncome" class="input" type="text" placeholder="e.g., 0" data-pitr-input="total_income" />
+                      </div>
+
+                      <div class="field">
+                        <label for="pitrTaxPaid">Tax Paid on Total Income (as per return filed)</label>
+                        <input id="pitrTaxPaid" class="input" type="text" placeholder="e.g., 89,813" data-pitr-input="tax_paid" />
+                      </div>
+
+                      <div class="field full">
+                        <label for="pitrAck">Acknowledgement No.</label>
+                        <input id="pitrAck" class="input" type="text" placeholder="e.g., 742408801211022" data-pitr-input="acknowledgement_no" />
+                      </div>
+                    </div>
+
+                    <div class="quick-actions" style="margin-top:12px">
+                      <button class="btn btn-secondary" type="button" data-action="save-pitr">Save ITR Entry</button>
+                      <button class="btn btn-primary" type="button" data-action="add-pitr-year" style="background:#059669">+ Add &amp; Next Year</button>
+                    </div>
+                  </div>
+
+                  <!-- Preview Table -->
+                  <div class="panel" data-pitr-preview-panel>
+                    <div class="panel-title">ITR Preview (Selected Person)</div>
+                    <div class="itr-preview">
+                      <table class="itr-table" aria-label="Personal ITR preview table">
+                        <thead>
+                          <tr>
+                            <th>Assessment Year</th>
+                            <th>Ward</th>
+                            <th>Return filed on</th>
+                            <th>Total Income</th>
+                            <th>Tax Paid</th>
+                            <th>Acknowledgement No.</th>
+                            <th style="width:90px;text-align:center">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody data-pitr-rows>
+                          <tr data-pitr-empty>
+                            <td colspan="7" class="muted">No ITR entries saved yet for this person.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </section>
+          </div>
+        </section>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="statusbar" role="contentinfo" aria-label="Status bar">
+    <div class="sb-left">
+      <span class="sb-item"><span class="sb-ic" aria-hidden="true">●</span> Case: <span class="sb-val" data-bind="caseId">—</span></span>
+      <span class="sb-sep" aria-hidden="true">|</span>
+      <span class="sb-item">Business: <span class="sb-val" data-bind="businessName">—</span></span>
+    </div>
+    <div class="sb-right">
+      <span class="sb-item"><span class="sb-ic" aria-hidden="true">⟲</span> Updated: <span class="sb-val" data-bind="lastUpdated">—</span></span>
+      <span class="sb-sep" aria-hidden="true">|</span>
+      <span class="sb-item"><span class="sb-ic" aria-hidden="true">⚑</span> Status: <span class="sb-pill" data-bind="overallStatus" data-status="draft">Draft</span></span>
+      <span class="sb-sep" aria-hidden="true">|</span>
+      <span class="sb-item"><span class="sb-ic" aria-hidden="true">▰</span> Progress: <span class="sb-val" data-bind="overallProgress">0%</span></span>
+    </div>
+  </div>
+
+  <script src="assets/case-workspace.js?v=20260302_fix7"></script>
+</body>
+</html>

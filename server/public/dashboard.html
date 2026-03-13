@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>CrediVerify 360 — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/dashboard.css?v=20260228_rv2" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="app">
+    <!-- Left sidebar (Odoo-style) -->
+    <aside class="sidenav" aria-label="Primary navigation">
+      <div class="sidenav-brand">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">CV</div>
+          <div class="brand-text">
+            <div class="brand-title">CrediVerify 360</div>
+            <div class="brand-subtitle">Case Management</div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidenav-nav">
+        <a class="nav-item" href="/" data-nav="/">
+          <span class="nav-icon" aria-hidden="true">▦</span>
+          <span class="nav-text">Dashboard</span>
+        </a>
+        <a class="nav-item" href="#caseGrid" data-nav="/cases">
+          <span class="nav-icon" aria-hidden="true">▣</span>
+          <span class="nav-text">Cases</span>
+        </a>
+      </nav>
+
+      <div class="sidenav-foot">
+        <div class="sidenav-help">Internal • v1</div>
+      </div>
+    </aside>
+
+    <div class="app-content">
+
+  <!-- Top header (Sticky) -->
+  <header class="topbar" role="banner">
+    <div class="topbar-left">
+      <div class="page-title" aria-label="Page title">
+        <div class="title">Dashboard</div>
+        <div class="subtitle">Enterprise case management view for verification workflows</div>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <button class="btn btn-primary" type="button" data-action="open-create">Create New Case</button>
+
+      <div class="user-chip" role="group" aria-label="User profile">
+        <div class="user-avatar" aria-hidden="true">U</div>
+        <div class="user-meta">
+          <div class="user-name" data-bind="userName">Internal User</div>
+          <div class="user-role">
+            <label class="sr-only" for="roleSelect">Role</label>
+            <select id="roleSelect" class="select" data-store="user.role">
+              <option value="Executive">Executive</option>
+              <option value="Admin">Admin</option>
+              <option value="Analyst">Analyst</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="main" role="main">
+    <!-- Hero (SaaS-style) -->
+    <section class="hero" aria-label="Overview">
+      <div class="hero-card">
+        <div class="hero-grid">
+          <div>
+            <div class="hero-kicker">Enterprise verification workspace</div>
+            <h1 class="hero-title">Run faster, auditable business verification.</h1>
+            <p class="hero-subtitle">A clean case workflow for GST, MCA, compliance checks, and evidence-backed reporting — designed for internal operations and review-ready outputs.</p>
+
+            <div class="hero-actions">
+              <button class="btn btn-primary" type="button" data-action="open-create">Create New Case</button>
+              <a class="btn btn-secondary" href="#caseGrid">View Cases</a>
+            </div>
+
+            <div class="trust" aria-label="Trust signals">
+              <div class="trust-title">Designed for internal auditability</div>
+              <div class="trust-row" role="list">
+                <div class="trust-pill" role="listitem">Evidence hashing</div>
+                <div class="trust-pill" role="listitem">Structured outputs</div>
+                <div class="trust-pill" role="listitem">Role-based workflows</div>
+                <div class="trust-pill" role="listitem">Export-ready reports</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-side" aria-label="Quick links">
+            <div class="hero-side-card">
+              <div class="hero-side-title">Quick access</div>
+              <div class="hero-side-links">
+                <a class="hero-link" href="#caseGrid">View Cases</a>
+              </div>
+            </div>
+            <div class="hero-side-card">
+              <div class="hero-side-title">Today</div>
+              <div class="hero-side-meta">
+                <div class="meta-k">Open cases</div>
+                <div class="meta-v" data-kpi="total">0</div>
+              </div>
+              <div class="hero-side-meta">
+                <div class="meta-k">Pending</div>
+                <div class="meta-v" data-kpi="pending">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2) KPI SUMMARY STRIP -->
+    <section class="kpi-strip" aria-label="Case KPIs">
+      <button class="kpi" type="button" data-filter="all">
+        <div class="kpi-icon" aria-hidden="true">T</div>
+        <div class="kpi-body">
+          <div class="kpi-label">Total Cases</div>
+          <div class="kpi-value" data-kpi="total">0</div>
+        </div>
+      </button>
+
+      <button class="kpi" type="button" data-filter="pending">
+        <div class="kpi-icon" aria-hidden="true">P</div>
+        <div class="kpi-body">
+          <div class="kpi-label">Pending Cases</div>
+          <div class="kpi-value" data-kpi="pending">0</div>
+        </div>
+      </button>
+
+      <button class="kpi" type="button" data-filter="ongoing">
+        <div class="kpi-icon" aria-hidden="true">O</div>
+        <div class="kpi-body">
+          <div class="kpi-label">Ongoing Cases</div>
+          <div class="kpi-value" data-kpi="ongoing">0</div>
+        </div>
+      </button>
+
+      <button class="kpi" type="button" data-filter="completed">
+        <div class="kpi-icon" aria-hidden="true">C</div>
+        <div class="kpi-body">
+          <div class="kpi-label">Completed Reports</div>
+          <div class="kpi-value" data-kpi="completed">0</div>
+        </div>
+      </button>
+    </section>
+
+    <section class="charts" aria-label="Dashboard charts">
+      <article class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">Status Distribution</div>
+            <div class="card-subtitle">Pending vs ongoing vs completed</div>
+          </div>
+          <span class="badge">Live</span>
+        </div>
+        <div class="card-body">
+          <canvas id="chartStatus" class="chart-canvas" aria-label="Status distribution chart"></canvas>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">Monthly Case Trend</div>
+            <div class="card-subtitle">Cases created in last 6 months</div>
+          </div>
+          <span class="badge">6M</span>
+        </div>
+        <div class="card-body">
+          <canvas id="chartMonthly" class="chart-canvas" aria-label="Monthly case trend chart"></canvas>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">Risk Mix</div>
+            <div class="card-subtitle">Low, medium, high portfolio split</div>
+          </div>
+          <span class="badge">Risk</span>
+        </div>
+        <div class="card-body">
+          <canvas id="chartRisk" class="chart-canvas" aria-label="Risk distribution chart"></canvas>
+        </div>
+      </article>
+    </section>
+
+    <!-- Workspace Blocks removed — open workspace via case cards -->
+
+    <!-- RV section removed — access via case workspace -->
+    <section id="rvSection" hidden>
+      <div class="rv-wrapper" style="display:none">
+        <div class="rv-head">
+          <div>
+            <h2 class="rv-title">&#128100; Personal Block — Resident Verification</h2>
+            <p class="rv-subtitle">Fill address details and upload verification images for the selected case</p>
+          </div>
+          <a class="btn btn-secondary btn-sm" href="/case-workspace?view=single&block=personal">Open Full Personal Block &rarr;</a>
+        </div>
+
+        <!-- Case Selector Row -->
+        <div class="rv-case-select-row">
+          <label for="rvCaseSelect" class="rv-label">Select Case</label>
+          <select id="rvCaseSelect" class="select rv-select"></select>
+          <button class="btn btn-primary btn-sm" type="button" id="rvLoadBtn">&#x1F50D; Load Case</button>
+        </div>
+
+        <!-- Address Form (always visible) -->
+        <div class="rv-card">
+          <div class="rv-card-head">
+            <div class="rv-card-title">&#127968; Address Details</div>
+          </div>
+          <div class="rv-form-grid">
+            <div class="field full">
+              <label for="rvAddress">Full Address</label>
+              <input id="rvAddress" class="input" type="text" placeholder="House No, Street, Area" />
+            </div>
+            <div class="field">
+              <label for="rvLocality">Locality</label>
+              <input id="rvLocality" class="input" type="text" placeholder="Locality / Sector" />
+            </div>
+            <div class="field">
+              <label for="rvCity">City</label>
+              <input id="rvCity" class="input" type="text" placeholder="City" />
+            </div>
+            <div class="field">
+              <label for="rvState">State</label>
+              <input id="rvState" class="input" type="text" placeholder="State" />
+            </div>
+            <div class="field">
+              <label for="rvPincode">Pincode</label>
+              <input id="rvPincode" class="input" type="text" placeholder="6-digit pincode" maxlength="6" />
+            </div>
+            <div class="field">
+              <label for="rvLandmark">Landmark</label>
+              <input id="rvLandmark" class="input" type="text" placeholder="Nearby landmark" />
+            </div>
+            <div class="field full">
+              <label for="rvRemarks">Remarks</label>
+              <textarea id="rvRemarks" class="input" rows="2" placeholder="Any remarks"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image Upload (always visible) -->
+        <div class="rv-card">
+          <div class="rv-card-head">
+            <div class="rv-card-title">&#128247; Verification Images</div>
+          </div>
+          <div class="rv-upload-row">
+            <input id="rvImgLabel" class="input" type="text" placeholder="Label (e.g. Front View, Name Plate)" style="flex:2;" />
+            <input id="rvImgFile" class="input" type="file" accept="image/*" style="flex:2;" />
+            <button class="btn btn-secondary btn-sm" type="button" id="rvImgAddBtn">+ Add Image</button>
+          </div>
+          <div id="rvImgGrid" class="rv-img-grid"></div>
+        </div>
+
+        <!-- Save -->
+        <div class="rv-actions">
+          <button class="btn btn-primary" type="button" id="rvSaveBtn">&#x1F4BE; Save Resident Verification</button>
+          <span id="rvSaveStatus" class="rv-save-status"></span>
+        </div>
+      </div><!-- /rv-wrapper -->
+    </section>
+
+    <!-- 4) CASE WORK QUEUE -->
+    <section class="queue" aria-label="Case work queue">
+      <div class="queue-head">
+        <div>
+          <h2 class="queue-title">Cases</h2>
+          <p class="queue-subtitle" id="queueSubtitle">Create a case, then open it to complete modules and generate the final report.</p>
+        </div>
+
+        <div class="queue-actions">
+          <label class="search" aria-label="Search cases">
+            <span class="sr-only">Search</span>
+            <input id="searchInput" class="input" type="search" placeholder="Search by Case ID / Business Name" data-action="search" />
+          </label>
+
+          <label class="filter" aria-label="Status filter">
+            <span class="sr-only">Filter</span>
+            <select id="statusFilter" class="select" data-action="status-filter">
+              <option value="all">All</option>
+              <option value="pending">Pending</option>
+              <option value="ongoing">Ongoing</option>
+              <option value="completed">Completed</option>
+            </select>
+          </label>
+
+          <label class="filter" aria-label="Risk filter">
+            <span class="sr-only">Risk</span>
+            <select id="riskFilter" class="select" data-action="risk-filter">
+              <option value="all">All Risk</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+
+          <button class="btn btn-primary" type="button" data-action="open-create">+ New Case</button>
+        </div>
+      </div>
+
+      <div class="case-wrap" role="region" aria-label="Case list">
+        <div id="caseGrid" class="case-grid" role="list" aria-describedby="caseListHelp"></div>
+        <div id="emptyState" class="empty" hidden>
+          <div class="empty-title">No cases yet</div>
+          <div class="empty-text">Create a case to begin verification and build the final report inside the Case Workspace.</div>
+          <button class="btn btn-primary" type="button" data-action="open-create">Create New Case</button>
+        </div>
+        <div id="caseListHelp" class="sr-only">Use filters to narrow down cases and open a case workspace.</div>
+      </div>
+    </section>
+
+    <footer class="footer" role="contentinfo" aria-label="Footer">
+      <div class="footer-title">CrediVerify 360</div>
+      <div class="footer-meta">Internal Use Only • Enterprise Dashboard</div>
+    </footer>
+  </main>
+
+  <!-- 5) CREATE NEW CASE FLOW -->
+  <div class="modal" id="createCaseModal" hidden data-modal>
+    <div class="modal-backdrop" data-action="close-create" aria-hidden="true"></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="createTitle">
+      <div class="modal-head">
+        <div>
+          <div id="createTitle" class="modal-title">Create New Case</div>
+          <div class="modal-subtitle">Capture basic details to initiate verification workflow</div>
+        </div>
+        <button class="icon-btn" type="button" data-action="close-create" aria-label="Close">✕</button>
+      </div>
+
+      <form class="modal-body" data-form="create">
+        <div class="form-grid">
+          <div class="field full">
+            <label for="businessName">Business Name <span class="req">*</span></label>
+            <input id="businessName" class="input" type="text" required placeholder="e.g., ABC Traders" data-field="businessName" />
+          </div>
+
+          <div class="field">
+            <label for="businessType">Business Type <span class="req">*</span></label>
+            <select id="businessType" class="select" required data-field="businessType">
+              <option value="">Select</option>
+              <option>Proprietorship</option>
+              <option>Partnership</option>
+              <option>LLP</option>
+              <option>Private Limited</option>
+              <option>Public Limited</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="purpose">Purpose of Verification <span class="req">*</span></label>
+            <select id="purpose" class="select" required data-field="purpose">
+              <option value="">Select</option>
+              <option>Pre‑Sanction Due Diligence</option>
+              <option>Post‑Sanction Monitoring</option>
+              <option>KYC / Onboarding</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="gstin">GSTIN <span class="req">*</span></label>
+            <input id="gstin" class="input" type="text" required placeholder="15 chars GSTIN" data-field="gstin" />
+            <div class="hint">Used for GST verification module (captcha-assisted).</div>
+          </div>
+
+          <div class="field">
+            <label for="cin">CIN (Optional)</label>
+            <input id="cin" class="input" type="text" placeholder="Company CIN" data-field="cin" />
+          </div>
+
+          <div class="field full">
+            <label for="assigned">Assigned Executive <span class="req">*</span></label>
+            <input id="assigned" class="input" type="text" required placeholder="e.g., Rahul Sharma" data-field="assignedTo" />
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-secondary" type="button" data-action="close-create">Cancel</button>
+          <button class="btn btn-primary" type="submit">Save Case</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div data-toast role="status" aria-live="polite"></div>
+
+  <script src="assets/dashboard.js?v=20260228_rv2"></script>
+  <script>
+    (function () {
+      const path = window.location.pathname;
+      const navLinks = document.querySelectorAll('.sidenav .nav-item[data-nav]');
+      for (const link of navLinks) {
+        const target = link.getAttribute('data-nav');
+        if (!target) continue;
+        const isMatch = target === '/' ? path === '/' : path.startsWith(target);
+        if (isMatch) link.setAttribute('aria-current', 'page');
+        else link.removeAttribute('aria-current');
+      }
+    })();
+  </script>
+    </div>
+  </div>
+</body>
+</html>

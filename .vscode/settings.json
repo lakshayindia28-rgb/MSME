@@ -1,0 +1,15 @@
+{
+  "terminal.integrated.tabs.enabled": true,
+  "terminal.integrated.tabs.location": "left",
+  "terminal.integrated.defaultLocation": "panel",
+  "terminal.integrated.scrollback": 5000,
+  "typescript.tsserver.experimental.enableProjectDiagnostics": false,
+  "typescript.validate.enable": false,
+  "javascript.validate.enable": true,
+  "search.exclude": {
+    "**/node_modules": true
+  },
+  "files.exclude": {
+    "**/node_modules/**/tsconfig.json": true
+  }
+}

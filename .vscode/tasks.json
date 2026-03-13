@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Dev: npm run dev",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev"],
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Server: node server/app.js",
+      "type": "shell",
+      "command": "node",
+      "args": ["server/app.js"],
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}

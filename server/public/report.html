@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CrediVerify 360 — Report Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/report.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidenav">
+      <div class="sidenav-brand">
+        <div class="brand">
+          <div class="brand-mark">CV</div>
+          <div class="brand-text">
+            <div class="brand-title">CrediVerify 360</div>
+            <div class="brand-subtitle">Report Builder</div>
+          </div>
+        </div>
+      </div>
+      <nav class="sidenav-nav">
+        <a class="nav-item" href="/"><span class="nav-icon">▦</span><span class="nav-text">Dashboard</span></a>
+        <a class="nav-item" href="/case-workspace?view=single&block=business"><span class="nav-icon">▣</span><span class="nav-text">Business Block</span></a>
+        <a class="nav-item" href="/case-workspace?view=single&block=personal"><span class="nav-icon">▤</span><span class="nav-text">Personal Block</span></a>
+        <a class="nav-item active" href="/case-workspace?view=single&block=report"><span class="nav-icon">▥</span><span class="nav-text">Report Builder</span></a>
+      </nav>
+      <div class="sidenav-foot"><div class="sidenav-help">Internal • v1</div></div>
+    </aside>
+
+    <div class="app-content">
+      <!-- Top header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="page-title">
+            <div class="title">Report Builder</div>
+            <div class="subtitle">Select modules, add field data, and generate professional PDF reports</div>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="case-selector">
+            <label for="caseIdInput">Case ID:</label>
+            <input type="text" id="caseIdInput" class="input" placeholder="Enter Case ID" />
+            <button class="btn btn-secondary" id="loadCaseBtn">Load Case</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="main">
+        <!-- Module Selection Panel -->
+        <section class="panel module-selector-panel">
+          <div class="panel-head">
+            <h2 class="panel-title">Module Selection</h2>
+            <p class="panel-subtitle">Tick modules to include in report. Untick to remove. <strong>Completed modules from Case Workspace are auto-selected.</strong></p>
+          </div>
+          <div class="case-status-banner" id="caseStatusBanner" hidden>
+            <span id="caseStatusText">No case loaded</span>
+          </div>
+          <div class="module-grid" id="moduleGrid">
+            <!-- Dynamically populated -->
+          </div>
+          <div class="ai-action-bar">
+            <button class="btn btn-ai" id="generateAiBtn" type="button">📝 Generate Summaries</button>
+            <span class="ai-action-hint">Generates per-module verification summaries + final overall observation</span>
+          </div>
+        </section>
+
+        <!-- Two-column layout: Module Data + Preview -->
+        <div class="builder-layout">
+          <!-- Left: Module Structures -->
+          <div class="builder-left">
+            <section class="panel" id="selectedModulesPanel">
+              <div class="panel-head">
+                <h2 class="panel-title">Selected Module Structures</h2>
+                <p class="panel-subtitle">Data from each selected module. Modules with no data will show empty structure.</p>
+              </div>
+              <div id="moduleStructures" class="module-structures">
+                <div class="empty-state">Select modules above to see their data structures here.</div>
+              </div>
+            </section>
+
+            <!-- Overall AI Observation -->
+            <section class="panel" id="overallObservationPanel">
+              <div class="panel-head">
+                <h2 class="panel-title">📝 Overall Observation</h2>
+                <p class="panel-subtitle">Final synthesized observation across all completed modules. Generated after all module summaries.</p>
+              </div>
+              <div id="overallObservationContent">
+                <div class="ai-summary-placeholder">Overall observation will appear here after analysis is generated.</div>
+              </div>
+            </section>
+
+            <!-- Business Field Data Module -->
+            <section class="panel" id="fieldDataPanel">
+              <div class="panel-head">
+                <h2 class="panel-title">Business Field Data</h2>
+                <p class="panel-subtitle">Upload images (site photos, factory images, shop photos, etc.) to include in the report.</p>
+              </div>
+              <div class="field-data-body">
+                <div class="image-upload-list" id="imageUploadList">
+                  <!-- Uploaded images appear here -->
+                </div>
+                <div class="add-image-row">
+                  <div class="image-input-group">
+                    <label for="imageLabel" class="input-label">Image Label</label>
+                    <input type="text" id="imageLabel" class="input" placeholder="e.g. Factory Front View, Shop Photo" />
+                  </div>
+                  <div class="image-input-group">
+                    <label for="imageFile" class="input-label">Select Image</label>
+                    <input type="file" id="imageFile" class="input-file" accept="image/*" />
+                  </div>
+                  <button class="btn btn-primary" id="addImageBtn" type="button">+ Add Image</button>
+                </div>
+                <div style="margin-top:14px;border-top:1px solid #e2e8f0;padding-top:12px">
+                  <label class="input-label" for="businessSummaryInput">Business Summary</label>
+                  <p style="font-size:11px;color:#64748b;margin:2px 0 6px">This summary will appear on a separate page after the field photos in the report.</p>
+                  <textarea id="businessSummaryInput" class="input" rows="5" style="width:100%;resize:vertical" placeholder="Enter business summary here..."></textarea>
+                </div>
+              </div>
+            </section>
+
+            <!-- Resident Verification Module -->
+            <section class="panel" id="residentVerificationPanel" style="border-left:3px solid #059669;">
+              <div class="panel-head">
+                <h2 class="panel-title">Resident Verification</h2>
+                <p class="panel-subtitle">Applicant's residential address and verification photo for the report.</p>
+              </div>
+              <div style="padding:4px 0">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+                  <div>
+                    <label class="input-label" for="rvAddress">Full Address</label>
+                    <textarea id="rvAddress" class="input" rows="2" style="width:100%;resize:vertical;" placeholder="House No., Street, Area"></textarea>
+                  </div>
+                  <div>
+                    <label class="input-label" for="rvLocality">Locality</label>
+                    <input type="text" id="rvLocality" class="input" style="width:100%;" placeholder="e.g. Sector 12" />
+                  </div>
+                  <div>
+                    <label class="input-label" for="rvCity">City</label>
+                    <input type="text" id="rvCity" class="input" style="width:100%;" placeholder="e.g. New Delhi" />
+                  </div>
+                  <div>
+                    <label class="input-label" for="rvState">State</label>
+                    <input type="text" id="rvState" class="input" style="width:100%;" placeholder="e.g. Delhi" />
+                  </div>
+                  <div>
+                    <label class="input-label" for="rvPincode">Pincode</label>
+                    <input type="text" id="rvPincode" class="input" style="width:100%;" placeholder="e.g. 110075" />
+                  </div>
+                  <div>
+                    <label class="input-label" for="rvLandmark">Landmark</label>
+                    <input type="text" id="rvLandmark" class="input" style="width:100%;" placeholder="e.g. Near Metro" />
+                  </div>
+                </div>
+                <div class="add-image-row" style="margin-top:8px">
+                  <div class="image-input-group">
+                    <label for="rvImageLabel" class="input-label">Image Label</label>
+                    <input type="text" id="rvImageLabel" class="input" placeholder="e.g. House Front, Address Proof" />
+                  </div>
+                  <div class="image-input-group">
+                    <label for="rvImageFile" class="input-label">Select Image</label>
+                    <input type="file" id="rvImageFile" class="input-file" accept="image/*" />
+                  </div>
+                  <button class="btn btn-primary" id="addRVImageBtn" type="button">+ Add Image</button>
+                </div>
+                <div class="image-upload-list" id="rvImageUploadList" style="margin-top:10px">
+                  <!-- Uploaded resident verification images appear here -->
+                </div>
+              </div>
+            </section>
+
+            <!-- Officer Signature & Photo -->
+            <section class="panel" id="officerPanel" style="border-left:3px solid #7c3aed;">
+              <div class="panel-head">
+                <h2 class="panel-title">Officer Signature & Photo</h2>
+                <p class="panel-subtitle">Upload officer/executive photo and signature for the last page of the report.</p>
+              </div>
+              <div style="padding:4px 0">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                  <!-- Officer Photo -->
+                  <div>
+                    <label class="input-label">Officer Photo</label>
+                    <div id="officerPhotoPreview" style="margin:6px 0;min-height:60px"></div>
+                    <input type="file" id="officerPhotoFile" class="input-file" accept="image/*" />
+                    <button class="btn btn-primary" id="uploadOfficerPhotoBtn" type="button" style="margin-top:6px">Upload Photo</button>
+                  </div>
+                  <!-- Officer Signature -->
+                  <div>
+                    <label class="input-label">Officer Signature</label>
+                    <div id="officerSignaturePreview" style="margin:6px 0;min-height:60px"></div>
+                    <input type="file" id="officerSignatureFile" class="input-file" accept="image/*" />
+                    <button class="btn btn-primary" id="uploadOfficerSignatureBtn" type="button" style="margin-top:6px">Upload Signature</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- Right: Live Preview + Actions -->
+          <div class="builder-right">
+            <section class="panel preview-panel">
+              <div class="panel-head">
+                <h2 class="panel-title">Report Preview</h2>
+                <div class="panel-actions">
+                  <button class="btn btn-secondary" id="refreshPreviewBtn">Refresh Preview</button>
+                  <button class="btn btn-primary" id="previewPdfBtn" style="background:#2563eb">🔍 Preview PDF</button>
+                  <button class="btn btn-primary" id="generatePdfBtn" style="background:#059669">⬇ Download PDF</button>
+                </div>
+              </div>
+              <div class="preview-stats" id="previewStats">
+                <span class="stat"><strong>Modules:</strong> <span id="statModules">0</span></span>
+                <span class="stat"><strong>Images:</strong> <span id="statImages">0</span></span>
+                <span class="stat"><strong>Status:</strong> <span id="statStatus">Ready</span></span>
+              </div>
+
+              <!-- In-browser PDF preview -->
+              <div id="pdfPreviewWrap" style="display:none;margin-bottom:16px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                  <span style="font-weight:700;font-size:13px">PDF Preview</span>
+                  <div style="display:flex;gap:8px">
+                    <button class="btn btn-secondary" id="downloadPreviewedPdfBtn" style="font-size:12px">⬇ Download This PDF</button>
+                    <button class="btn btn-secondary" id="closePdfPreviewBtn" style="font-size:12px">✕ Close Preview</button>
+                  </div>
+                </div>
+                <iframe id="pdfPreviewIframe" style="width:100%;height:700px;border:1px solid #e2e8f0;border-radius:8px;background:#fff" title="PDF Preview"></iframe>
+              </div>
+
+              <div class="preview-body" id="previewBody">
+                <div class="preview-placeholder">Select modules and add data to see live preview</div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head">
+                <h2 class="panel-title">Report Payload (JSON)</h2>
+                <p class="panel-subtitle">Raw payload that will be sent for PDF generation.</p>
+              </div>
+              <pre class="json-preview" id="jsonPreview">{}</pre>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- AI Generation Overlay -->
+  <div class="overlay" id="aiOverlay" hidden>
+    <div class="overlay-box">
+      <div class="spinner"></div>
+      <div class="overlay-text">Generating Analysis...</div>
+      <div class="overlay-sub" id="aiOverlayStatus">Initializing...</div>
+      <div class="ai-progress-track">
+        <div class="ai-progress-bar" id="aiProgressBar" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generate PDF loading overlay -->
+  <div class="overlay" id="generateOverlay" hidden>
+    <div class="overlay-box">
+      <div class="spinner"></div>
+      <div class="overlay-text">Generating PDF Report...</div>
+      <div class="overlay-sub" id="overlayStatus">Please wait, this may take a moment.</div>
+    </div>
+  </div>
+
+  <script src="assets/report.js"></script>
+</body>
+</html>

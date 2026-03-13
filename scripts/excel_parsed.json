@@ -1,0 +1,3539 @@
+{
+  "Sheet1": {
+    "ref": "A2:D157",
+    "cells": {
+      "A2": {
+        "value": "Profitability Statement",
+        "type": "s",
+        "formula": null,
+        "formatted": "Profitability Statement"
+      },
+      "B2": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C2": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D2": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A3": {
+        "value": "Period Ends on:",
+        "type": "s",
+        "formula": null,
+        "formatted": "Period Ends on:"
+      },
+      "B3": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C3": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D3": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A4": {
+        "value": "Result Type:",
+        "type": "s",
+        "formula": null,
+        "formatted": "Result Type:"
+      },
+      "B4": {
+        "value": "AUDITED  ",
+        "type": "s",
+        "formula": null,
+        "formatted": "AUDITED  "
+      },
+      "C4": {
+        "value": "AUDITED  ",
+        "type": "s",
+        "formula": null,
+        "formatted": "AUDITED  "
+      },
+      "D4": {
+        "value": "AUDITED ",
+        "type": "s",
+        "formula": null,
+        "formatted": "AUDITED "
+      },
+      "A5": {
+        "value": "Auditor Qualification:",
+        "type": "s",
+        "formula": null,
+        "formatted": "Auditor Qualification:"
+      },
+      "B5": {
+        "value": "CA",
+        "type": "s",
+        "formula": null,
+        "formatted": "CA"
+      },
+      "C5": {
+        "value": "CA",
+        "type": "s",
+        "formula": null,
+        "formatted": "CA"
+      },
+      "D5": {
+        "value": "CA",
+        "type": "s",
+        "formula": null,
+        "formatted": "CA"
+      },
+      "A6": {
+        "value": "No. of months in current financial year",
+        "type": "s",
+        "formula": null,
+        "formatted": "No. of months in current financial year"
+      },
+      "B6": {
+        "value": "12 MONTHS ",
+        "type": "s",
+        "formula": null,
+        "formatted": "12 MONTHS "
+      },
+      "C6": {
+        "value": "12 MONTHS ",
+        "type": "s",
+        "formula": null,
+        "formatted": "12 MONTHS "
+      },
+      "D6": {
+        "value": "12 MONTHS ",
+        "type": "s",
+        "formula": null,
+        "formatted": "12 MONTHS "
+      },
+      "A7": {
+        "value": "Net Sales",
+        "type": "s",
+        "formula": null,
+        "formatted": "Net Sales"
+      },
+      "B7": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C7": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D7": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A8": {
+        "value": "Other Income (related to operations)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Other Income (related to operations)"
+      },
+      "B8": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C8": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D8": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A9": {
+        "value": "Total Operating Income",
+        "type": "s",
+        "formula": null,
+        "formatted": "Total Operating Income"
+      },
+      "B9": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(B7+B8)",
+        "formatted": "0.00"
+      },
+      "C9": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(C7+C8)",
+        "formatted": "0.00"
+      },
+      "D9": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(D7+D8)",
+        "formatted": "0.00"
+      },
+      "A10": {
+        "value": "Handling Costs",
+        "type": "s",
+        "formula": null,
+        "formatted": "Handling Costs"
+      },
+      "B10": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C10": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D10": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A11": {
+        "value": "Cost of Traded Goods Sale",
+        "type": "s",
+        "formula": null,
+        "formatted": "Cost of Traded Goods Sale"
+      },
+      "B11": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C11": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D11": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A12": {
+        "value": "Consumable Stores",
+        "type": "s",
+        "formula": null,
+        "formatted": "Consumable Stores"
+      },
+      "B12": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C12": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D12": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A13": {
+        "value": "Power and Fuel",
+        "type": "s",
+        "formula": null,
+        "formatted": "Power and Fuel"
+      },
+      "B13": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C13": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D13": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A14": {
+        "value": "Employee Costs",
+        "type": "s",
+        "formula": null,
+        "formatted": "Employee Costs"
+      },
+      "B14": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C14": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D14": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A15": {
+        "value": "Other Expenses",
+        "type": "s",
+        "formula": null,
+        "formatted": "Other Expenses"
+      },
+      "B15": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C15": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D15": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A16": {
+        "value": "Selling Expenses",
+        "type": "s",
+        "formula": null,
+        "formatted": "Selling Expenses"
+      },
+      "B16": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C16": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D16": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A17": {
+        "value": "Other related Expenses",
+        "type": "s",
+        "formula": null,
+        "formatted": "Other related Expenses"
+      },
+      "B17": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C17": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D17": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A18": {
+        "value": "Cost of Sales",
+        "type": "s",
+        "formula": null,
+        "formatted": "Cost of Sales"
+      },
+      "B18": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(B11,B14,B15)",
+        "formatted": "0.00"
+      },
+      "C18": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(C11,C14,C15)",
+        "formatted": "0.00"
+      },
+      "D18": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(D11,D14,D15)",
+        "formatted": "0.00"
+      },
+      "A19": {
+        "value": "PBILDT",
+        "type": "s",
+        "formula": null,
+        "formatted": "PBILDT"
+      },
+      "B19": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C19": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D19": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A20": {
+        "value": "Depreciation",
+        "type": "s",
+        "formula": null,
+        "formatted": "Depreciation"
+      },
+      "B20": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C20": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D20": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A21": {
+        "value": "PBIT",
+        "type": "s",
+        "formula": null,
+        "formatted": "PBIT"
+      },
+      "B21": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C21": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D21": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A22": {
+        "value": "Interest and Finance Charges",
+        "type": "s",
+        "formula": null,
+        "formatted": "Interest and Finance Charges"
+      },
+      "B22": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C22": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D22": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A23": {
+        "value": "Operating Profit Before Tax  (OPBT)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Operating Profit Before Tax  (OPBT)"
+      },
+      "B23": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C23": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D23": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A24": {
+        "value": "Operating Profit After Tax (OPAT)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Operating Profit After Tax (OPAT)"
+      },
+      "B24": {
+        "value": 0,
+        "type": "n",
+        "formula": "B23-B29",
+        "formatted": "0.00"
+      },
+      "C24": {
+        "value": 0,
+        "type": "n",
+        "formula": "C23-C29",
+        "formatted": "0.00"
+      },
+      "D24": {
+        "value": 0,
+        "type": "n",
+        "formula": "D23-D29",
+        "formatted": "0.00"
+      },
+      "A25": {
+        "value": "Non-Operating Income / (Expense)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Non-Operating Income / (Expense)"
+      },
+      "B25": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C25": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D25": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A26": {
+        "value": "Profit Before Tax (PBT)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Profit Before Tax (PBT)"
+      },
+      "B26": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C26": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D26": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A27": {
+        "value": "Cash Adjustments",
+        "type": "s",
+        "formula": null,
+        "formatted": "Cash Adjustments"
+      },
+      "B27": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C27": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D27": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A28": {
+        "value": "Adjusted Profit Before Tax  (APBT)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Adjusted Profit Before Tax  (APBT)"
+      },
+      "B28": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C28": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D28": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A29": {
+        "value": "Tax",
+        "type": "s",
+        "formula": null,
+        "formatted": "Tax"
+      },
+      "B29": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C29": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D29": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A30": {
+        "value": "Provision for Deferred Tax",
+        "type": "s",
+        "formula": null,
+        "formatted": "Provision for Deferred Tax"
+      },
+      "B30": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C30": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D30": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A31": {
+        "value": "Adjusted Profit After Tax  (APAT)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Adjusted Profit After Tax  (APAT)"
+      },
+      "B31": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C31": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D31": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A32": {
+        "value": "Gross Cash Accruals",
+        "type": "s",
+        "formula": null,
+        "formatted": "Gross Cash Accruals"
+      },
+      "B32": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(B20,B30,B31)",
+        "formatted": "0.00"
+      },
+      "C32": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(C20,C30,C31)",
+        "formatted": "0.00"
+      },
+      "D32": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(D20,D30,D31)",
+        "formatted": "0.00"
+      },
+      "A33": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "B33": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C33": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D33": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A34": {
+        "value": "Balance Sheet: Assets",
+        "type": "s",
+        "formula": null,
+        "formatted": "Balance Sheet: Assets"
+      },
+      "B34": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C34": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D34": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A35": {
+        "value": "Period Ends on:",
+        "type": "s",
+        "formula": null,
+        "formatted": "Period Ends on:"
+      },
+      "B35": {
+        "value": 45747,
+        "type": "n",
+        "formula": null,
+        "formatted": "3/31/2025"
+      },
+      "C35": {
+        "value": 45382,
+        "type": "n",
+        "formula": null,
+        "formatted": "3/31/2024"
+      },
+      "D35": {
+        "value": 44651,
+        "type": "n",
+        "formula": null,
+        "formatted": "3/31/2022"
+      },
+      "A36": {
+        "value": "Result Type:",
+        "type": "s",
+        "formula": null,
+        "formatted": "Result Type:"
+      },
+      "B36": {
+        "value": "AUDITED ",
+        "type": "s",
+        "formula": null,
+        "formatted": "AUDITED "
+      },
+      "C36": {
+        "value": "AUDITED ",
+        "type": "s",
+        "formula": null,
+        "formatted": "AUDITED "
+      },
+      "D36": {
+        "value": "AUDITED ",
+        "type": "s",
+        "formula": null,
+        "formatted": "AUDITED "
+      },
+      "A37": {
+        "value": "SUMMARY: ASSETS",
+        "type": "s",
+        "formula": null,
+        "formatted": "SUMMARY: ASSETS"
+      },
+      "B37": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C37": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D37": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A38": {
+        "value": "Gross Block",
+        "type": "s",
+        "formula": null,
+        "formatted": "Gross Block"
+      },
+      "B38": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C38": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D38": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A39": {
+        "value": "Accumulated Depreciation",
+        "type": "s",
+        "formula": null,
+        "formatted": "Accumulated Depreciation"
+      },
+      "B39": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C39": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D39": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A40": {
+        "value": "Net Block",
+        "type": "s",
+        "formula": null,
+        "formatted": "Net Block"
+      },
+      "B40": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C40": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D40": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A41": {
+        "value": "Capital Work in Progress",
+        "type": "s",
+        "formula": null,
+        "formatted": "Capital Work in Progress"
+      },
+      "B41": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C41": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D41": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A42": {
+        "value": "NET FIXED ASSETS",
+        "type": "s",
+        "formula": null,
+        "formatted": "NET FIXED ASSETS"
+      },
+      "B42": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C42": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D42": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A43": {
+        "value": "Investments in Affiliate Companies",
+        "type": "s",
+        "formula": null,
+        "formatted": "Investments in Affiliate Companies"
+      },
+      "B43": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C43": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D43": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A44": {
+        "value": "Marketable Securities",
+        "type": "s",
+        "formula": null,
+        "formatted": "Marketable Securities"
+      },
+      "B44": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C44": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D44": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A45": {
+        "value": "TOTAL INVESTMENTS: net of provision",
+        "type": "s",
+        "formula": null,
+        "formatted": "TOTAL INVESTMENTS: net of provision"
+      },
+      "B45": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C45": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D45": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A46": {
+        "value": "Receivables : More than 6 months",
+        "type": "s",
+        "formula": null,
+        "formatted": "Receivables : More than 6 months"
+      },
+      "B46": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C46": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D46": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A47": {
+        "value": "Receivables : Less than 6 months",
+        "type": "s",
+        "formula": null,
+        "formatted": "Receivables : Less than 6 months"
+      },
+      "B47": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C47": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D47": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A48": {
+        "value": "Less: Provision for doubtful debts",
+        "type": "s",
+        "formula": null,
+        "formatted": "Less: Provision for doubtful debts"
+      },
+      "B48": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C48": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D48": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A49": {
+        "value": "Bills Receivable",
+        "type": "s",
+        "formula": null,
+        "formatted": "Bills Receivable"
+      },
+      "B49": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C49": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D49": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A50": {
+        "value": "TOTAL RECEIVABLES",
+        "type": "s",
+        "formula": null,
+        "formatted": "TOTAL RECEIVABLES"
+      },
+      "B50": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(B51:B57)",
+        "formatted": "0"
+      },
+      "C50": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(C51:C57)",
+        "formatted": "0"
+      },
+      "D50": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(D51:D57)",
+        "formatted": "0"
+      },
+      "A51": {
+        "value": "Loans & Advances to Subsidiaries",
+        "type": "s",
+        "formula": null,
+        "formatted": "Loans & Advances to Subsidiaries"
+      },
+      "B51": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C51": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D51": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A52": {
+        "value": "Loans & Advances to Affiliate Companies",
+        "type": "s",
+        "formula": null,
+        "formatted": "Loans & Advances to Affiliate Companies"
+      },
+      "B52": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C52": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D52": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A53": {
+        "value": "Loans; Advances;  current assets  related to operations",
+        "type": "s",
+        "formula": null,
+        "formatted": "Loans; Advances;  current assets  related to operations"
+      },
+      "B53": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C53": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D53": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A54": {
+        "value": "Cash and Bank Balances",
+        "type": "s",
+        "formula": null,
+        "formatted": "Cash and Bank Balances"
+      },
+      "B54": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C54": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D54": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A55": {
+        "value": "Total Inventories  Non-operational Assets",
+        "type": "s",
+        "formula": null,
+        "formatted": "Total Inventories  Non-operational Assets"
+      },
+      "B55": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C55": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D55": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A56": {
+        "value": "Loans;  Advances;  current assets not related to operations",
+        "type": "s",
+        "formula": null,
+        "formatted": "Loans;  Advances;  current assets not related to operations"
+      },
+      "B56": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C56": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D56": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A57": {
+        "value": "Advance Tax Paid",
+        "type": "s",
+        "formula": null,
+        "formatted": "Advance Tax Paid"
+      },
+      "B57": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C57": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D57": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A58": {
+        "value": "TOTAL OTHER ASSETS",
+        "type": "s",
+        "formula": null,
+        "formatted": "TOTAL OTHER ASSETS"
+      },
+      "B58": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C58": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D58": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A59": {
+        "value": "TOTAL CURRENT ASSETS related to operations",
+        "type": "s",
+        "formula": null,
+        "formatted": "TOTAL CURRENT ASSETS related to operations"
+      },
+      "B59": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C59": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D59": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A60": {
+        "value": "TOTAL ASSETS",
+        "type": "s",
+        "formula": null,
+        "formatted": "TOTAL ASSETS"
+      },
+      "B60": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C60": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D60": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A61": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "B61": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C61": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D61": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A62": {
+        "value": "Balance Sheet: Liabilities",
+        "type": "s",
+        "formula": null,
+        "formatted": "Balance Sheet: Liabilities"
+      },
+      "B62": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C62": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D62": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A63": {
+        "value": "Period Ends on:",
+        "type": "s",
+        "formula": null,
+        "formatted": "Period Ends on:"
+      },
+      "B63": {
+        "value": 45747,
+        "type": "n",
+        "formula": null,
+        "formatted": "3/31/2025"
+      },
+      "C63": {
+        "value": 45382,
+        "type": "n",
+        "formula": null,
+        "formatted": "3/31/2024"
+      },
+      "D63": {
+        "value": 44651,
+        "type": "n",
+        "formula": null,
+        "formatted": "3/31/2022"
+      },
+      "A64": {
+        "value": "Result Type:",
+        "type": "s",
+        "formula": null,
+        "formatted": "Result Type:"
+      },
+      "B64": {
+        "value": "AUDITED ",
+        "type": "s",
+        "formula": null,
+        "formatted": "AUDITED "
+      },
+      "C64": {
+        "value": "AUDITED ",
+        "type": "s",
+        "formula": null,
+        "formatted": "AUDITED "
+      },
+      "D64": {
+        "value": "AUDITED ",
+        "type": "s",
+        "formula": null,
+        "formatted": "AUDITED "
+      },
+      "A65": {
+        "value": "SUMARY: LIABILITIES",
+        "type": "s",
+        "formula": null,
+        "formatted": "SUMARY: LIABILITIES"
+      },
+      "B65": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C65": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D65": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A66": {
+        "value": "Total Paid Up Equity Share Capital",
+        "type": "s",
+        "formula": null,
+        "formatted": "Total Paid Up Equity Share Capital"
+      },
+      "B66": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C66": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D66": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A67": {
+        "value": "Share Application Money pending allotment",
+        "type": "s",
+        "formula": null,
+        "formatted": "Share Application Money pending allotment"
+      },
+      "B67": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C67": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D67": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A68": {
+        "value": "Quasi Equity :FCD; CCPS etc.",
+        "type": "s",
+        "formula": null,
+        "formatted": "Quasi Equity :FCD; CCPS etc."
+      },
+      "B68": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C68": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D68": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A69": {
+        "value": "GROSS RESERVES",
+        "type": "s",
+        "formula": null,
+        "formatted": "GROSS RESERVES"
+      },
+      "B69": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C69": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D69": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A70": {
+        "value": "Intangible Assets",
+        "type": "s",
+        "formula": null,
+        "formatted": "Intangible Assets"
+      },
+      "B70": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C70": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D70": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A71": {
+        "value": "Miscellaneous expenses not written off",
+        "type": "s",
+        "formula": null,
+        "formatted": "Miscellaneous expenses not written off"
+      },
+      "B71": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C71": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D71": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A72": {
+        "value": "Debit Balance in Profit and loss Account",
+        "type": "s",
+        "formula": null,
+        "formatted": "Debit Balance in Profit and loss Account"
+      },
+      "B72": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C72": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D72": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A73": {
+        "value": "NET RESERVES",
+        "type": "s",
+        "formula": null,
+        "formatted": "NET RESERVES"
+      },
+      "B73": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C73": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D73": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A74": {
+        "value": "TANGIBLE NET WORTH",
+        "type": "s",
+        "formula": null,
+        "formatted": "TANGIBLE NET WORTH"
+      },
+      "B74": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C74": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D74": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A75": {
+        "value": "Deferred Payment Credit",
+        "type": "s",
+        "formula": null,
+        "formatted": "Deferred Payment Credit"
+      },
+      "B75": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C75": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D75": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A76": {
+        "value": "Rupee Term Loans",
+        "type": "s",
+        "formula": null,
+        "formatted": "Rupee Term Loans"
+      },
+      "B76": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C76": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D76": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A77": {
+        "value": "TOTAL LONG TERM DEBT",
+        "type": "s",
+        "formula": null,
+        "formatted": "TOTAL LONG TERM DEBT"
+      },
+      "B77": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C77": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D77": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A78": {
+        "value": "Current Portion of Long Term Debt and Fixed Deposits",
+        "type": "s",
+        "formula": null,
+        "formatted": "Current Portion of Long Term Debt and Fixed Deposits"
+      },
+      "B78": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C78": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D78": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A79": {
+        "value": "NET LONG TERM DEBT",
+        "type": "s",
+        "formula": null,
+        "formatted": "NET LONG TERM DEBT"
+      },
+      "B79": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C79": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D79": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A80": {
+        "value": "Current Portion of Long Term Debt and Fixed Deposits",
+        "type": "s",
+        "formula": null,
+        "formatted": "Current Portion of Long Term Debt and Fixed Deposits"
+      },
+      "B80": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C80": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D80": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A81": {
+        "value": "Working capital Bank Borrowings",
+        "type": "s",
+        "formula": null,
+        "formatted": "Working capital Bank Borrowings"
+      },
+      "B81": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C81": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D81": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A82": {
+        "value": "Intercorporate Borrowings: excluding from affiliates; subsidiaries",
+        "type": "s",
+        "formula": null,
+        "formatted": "Intercorporate Borrowings: excluding from affiliates; subsidiaries"
+      },
+      "B82": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C82": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D82": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A83": {
+        "value": "Loans & Advances from Subsidiaries",
+        "type": "s",
+        "formula": null,
+        "formatted": "Loans & Advances from Subsidiaries"
+      },
+      "B83": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C83": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D83": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A84": {
+        "value": "Loans & Advances from  promoters; other affiliated cos.",
+        "type": "s",
+        "formula": null,
+        "formatted": "Loans & Advances from  promoters; other affiliated cos."
+      },
+      "B84": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C84": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D84": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A85": {
+        "value": "Other Short Term Loans & Advances",
+        "type": "s",
+        "formula": null,
+        "formatted": "Other Short Term Loans & Advances"
+      },
+      "B85": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C85": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D85": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A86": {
+        "value": "New Short Term Loans",
+        "type": "s",
+        "formula": null,
+        "formatted": "New Short Term Loans"
+      },
+      "B86": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C86": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D86": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A87": {
+        "value": "TOTAL SHORT TERM DEBT",
+        "type": "s",
+        "formula": null,
+        "formatted": "TOTAL SHORT TERM DEBT"
+      },
+      "B87": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(B88:B91)",
+        "formatted": "0.00"
+      },
+      "C87": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(C88:C91)",
+        "formatted": "0.00"
+      },
+      "D87": {
+        "value": 0,
+        "type": "n",
+        "formula": "SUM(D88:D91)",
+        "formatted": "0.00"
+      },
+      "A88": {
+        "value": "Creditors for goods",
+        "type": "s",
+        "formula": null,
+        "formatted": "Creditors for goods"
+      },
+      "B88": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C88": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D88": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A89": {
+        "value": "Creditors for Expenses",
+        "type": "s",
+        "formula": null,
+        "formatted": "Creditors for Expenses"
+      },
+      "B89": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C89": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D89": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A90": {
+        "value": "Other Current Liabilities: related to ops.",
+        "type": "s",
+        "formula": null,
+        "formatted": "Other Current Liabilities: related to ops."
+      },
+      "B90": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C90": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D90": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A91": {
+        "value": "Current Liabilities: not related to operations",
+        "type": "s",
+        "formula": null,
+        "formatted": "Current Liabilities: not related to operations"
+      },
+      "B91": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C91": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D91": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A92": {
+        "value": "TOTAL OTHER LIABILITIES",
+        "type": "s",
+        "formula": null,
+        "formatted": "TOTAL OTHER LIABILITIES"
+      },
+      "B92": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C92": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D92": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A93": {
+        "value": "Provision for Dividend",
+        "type": "s",
+        "formula": null,
+        "formatted": "Provision for Dividend"
+      },
+      "B93": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C93": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D93": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A94": {
+        "value": "Provision for Taxes",
+        "type": "s",
+        "formula": null,
+        "formatted": "Provision for Taxes"
+      },
+      "B94": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C94": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D94": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A95": {
+        "value": "Other Provisions; regular",
+        "type": "s",
+        "formula": null,
+        "formatted": "Other Provisions; regular"
+      },
+      "B95": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C95": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D95": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A96": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "B96": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C96": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D96": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A97": {
+        "value": "Total Provisions",
+        "type": "s",
+        "formula": null,
+        "formatted": "Total Provisions"
+      },
+      "B97": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C97": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D97": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A98": {
+        "value": "Total Current Liabilities and Provisions; related to operations",
+        "type": "s",
+        "formula": null,
+        "formatted": "Total Current Liabilities and Provisions; related to operations"
+      },
+      "B98": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C98": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D98": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A99": {
+        "value": "TOTAL OUTSIDE LIABILITIES",
+        "type": "s",
+        "formula": null,
+        "formatted": "TOTAL OUTSIDE LIABILITIES"
+      },
+      "B99": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "C99": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "D99": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A100": {
+        "value": "TOTAL LIABILITIES",
+        "type": "s",
+        "formula": null,
+        "formatted": "TOTAL LIABILITIES"
+      },
+      "B100": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C100": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D100": {
+        "value": 0,
+        "type": "n",
+        "formula": null,
+        "formatted": "0.00"
+      },
+      "A102": {
+        "value": "Particulars",
+        "type": "s",
+        "formula": null,
+        "formatted": "Particulars"
+      },
+      "B102": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C102": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D102": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A103": {
+        "value": "Current Ratio",
+        "type": "s",
+        "formula": null,
+        "formatted": "Current Ratio"
+      },
+      "B103": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(B60/B100,0)",
+        "formatted": "0.0"
+      },
+      "C103": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(C60/C100,0)",
+        "formatted": "0.0"
+      },
+      "D103": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(D60/D100,0)",
+        "formatted": "0.0"
+      },
+      "A104": {
+        "value": "Working Capital Turnover Ratio",
+        "type": "s",
+        "formula": null,
+        "formatted": "Working Capital Turnover Ratio"
+      },
+      "B104": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(B7/(B59-B98),0)",
+        "formatted": "0.0"
+      },
+      "C104": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(C7/(C59-C98),0)",
+        "formatted": "0.0"
+      },
+      "D104": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(D7/(D59-D98),0)",
+        "formatted": "0.0"
+      },
+      "A105": {
+        "value": "Average Collection Period (days)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Average Collection Period (days)"
+      },
+      "B105": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B50/B7)*365,0)",
+        "formatted": "0.0"
+      },
+      "C105": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C50/C7)*365,0)",
+        "formatted": "0.0"
+      },
+      "D105": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D50/D7)*365,0)",
+        "formatted": "0.0"
+      },
+      "A106": {
+        "value": "Average Creditors Period (days)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Average Creditors Period (days)"
+      },
+      "B106": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(((B88+B89)/B18)*365,0)",
+        "formatted": "0.0"
+      },
+      "C106": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(((C88+C89)/C18)*365,0)",
+        "formatted": "0.0"
+      },
+      "D106": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(((D88+D89)/D18)*365,0)",
+        "formatted": "0.0"
+      },
+      "A107": {
+        "value": "Working Capital Cycle (days)  ",
+        "type": "s",
+        "formula": null,
+        "formatted": "Working Capital Cycle (days)  "
+      },
+      "B107": {
+        "value": 0,
+        "type": "n",
+        "formula": "B105-B106",
+        "formatted": "0.0"
+      },
+      "C107": {
+        "value": 0,
+        "type": "n",
+        "formula": "C105-C106",
+        "formatted": "0.0"
+      },
+      "D107": {
+        "value": 0,
+        "type": "n",
+        "formula": "D105-D106",
+        "formatted": "0.0"
+      },
+      "A108": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "B108": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C108": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D108": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A109": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "B109": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C109": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D109": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A110": {
+        "value": "Financial Flexibility:",
+        "type": "s",
+        "formula": null,
+        "formatted": "Financial Flexibility:"
+      },
+      "B110": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C110": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D110": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A111": {
+        "value": "Capital Structure Ratio",
+        "type": "s",
+        "formula": null,
+        "formatted": "Capital Structure Ratio"
+      },
+      "B111": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C111": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D111": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A113": {
+        "value": "Particulars",
+        "type": "s",
+        "formula": null,
+        "formatted": "Particulars"
+      },
+      "B113": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C113": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D113": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A114": {
+        "value": "Debt Equity Ratio",
+        "type": "s",
+        "formula": null,
+        "formatted": "Debt Equity Ratio"
+      },
+      "B114": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B77+B87)/B66,0)",
+        "formatted": "0.00"
+      },
+      "C114": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C77+C87)/C66,0)",
+        "formatted": "0"
+      },
+      "D114": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D77+D87)/D66,0)",
+        "formatted": "0"
+      },
+      "A115": {
+        "value": "Overall Gearing Ratio (Including Acceptances / Creditors on LC)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Overall Gearing Ratio (Including Acceptances / Creditors on LC)"
+      },
+      "B115": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B77+B87)+(B88+B89)/B66,0)",
+        "formatted": "0.00"
+      },
+      "C115": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(((C77+C87)+(C88+C89))/C66,0)",
+        "formatted": "0"
+      },
+      "D115": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(((D77+D87)+(D88+D89))/D66,0)",
+        "formatted": "0"
+      },
+      "A116": {
+        "value": "Overall Gearing Ratio (Excluding Acceptances / Creditors on LC)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Overall Gearing Ratio (Excluding Acceptances / Creditors on LC)"
+      },
+      "B116": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B79+B89)/B68,0)",
+        "formatted": "0.00"
+      },
+      "C116": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C79+C89)/C68,0)",
+        "formatted": "0"
+      },
+      "D116": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D79+D89)/D68,0)",
+        "formatted": "0"
+      },
+      "A117": {
+        "value": "Adjusted Overall Gearing",
+        "type": "s",
+        "formula": null,
+        "formatted": "Adjusted Overall Gearing"
+      },
+      "B117": {
+        "value": 0,
+        "type": "n",
+        "formula": "B115",
+        "formatted": "0.00"
+      },
+      "C117": {
+        "value": 0,
+        "type": "n",
+        "formula": "C115",
+        "formatted": "0"
+      },
+      "D117": {
+        "value": 0,
+        "type": "n",
+        "formula": "D115",
+        "formatted": "0"
+      },
+      "A118": {
+        "value": "Average Cost of Borrowings",
+        "type": "s",
+        "formula": null,
+        "formatted": "Average Cost of Borrowings"
+      },
+      "B118": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(B22/(B77+B87),0)",
+        "formatted": "0.00"
+      },
+      "C118": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(C22/(C77+C87),0)",
+        "formatted": "0"
+      },
+      "D118": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(D22/(D77+D87),0)",
+        "formatted": "0"
+      },
+      "A119": {
+        "value": "Total Outside Liabilities to Networth",
+        "type": "s",
+        "formula": null,
+        "formatted": "Total Outside Liabilities to Networth"
+      },
+      "B119": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(B99/B74,0)",
+        "formatted": "0.00"
+      },
+      "C119": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(C99/C74,0)",
+        "formatted": "0"
+      },
+      "D119": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(D99/D74,0)",
+        "formatted": "0"
+      },
+      "A121": {
+        "value": "Summary of Ratios",
+        "type": "s",
+        "formula": null,
+        "formatted": "Summary of Ratios"
+      },
+      "B121": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C121": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D121": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A122": {
+        "value": "Period Ends on:",
+        "type": "s",
+        "formula": null,
+        "formatted": "Period Ends on:"
+      },
+      "B122": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C122": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D122": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A123": {
+        "value": "Result Type:",
+        "type": "s",
+        "formula": null,
+        "formatted": "Result Type:"
+      },
+      "B123": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C123": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D123": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A124": {
+        "value": "KEY FINANCIAL RATIOS",
+        "type": "s",
+        "formula": null,
+        "formatted": "KEY FINANCIAL RATIOS"
+      },
+      "B124": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C124": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D124": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A125": {
+        "value": "Growth Ratios (%)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Growth Ratios (%)"
+      },
+      "B125": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C125": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D125": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A126": {
+        "value": "Growth in Net sales",
+        "type": "s",
+        "formula": null,
+        "formatted": "Growth in Net sales"
+      },
+      "B126": {
+        "value": 7,
+        "type": "e",
+        "formula": "(B7-C7)/C7*100",
+        "formatted": "#DIV/0!"
+      },
+      "C126": {
+        "value": 7,
+        "type": "e",
+        "formula": "(C7-D7)/D7*100",
+        "formatted": "#DIV/0!"
+      },
+      "D126": {
+        "value": 7,
+        "type": "e",
+        "formula": "(D7-E7)/E7*100",
+        "formatted": "#DIV/0!"
+      },
+      "A127": {
+        "value": "Growth in Total Operating Income",
+        "type": "s",
+        "formula": null,
+        "formatted": "Growth in Total Operating Income"
+      },
+      "B127": {
+        "value": 7,
+        "type": "e",
+        "formula": "(B9-C9)/C9*100",
+        "formatted": "#DIV/0!"
+      },
+      "C127": {
+        "value": 7,
+        "type": "e",
+        "formula": "(C9-D9)/D9*100",
+        "formatted": "#DIV/0!"
+      },
+      "D127": {
+        "value": 7,
+        "type": "e",
+        "formula": "(D9-E9)/E9*100",
+        "formatted": "#DIV/0!"
+      },
+      "A128": {
+        "value": "Growth in PBILDT",
+        "type": "s",
+        "formula": null,
+        "formatted": "Growth in PBILDT"
+      },
+      "B128": {
+        "value": 7,
+        "type": "e",
+        "formula": "(B19-C19)/C19*100",
+        "formatted": "#DIV/0!"
+      },
+      "C128": {
+        "value": 7,
+        "type": "e",
+        "formula": "(C19-D19)/D19*100",
+        "formatted": "#DIV/0!"
+      },
+      "D128": {
+        "value": 7,
+        "type": "e",
+        "formula": "(D19-E19)/E19*100",
+        "formatted": "#DIV/0!"
+      },
+      "A129": {
+        "value": "Growth in APAT",
+        "type": "s",
+        "formula": null,
+        "formatted": "Growth in APAT"
+      },
+      "B129": {
+        "value": 7,
+        "type": "e",
+        "formula": "(B31-C31)/C31*100",
+        "formatted": "#DIV/0!"
+      },
+      "C129": {
+        "value": 7,
+        "type": "e",
+        "formula": "(C31-D31)/D31*100",
+        "formatted": "#DIV/0!"
+      },
+      "D129": {
+        "value": 7,
+        "type": "e",
+        "formula": "(D31-E31)/E31*100",
+        "formatted": "#DIV/0!"
+      },
+      "A130": {
+        "value": "Profitability Ratios (%)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Profitability Ratios (%)"
+      },
+      "B130": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C130": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D130": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A131": {
+        "value": "Gross Margin",
+        "type": "s",
+        "formula": null,
+        "formatted": "Gross Margin"
+      },
+      "B131": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(((B7-B11)/B7)*100,0)",
+        "formatted": "0.0"
+      },
+      "C131": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(((C7-C11)/C7)*100,0)",
+        "formatted": "0.0"
+      },
+      "D131": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(((D7-D11)/D7)*100,0)",
+        "formatted": "0.0"
+      },
+      "A132": {
+        "value": "PBILDT Margin",
+        "type": "s",
+        "formula": null,
+        "formatted": "PBILDT Margin"
+      },
+      "B132": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B19/B9)*100,0)",
+        "formatted": "0.0"
+      },
+      "C132": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C19/C9)*100,0)",
+        "formatted": "0.0"
+      },
+      "D132": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D19/D9)*100,0)",
+        "formatted": "0.0"
+      },
+      "A133": {
+        "value": "PBIT Margin",
+        "type": "s",
+        "formula": null,
+        "formatted": "PBIT Margin"
+      },
+      "B133": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B21/B9)*100,0)",
+        "formatted": "0.0"
+      },
+      "C133": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C21/C9)*100,0)",
+        "formatted": "0.0"
+      },
+      "D133": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D21/D9)*100,0)",
+        "formatted": "0.0"
+      },
+      "A134": {
+        "value": "OPBT Margin",
+        "type": "s",
+        "formula": null,
+        "formatted": "OPBT Margin"
+      },
+      "B134": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B23/B9)*100,0)",
+        "formatted": "0.0"
+      },
+      "C134": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C23/C9)*100,0)",
+        "formatted": "0.0"
+      },
+      "D134": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D23/D9)*100,0)",
+        "formatted": "0.0"
+      },
+      "A135": {
+        "value": "OPAT Margin",
+        "type": "s",
+        "formula": null,
+        "formatted": "OPAT Margin"
+      },
+      "B135": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B24/B9)*100,0)",
+        "formatted": "0.0"
+      },
+      "C135": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C24/C9)*100,0)",
+        "formatted": "0.0"
+      },
+      "D135": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D24/D9)*100,0)",
+        "formatted": "0.0"
+      },
+      "A136": {
+        "value": "APAT Margin",
+        "type": "s",
+        "formula": null,
+        "formatted": "APAT Margin"
+      },
+      "B136": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B31/B9)*100,0)",
+        "formatted": "0.0"
+      },
+      "C136": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C31/C9)*100,0)",
+        "formatted": "0.0"
+      },
+      "D136": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D31/D9)*100,0)",
+        "formatted": "0.0"
+      },
+      "A137": {
+        "value": "Operating ROCE",
+        "type": "s",
+        "formula": null,
+        "formatted": "Operating ROCE"
+      },
+      "B137": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B21/(B42+(B60-B100))*100),0)",
+        "formatted": "0.0"
+      },
+      "C137": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C21/(C42+(C60-C100))*100),0)",
+        "formatted": "0.0"
+      },
+      "D137": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D21/(D42+(D60-D100))*100),0)",
+        "formatted": "0.0"
+      },
+      "A138": {
+        "value": "ROCE (Total)",
+        "type": "s",
+        "formula": null,
+        "formatted": "ROCE (Total)"
+      },
+      "B138": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B21/B60)*100,0)",
+        "formatted": "0.0"
+      },
+      "C138": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C21/C60)*100,0)",
+        "formatted": "0.0"
+      },
+      "D138": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D21/D60)*100,0)",
+        "formatted": "0.0"
+      },
+      "A139": {
+        "value": "RONW",
+        "type": "s",
+        "formula": null,
+        "formatted": "RONW"
+      },
+      "B139": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C139": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D139": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A140": {
+        "value": "Average Cost of Borrowings",
+        "type": "s",
+        "formula": null,
+        "formatted": "Average Cost of Borrowings"
+      },
+      "B140": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B22/(B77+B87))*100,0)",
+        "formatted": "0.0"
+      },
+      "C140": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C22/(C77+C87))*100,0)",
+        "formatted": "0.0"
+      },
+      "D140": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D22/(D77+D87))*100,0)",
+        "formatted": "0.0"
+      },
+      "A141": {
+        "value": "Turnover Ratios",
+        "type": "s",
+        "formula": null,
+        "formatted": "Turnover Ratios"
+      },
+      "B141": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C141": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D141": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A142": {
+        "value": "Operating Capital Turnover Ratio",
+        "type": "s",
+        "formula": null,
+        "formatted": "Operating Capital Turnover Ratio"
+      },
+      "B142": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(B7/(B60-B100),0)",
+        "formatted": "0.0"
+      },
+      "C142": {
+        "value": 7,
+        "type": "e",
+        "formula": "C7/C9",
+        "formatted": "#DIV/0!"
+      },
+      "D142": {
+        "value": 7,
+        "type": "e",
+        "formula": "D7/D9",
+        "formatted": "#DIV/0!"
+      },
+      "A143": {
+        "value": "Fixed Assets Turnover Ratio",
+        "type": "s",
+        "formula": null,
+        "formatted": "Fixed Assets Turnover Ratio"
+      },
+      "B143": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(B7/B42,0)",
+        "formatted": "0.0"
+      },
+      "C143": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(C7/C42,0)",
+        "formatted": "0.0"
+      },
+      "D143": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(D7/D42,0)",
+        "formatted": "0.00"
+      },
+      "A144": {
+        "value": "Working Capital Turnover Ratio",
+        "type": "s",
+        "formula": null,
+        "formatted": "Working Capital Turnover Ratio"
+      },
+      "B144": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(B7/(B60-B100),0)",
+        "formatted": "0.0"
+      },
+      "C144": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(C7/(C59-C98),0)",
+        "formatted": "0.0"
+      },
+      "D144": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(D7/(D59-D98),0)",
+        "formatted": "0"
+      },
+      "A145": {
+        "value": "Average Collection Period (days)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Average Collection Period (days)"
+      },
+      "B145": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B50/B7)*365,0)",
+        "formatted": "0.0"
+      },
+      "C145": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C50/C7)*365,0)",
+        "formatted": "0.0"
+      },
+      "D145": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D50/D7)*365,0)",
+        "formatted": "0"
+      },
+      "A146": {
+        "value": "Average Creditors Period (days)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Average Creditors Period (days)"
+      },
+      "B146": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B88/B11)*365,0)",
+        "formatted": "0.0"
+      },
+      "C146": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C88/C11)*365,0)",
+        "formatted": "0.0"
+      },
+      "D146": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D88/D11)*365,0)",
+        "formatted": "0"
+      },
+      "A147": {
+        "value": "Working Capital Cycle (days)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Working Capital Cycle (days)"
+      },
+      "B147": {
+        "value": 0,
+        "type": "n",
+        "formula": "B145-B146",
+        "formatted": "0.0"
+      },
+      "C147": {
+        "value": 0,
+        "type": "n",
+        "formula": "C145-C146",
+        "formatted": "0.0"
+      },
+      "D147": {
+        "value": 0,
+        "type": "n",
+        "formula": "D145-D146",
+        "formatted": "0"
+      },
+      "A148": {
+        "value": "Solvency Ratios :",
+        "type": "s",
+        "formula": null,
+        "formatted": "Solvency Ratios :"
+      },
+      "B148": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "C148": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "D148": {
+        "type": "z",
+        "formula": null,
+        "formatted": null
+      },
+      "A149": {
+        "value": "Debt Equity Ratio",
+        "type": "s",
+        "formula": null,
+        "formatted": "Debt Equity Ratio"
+      },
+      "B149": {
+        "value": 0,
+        "type": "n",
+        "formula": "B114",
+        "formatted": "0.00"
+      },
+      "C149": {
+        "value": 0,
+        "type": "n",
+        "formula": "C114",
+        "formatted": "0"
+      },
+      "D149": {
+        "value": 0,
+        "type": "n",
+        "formula": "D114",
+        "formatted": "0"
+      },
+      "A150": {
+        "value": "Overall Gearing Ratio (Including Acceptances / Creditors on LC)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Overall Gearing Ratio (Including Acceptances / Creditors on LC)"
+      },
+      "B150": {
+        "value": 0,
+        "type": "n",
+        "formula": "B115",
+        "formatted": "0.00"
+      },
+      "C150": {
+        "value": 0,
+        "type": "n",
+        "formula": "C115",
+        "formatted": "0"
+      },
+      "D150": {
+        "value": 0,
+        "type": "n",
+        "formula": "D115",
+        "formatted": "0"
+      },
+      "A151": {
+        "value": "Adjusted Debt Equity Ratio",
+        "type": "s",
+        "formula": null,
+        "formatted": "Adjusted Debt Equity Ratio"
+      },
+      "B151": {
+        "value": 0,
+        "type": "n",
+        "formula": "B149",
+        "formatted": "0.00"
+      },
+      "C151": {
+        "value": 0,
+        "type": "n",
+        "formula": "C149",
+        "formatted": "0"
+      },
+      "D151": {
+        "value": 0,
+        "type": "n",
+        "formula": "D149",
+        "formatted": "0"
+      },
+      "A152": {
+        "value": "Adjusted Overall Gearing",
+        "type": "s",
+        "formula": null,
+        "formatted": "Adjusted Overall Gearing"
+      },
+      "B152": {
+        "value": 0,
+        "type": "n",
+        "formula": "B117",
+        "formatted": "0.00"
+      },
+      "C152": {
+        "value": 0,
+        "type": "n",
+        "formula": "C117",
+        "formatted": "0"
+      },
+      "D152": {
+        "value": 0,
+        "type": "n",
+        "formula": "D117",
+        "formatted": "0"
+      },
+      "A153": {
+        "value": "Term Debt (including CPLTD) / Gross Cash Accruals",
+        "type": "s",
+        "formula": null,
+        "formatted": "Term Debt (including CPLTD) / Gross Cash Accruals"
+      },
+      "B153": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B77+B87)/B32,0)",
+        "formatted": "0.00"
+      },
+      "C153": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C77+C87)/C32,0)",
+        "formatted": "0.0"
+      },
+      "D153": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D77+D87)/D32,0)",
+        "formatted": "0.0"
+      },
+      "A154": {
+        "value": "Total Debt / Gross Cash Accruals",
+        "type": "s",
+        "formula": null,
+        "formatted": "Total Debt / Gross Cash Accruals"
+      },
+      "B154": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((B77+B79+B87)/B32,0)",
+        "formatted": "0.00"
+      },
+      "C154": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((C77+C79+C87)/C32,0)",
+        "formatted": "0.0"
+      },
+      "D154": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR((D77+D79+D87)/D32,0)",
+        "formatted": "0.0"
+      },
+      "A155": {
+        "value": "Interest Coverage (PBILDT / Interest)",
+        "type": "s",
+        "formula": null,
+        "formatted": "Interest Coverage (PBILDT / Interest)"
+      },
+      "B155": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(B19/B22,0)",
+        "formatted": "0.00"
+      },
+      "C155": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(C19/C22,0)",
+        "formatted": "0.0"
+      },
+      "D155": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(D19/D22,0)",
+        "formatted": "0.0"
+      },
+      "A156": {
+        "value": "PBIT / Interest",
+        "type": "s",
+        "formula": null,
+        "formatted": "PBIT / Interest"
+      },
+      "B156": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(B21/B22,0)",
+        "formatted": "0.00"
+      },
+      "C156": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(C21/C22,0)",
+        "formatted": "0.0"
+      },
+      "D156": {
+        "value": 0,
+        "type": "n",
+        "formula": "IFERROR(D21/D22,0)",
+        "formatted": "0.0"
+      },
+      "A157": {
+        "value": "Adjusted Interest Coverage",
+        "type": "s",
+        "formula": null,
+        "formatted": "Adjusted Interest Coverage"
+      },
+      "B157": {
+        "value": 0,
+        "type": "n",
+        "formula": "B155",
+        "formatted": "0.00"
+      },
+      "C157": {
+        "value": 0,
+        "type": "n",
+        "formula": "C155",
+        "formatted": "0.0"
+      },
+      "D157": {
+        "value": 0,
+        "type": "n",
+        "formula": "D155",
+        "formatted": "0.0"
+      }
+    },
+    "cellCount": 612,
+    "formulaCount": 135
+  }
+}

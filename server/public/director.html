@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>Director Details - MCA Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/theme.css" />
+    <style>
+        .cv-main { padding: 22px 0 56px; }
+
+        .page-head { margin: 18px 0 14px; }
+
+        .page-title {
+            margin: 0;
+            font-size: 28px;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+
+        .page-subtitle { margin: 8px 0 0; color: var(--muted); }
+
+        .loading {
+            text-align: center;
+            padding: 40px 16px;
+        }
+
+        .spinner {
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .director-header {
+            border: 1px solid var(--border);
+            background: var(--bg-2);
+            padding: 18px;
+            border-radius: 14px;
+            margin: 18px 0;
+        }
+
+        .director-header h2 {
+            margin: 0;
+            font-size: 18px;
+            letter-spacing: -0.01em;
+        }
+
+        .director-header .din {
+            margin-top: 6px;
+            color: var(--muted);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 13px;
+        }
+
+        .about-text {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        .section {
+            margin: 30px 0;
+        }
+
+        .section h3 {
+            color: var(--text);
+            font-size: 16px;
+            margin: 0 0 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            letter-spacing: -0.01em;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .info-item {
+            background: var(--bg);
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .info-item strong {
+            display: block;
+            color: var(--muted);
+            margin-bottom: 8px;
+            font-size: 12.5px;
+            font-weight: 750;
+        }
+
+        .info-item span {
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 650;
+        }
+
+        .companies-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            background: var(--bg);
+        }
+
+        .companies-table thead {
+            background: var(--bg-2);
+            color: var(--text);
+        }
+
+        .companies-table th {
+            padding: 14px;
+            text-align: left;
+            font-size: 12.5px;
+            color: var(--muted);
+            font-weight: 800;
+        }
+
+        .companies-table td {
+            padding: 14px;
+            border-top: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .companies-table tbody tr:hover {
+            background: var(--bg-2);
+        }
+
+        .company-name {
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .company-cin {
+            font-family: monospace;
+            color: var(--muted);
+            font-size: 12.5px;
+        }
+
+        .designation-badge {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.08);
+            color: var(--accent);
+            border: 1px solid rgba(37, 99, 235, 0.18);
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12.5px;
+            font-weight: 800;
+        }
+
+        .error-message {
+            background: #fff1f2;
+            color: #9f1239;
+            border: 1px solid #fecdd3;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="cv">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="navbar" role="banner">
+        <div class="container navbar-inner">
+            <a class="brand" href="/" aria-label="CrediVerify 360 Home">
+                <span class="brand-mark" aria-hidden="true">CV</span>
+                <span>
+                    <div class="brand-title">CrediVerify 360</div>
+                    <div class="brand-subtitle">Director & MCA intelligence</div>
+                </span>
+            </a>
+
+            <div class="nav-actions">
+                <a href="/mca.html" class="btn btn-secondary">Back to Company Search</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" class="cv-main" role="main">
+        <div class="container">
+            <div class="page-head">
+                <div class="kicker">MCA • Director profile</div>
+                <h1 class="page-title">Director Details</h1>
+                <p class="page-subtitle">Review director identity fields and associated companies in a clean, report-ready layout.</p>
+            </div>
+
+            <section class="card card-pad" aria-label="Director details">
+                <div id="content">
+                    <div class="loading">
+                        <div class="spinner" aria-hidden="true"></div>
+                        <p class="p" style="margin:0;">Loading director details…</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <p class="footer-title">CrediVerify 360</p>
+                    <p class="footer-text">Internal verification tools for evidence-backed decisions and audit-friendly reporting.</p>
+                    <div class="footer-meta">
+                        <span>Internal Use Only</span>
+                        <span>•</span>
+                        <span>Director Intelligence</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="footer-title">Workspace</p>
+                    <div class="footer-links">
+                        <a href="/">Dashboard</a>
+                        <a href="/case-workspace?view=blocks">Case Workspace</a>
+                    </div>
+                </div>
+                <div>
+                    <p class="footer-title">Support</p>
+                    <div class="footer-links">
+                        <a href="mailto:support@credverify.local">support@credverify.local</a>
+                        <a href="#" onclick="return false;">Docs (internal)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Get DIN from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const din = urlParams.get('din');
+
+        if (!din) {
+            document.getElementById('content').innerHTML = 
+                '<div class="error-message">No DIN provided. Please go back and select a director.</div>';
+        } else {
+            fetchDirectorDetails(din);
+        }
+
+        async function fetchDirectorDetails(din) {
+            try {
+                const response = await fetch('/api/fetch-director', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ din: din })
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    displayDirectorData(result.data);
+                } else {
+                    document.getElementById('content').innerHTML = 
+                        '<div class="error-message">' + (result.error || 'Failed to fetch director details') + '</div>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('content').innerHTML = 
+                    '<div class="error-message">Network error. Please try again later.</div>';
+            }
+        }
+
+        function displayDirectorData(data) {
+            let html = '';
+
+            // Director Header
+            html += '<div class="director-header">';
+            html += '<h2>' + escapeHtml(data.name) + '</h2>';
+            html += '<div class="din">DIN: ' + data.din + '</div>';
+            html += '</div>';
+
+            // About Section
+            html += '<div class="section">';
+            html += '<h3>About</h3>';
+            html += '<p class="about-text">';
+            
+            if (data.about) {
+                html += escapeHtml(data.about);
+            } else {
+                html += '<strong>' + escapeHtml(data.name) + '</strong> is a director registered with Ministry of Corporate Affairs. ';
+                html += 'Their Director Identification Number (DIN) is <strong>' + data.din + '</strong>.';
+                const totalCompanies = (data.companies ? data.companies.length : 0) + (data.pastCompanies ? data.pastCompanies.length : 0);
+                if (totalCompanies > 0) {
+                    html += ' ' + escapeHtml(data.name) + ' is/has been associated with <strong>' + totalCompanies + '</strong> ' + (totalCompanies === 1 ? 'company' : 'companies') + '.';
+                }
+            }
+            
+            html += '</p></div>';
+
+            // Personal Information
+            if (data.personalInfo && Object.keys(data.personalInfo).length > 0) {
+                html += '<div class="section">';
+                html += '<h3>Personal Information</h3>';
+                html += '<div class="info-grid">';
+                
+                for (const [key, value] of Object.entries(data.personalInfo)) {
+                    html += '<div class="info-item">';
+                    html += '<strong>' + escapeHtml(key) + '</strong>';
+                    html += '<span>' + escapeHtml(value) + '</span>';
+                    html += '</div>';
+                }
+                
+                html += '</div></div>';
+            }
+
+            // Current Companies Associated
+            if (data.companies && data.companies.length > 0) {
+                html += '<div class="section">';
+                html += '<h3>Companies Associated With</h3>';
+                html += '<table class="companies-table">';
+                html += '<thead><tr>';
+                html += '<th>Company</th>';
+                html += '<th>Designation</th>';
+                html += '<th>Date of Appointment</th>';
+                html += '</tr></thead><tbody>';
+
+                data.companies.forEach(company => {
+                    html += '<tr>';
+                    html += '<td>';
+                    html += '<div class="company-name">' + escapeHtml(company.name) + '</div>';
+                    if (company.cin) {
+                        html += '<div class="company-cin">CIN: ' + company.cin + '</div>';
+                    }
+                    html += '</td>';
+                    html += '<td><span class="designation-badge">' + escapeHtml(company.designation || 'Director') + '</span></td>';
+                    html += '<td>' + (company.dateOfAppointment || 'N/A') + '</td>';
+                    html += '</tr>';
+                });
+
+                html += '</tbody></table></div>';
+            }
+
+            // Past Companies Associated
+            if (data.pastCompanies && data.pastCompanies.length > 0) {
+                html += '<div class="section">';
+                html += '<h3>Past Companies Associated With</h3>';
+                html += '<table class="companies-table">';
+                html += '<thead><tr>';
+                html += '<th>Company</th>';
+                html += '<th>Designation</th>';
+                html += '<th>Date of Appointment</th>';
+                html += '<th>Date of Cessation</th>';
+                html += '</tr></thead><tbody>';
+
+                data.pastCompanies.forEach(company => {
+                    html += '<tr>';
+                    html += '<td>';
+                    html += '<div class="company-name">' + escapeHtml(company.name) + '</div>';
+                    if (company.cin) {
+                        html += '<div class="company-cin">CIN: ' + company.cin + '</div>';
+                    }
+                    html += '</td>';
+                    html += '<td><span class="designation-badge">' + escapeHtml(company.designation || 'Director') + '</span></td>';
+                    html += '<td>' + (company.dateOfAppointment || 'N/A') + '</td>';
+                    html += '<td>' + (company.dateOfCessation || 'N/A') + '</td>';
+                    html += '</tr>';
+                });
+
+                html += '</tbody></table></div>';
+            }
+
+            document.getElementById('content').innerHTML = html;
+            document.title = data.name + ' - Director Details';
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

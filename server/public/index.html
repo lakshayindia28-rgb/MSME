@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>Business Intelligence Hub - GST & MCA Data Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #111111;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header Section */
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px;
+            color: #0f172a;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-section p {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: #334155;
+        }
+
+        .hero-section .subtitle {
+            font-size: 1.1em;
+            color: #475569;
+            margin-bottom: 40px;
+        }
+
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .badge {
+            background: #f8fafc;
+            padding: 10px 25px;
+            border-radius: 25px;
+            color: #0f172a;
+            font-size: 0.95em;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-icon {
+            font-size: 1.2em;
+        }
+
+        /* Module Cards Section */
+        .modules-section {
+            margin-top: 60px;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .module-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 45px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+            cursor: pointer;
+            transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            z-index: 0;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 132, 199, 0.06);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        .module-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .module-card:hover::before {
+            opacity: 1;
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(2, 132, 199, 0.35);
+            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
+        }
+
+        .module-icon {
+            font-size: 4em;
+            margin-bottom: 25px;
+            display: inline-block;
+            transition: transform 160ms ease;
+        }
+
+        .module-card:hover .module-icon {
+            transform: scale(1.06);
+        }
+
+        .workspace-card {
+            border-top: 5px solid #a855f7;
+        }
+
+        .workspace-card .module-icon {
+            color: #a855f7;
+        }
+
+        .gst-card {
+            border-top: 5px solid #10b981;
+        }
+
+        .gst-card .module-icon {
+            color: #10b981;
+        }
+
+        .mca-card {
+            border-top: 5px solid #3b82f6;
+        }
+
+        .mca-card .module-icon {
+            color: #3b82f6;
+        }
+
+        .compliance-card {
+            border-top: 5px solid #dc2626;
+        }
+
+        .compliance-card .module-icon {
+            color: #dc2626;
+        }
+
+        .module-card h2 {
+            font-size: 2em;
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .module-card p {
+            color: #6b7280;
+            font-size: 1.1em;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 25px 0;
+        }
+
+        .features-list li {
+            color: #4b5563;
+            padding: 10px 0;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: white;
+            background: #10b981;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .mca-card .features-list li::before {
+            background: #3b82f6;
+        }
+
+        .udyam-card .features-list li::before {
+            background: #f59e0b;
+        }
+
+        .compliance-card .features-list li::before {
+            background: #dc2626;
+        }
+
+        .workspace-card .features-list li::before {
+            background: #a855f7;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: #0f172a;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 14px rgba(15, 23, 42, 0.14);
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.18);
+        }
+
+        .gst-card .btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .gst-card .btn-primary:hover {
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.6);
+        }
+
+        .mca-card .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .mca-card .btn-primary:hover {
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.6);
+        }
+
+        .udyam-card .btn-primary {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .udyam-card .btn-primary:hover {
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.6);
+        }
+
+        .compliance-card .btn-primary {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
+        }
+
+        .compliance-card .btn-primary:hover {
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.6);
+        }
+
+        .workspace-card .btn-primary {
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            box-shadow: 0 5px 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .workspace-card .btn-primary:hover {
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.6);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 80px;
+            padding: 30px;
+            color: #475569;
+        }
+
+        .footer p {
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #334155;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .footer-links a:hover {
+            color: #0f172a;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.2em;
+            }
+
+            .hero-section p {
+                font-size: 1.1em;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .module-card {
+                padding: 30px;
+            }
+
+            .module-card h2 {
+                font-size: 1.6em;
+            }
+
+            .badge-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Loading Animation */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1>🚀 Business Intelligence Hub</h1>
+            <p>Your Gateway to Government Data & Corporate Information</p>
+            <p class="subtitle">Access GST Records & MCA Company Details - All in One Place</p>
+            
+            <div class="badge-container">
+                <div class="badge">
+                    <span class="badge-icon">⚡</span>
+                    <span>Real-Time Data</span>
+                </div>
+                <div class="badge">
+                    <span class="badge-icon">🔒</span>
+                    <span>Secure Access</span>
+                </div>
+                <div class="badge">
+                    <span class="badge-icon">🎯</span>
+                    <span>Accurate Information</span>
+                </div>
+                <div class="badge">
+                    <span class="badge-icon">⚙️</span>
+                    <span>Easy to Use</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modules Grid -->
+        <div class="modules-section">
+            <div class="modules-grid">
+                <!-- Business Details Blocks (Group of existing modules) -->
+                <div class="module-card workspace-card" onclick="window.location.href='case-workspace.html?block=business'">
+                    <div class="module-icon">🏢</div>
+                    <h2>Business Details Blocks</h2>
+                    <p>All business verification modules in one workspace view (module-wise outputs + evidence).</p>
+
+                    <ul class="features-list">
+                        <li>GST Verification</li>
+                        <li>MCA Verification</li>
+                        <li>Compliance Check</li>
+                        <li>PAN Details</li>
+                        <li>Udyam Details</li>
+                        <li>ITR</li>
+                        <li>Bank Statement</li>
+                    </ul>
+
+                    <button class="btn-primary">
+                        Open Business Blocks →
+                    </button>
+                </div>
+
+                <!-- Personal Information Block (Placeholder) -->
+                <div class="module-card" onclick="window.location.href='case-workspace.html?block=personal'">
+                    <div class="module-icon">👤</div>
+                    <h2>Personal Information Block</h2>
+                    <p>Modules for business-related people (directors / proprietors / key contacts). Coming next.</p>
+
+                    <ul class="features-list">
+                        <li>Directors (DIN) details</li>
+                        <li>Key contacts & roles</li>
+                        <li>Identity/KYC checklist</li>
+                        <li>Evidence uploads</li>
+                    </ul>
+
+                    <button class="btn-primary">
+                        Open Personal Block →
+                    </button>
+                </div>
+
+                <!-- Report Builder Block -->
+                <div class="module-card workspace-card" onclick="window.location.href='case-workspace.html?view=single&block=report'">
+                    <div class="module-icon">📊</div>
+                    <h2>Report Builder Block</h2>
+                    <p>Select module-wise data for final report, preview in real time, and generate professional PDF reports.</p>
+
+                    <ul class="features-list">
+                        <li>Module selection for report</li>
+                        <li>Real-time preview</li>
+                        <li>Cover, Signature & Stamp</li>
+                        <li>PDF generation</li>
+                    </ul>
+
+                    <button class="btn-primary">
+                        Open Report Builder →
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2026 Business Intelligence Hub. All rights reserved.</p>
+            <p class="pulse">Built with ❤️ for seamless data access</p>
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#contact">Contact Us</a>
+                <a href="#api">API Documentation</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '1') {
+                window.location.href = 'gst.html';
+            } else if (e.key === '2') {
+                window.location.href = 'mca.html';
+            } else if (e.key === '3') {
+                window.location.href = 'compliance.html';
+            }
+        });
+
+        // Card click animation
+        const cards = document.querySelectorAll('.module-card');
+        cards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Don't navigate if clicking the button
+                if (e.target.classList.contains('btn-primary')) {
+                    return;
+                }
+                
+                // Add a scale animation before navigation
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    const href = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+                    window.location.href = href;
+                }, 200);
+            });
+        });
+
+        // Prevent button propagation
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        });
+
+    </script>
+
+</body>
+</html>
