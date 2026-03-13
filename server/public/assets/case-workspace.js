@@ -5826,7 +5826,11 @@
     }
 
     function savePersonItrEntries(personKey, entries) {
-      const model = readPersonalInfo();
+      // Use in-memory model (_personalInfoModel) to preserve PAN/Aadhaar images.
+      // readPersonalInfo() reads from localStorage where images are stripped.
+      const model = (_personalInfoModel && typeof _personalInfoModel === 'object')
+        ? _personalInfoModel
+        : readPersonalInfo();
       if (!model.personal_itr) model.personal_itr = { primary: { name: '', itr_entries: [] }, designatedPersons: [] };
       if (personKey === 'primary') {
         if (!model.personal_itr.primary) model.personal_itr.primary = {};
@@ -6011,7 +6015,10 @@
         const json = await res.json().catch(() => ({}));
         if (json?.success && json?.data?.data) {
           const serverData = json.data.data;
-          const model = readPersonalInfo();
+          // Use in-memory model to preserve PAN/Aadhaar images
+          const model = (_personalInfoModel && typeof _personalInfoModel === 'object')
+            ? _personalInfoModel
+            : readPersonalInfo();
           if (!model.personal_itr) model.personal_itr = { primary: { name: '', itr_entries: [] }, designatedPersons: [] };
           // Merge server itr_entries into model
           if (serverData.primary?.itr_entries) {
@@ -9489,37 +9496,21 @@
         btn.disabled = true;
         btn.textContent = 'Saving…';
         try {
-          // Read latest personal info from localStorage (already saved by scheduleSave debounce)
-          const personalInfo = readPersonalInfo();
+          // Use in-memory model (_personalInfoModel) which has full image data_urls.
+          // readPersonalInfo() reads from localStorage where images are stripped for quota.
+          const personalInfo = (_personalInfoModel && typeof _personalInfoModel === 'object')
+            ? _personalInfoModel
+            : readPersonalInfo();
           if (moduleKey === 'applicant') {
             clearApplicantDraftFlags(personalInfo);
-            // Save Applicant click should immediately propagate matching fields to linked modules.
             syncApplicantPeopleIntoPanAndAadhaar(personalInfo);
-            writePersonalInfo(personalInfo);
-            // Refresh Personal ITR person list
             if (typeof window._pitrRebuildPersons === 'function') window._pitrRebuildPersons();
           }
-          const moduleData = personalInfo[moduleKey] || {};
-          const payload = JSON.parse(JSON.stringify(moduleData));
 
-          // Strip large data URLs from verified docs for server snapshot
-          if (payload.primary && payload.primary.verified_document && payload.primary.verified_document.data_url) {
-            payload.primary.verified_document = {
-              file_name: payload.primary.verified_document.file_name,
-              attached: true
-            };
-          }
-          if (payload.primary && payload.primary.verified_document_2 && payload.primary.verified_document_2.data_url) {
-            payload.primary.verified_document_2 = {
-              file_name: payload.primary.verified_document_2.file_name,
-              attached: true
-            };
-          }
+          // Always persist the FULL personal_info (with images) to server.
+          // This ensures PAN/Aadhaar images are never lost from the personal_info snapshot.
+          writePersonalInfo(personalInfo, { immediate: true });
 
-          if (HAS_CASE_ID) {
-            btn.textContent = 'Saving to server…';
-            await saveSnapshotToServer('personal_' + moduleKey, JSON.stringify(payload));
-          }
           STORAGE.setItem(storageKey('lastUpdated'), new Date().toISOString());
           // Re-render summary cards and collapse form
           if (typeof window._piRenderAllSummaries === 'function') window._piRenderAllSummaries();

@@ -347,6 +347,48 @@ async function hydrateDueDiligencePayloadFromCase(rawPayload) {
     }
   }
 
+  // Hydrate Personal Block PAN/Aadhaar images — if frontend sent stripped images (attached:true, no data_url),
+  // try to recover them from the server personal_info snapshot
+  if (payload.personalInfo && typeof payload.personalInfo === 'object') {
+    const piModules = ['pan', 'aadhaar'];
+    const docKeys = ['verified_document', 'verified_document_2'];
+    let needsRecovery = false;
+    for (const mk of piModules) {
+      const primary = payload.personalInfo[mk]?.primary;
+      if (!primary) continue;
+      for (const dk of docKeys) {
+        const doc = primary[dk];
+        if (doc && typeof doc === 'object' && (doc.attached || doc.stripped) && !doc.data_url) {
+          needsRecovery = true;
+          break;
+        }
+      }
+      if (needsRecovery) break;
+    }
+    if (needsRecovery) {
+      try {
+        const piSnap = await readLatestCaseModuleSnapshot(caseId, 'personal_info');
+        if (piSnap && typeof piSnap === 'object') {
+          for (const mk of piModules) {
+            const primary = payload.personalInfo[mk]?.primary;
+            const snapPrimary = piSnap[mk]?.primary;
+            if (!primary || !snapPrimary) continue;
+            for (const dk of docKeys) {
+              const doc = primary[dk];
+              const snapDoc = snapPrimary[dk];
+              if (doc && typeof doc === 'object' && (doc.attached || doc.stripped) && !doc.data_url) {
+                if (snapDoc && typeof snapDoc === 'object' && snapDoc.data_url && typeof snapDoc.data_url === 'string' && snapDoc.data_url.startsWith('data:')) {
+                  primary[dk] = snapDoc;
+                  logger.info(`Personal ${mk} ${dk} image recovered from snapshot`);
+                }
+              }
+            }
+          }
+        }
+      } catch (e) { logger.warn('Personal image recovery from snapshot failed:', e?.message); }
+    }
+  }
+
   return payload;
 }
 
