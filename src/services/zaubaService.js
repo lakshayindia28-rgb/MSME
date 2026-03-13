@@ -1,11 +1,13 @@
 import axios from 'axios';
+import puppeteer from 'puppeteer';
 import * as cheerio from 'cheerio';
 import { logger } from '../utils/logger.js';
 
 class ZaubaService {
   constructor() {
     this.baseUrl = 'https://www.zaubacorp.com';
-    this.proxy = process.env.SCRAPE_PROXY ? this._parseProxy(process.env.SCRAPE_PROXY) : null;
+    this.proxyRaw = process.env.SCRAPE_PROXY || null; // IP:PORT:USER:PASS
+    this.proxy = this.proxyRaw ? this._parseProxy(this.proxyRaw) : null;
   }
 
   _parseProxy(str) {
@@ -22,6 +24,49 @@ class ZaubaService {
   }
 
   /**
+   * Fetch page HTML using Puppeteer (bypasses Cloudflare challenge)
+   */
+  async _fetchWithBrowser(url) {
+    const args = [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-blink-features=AutomationControlled'
+    ];
+    if (this.proxyRaw) {
+      const parts = this.proxyRaw.split(':');
+      args.push(`--proxy-server=http://${parts[0]}:${parts[1]}`);
+    }
+
+    const browser = await puppeteer.launch({
+      headless: 'new',
+      executablePath: process.env.CHROME_PATH || '/snap/bin/chromium',
+      args
+    });
+
+    try {
+      const page = await browser.newPage();
+
+      // Authenticate with proxy if credentials exist
+      if (this.proxy && this.proxy.auth) {
+        await page.authenticate({ username: this.proxy.auth.username, password: this.proxy.auth.password });
+      }
+
+      await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+
+      // Wait a bit for any Cloudflare challenge to resolve
+      await page.waitForSelector('body', { timeout: 10000 });
+
+      const html = await page.content();
+      return html;
+    } finally {
+      await browser.close();
+    }
+  }
+
+  /**
    * Fetch company data from ZaubaCorp by CIN
    */
   async fetchCompanyData(cin) {
@@ -35,33 +80,32 @@ class ZaubaService {
 
       // Search for company by CIN
       const searchUrl = `${this.baseUrl}/company/${cin}`;
-      
-      const axiosOpts = {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0',
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-          'Accept-Language': 'en-US,en;q=0.5',
-          'Accept-Encoding': 'gzip, deflate, br',
-          'Connection': 'keep-alive',
-          'Upgrade-Insecure-Requests': '1',
-          'Sec-Fetch-Dest': 'document',
-          'Sec-Fetch-Mode': 'navigate',
-          'Sec-Fetch-Site': 'none',
-          'Cache-Control': 'max-age=0'
-        },
-        timeout: 20000,
-        maxRedirects: 5
-      };
-      if (this.proxy) axiosOpts.proxy = this.proxy;
 
-      const response = await axios.get(searchUrl, axiosOpts);
-
-      if (response.status !== 200) {
-        throw new Error(`Failed to fetch data. Status: ${response.status}`);
+      let html;
+      try {
+        // Try Puppeteer first (bypasses Cloudflare)
+        html = await this._fetchWithBrowser(searchUrl);
+      } catch (browserErr) {
+        logger.warn(`Puppeteer fetch failed, falling back to axios: ${browserErr.message}`);
+        // Fallback to axios
+        const axiosOpts = {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0',
+            'Accept': 'text/html',
+          },
+          timeout: 20000,
+          maxRedirects: 5
+        };
+        if (this.proxy) axiosOpts.proxy = this.proxy;
+        const response = await axios.get(searchUrl, axiosOpts);
+        if (response.status !== 200) {
+          throw new Error(`Failed to fetch data. Status: ${response.status}`);
+        }
+        html = response.data;
       }
 
       // Parse HTML response
-      const companyData = this.parseCompanyHTML(response.data, cin);
+      const companyData = this.parseCompanyHTML(html, cin);
       
       logger.info(`✓ MCA data fetched successfully for: ${companyData.companyName}`);
       
