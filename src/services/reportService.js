@@ -1949,7 +1949,6 @@ Format the report professionally with clear headings and bullet points.`;
       const piPersonalItr = personalInfo.personal_itr || {};
       const piItrPrimary = piPersonalItr.primary || {};
       const primaryItrEntries = Array.isArray(piItrPrimary.itr_entries) ? piItrPrimary.itr_entries.filter(e => e && e.assessment_year) : [];
-      logger.info('[ITR-DEBUG] personalInfo.personal_itr keys: ' + JSON.stringify(Object.keys(piPersonalItr)) + ', primary keys: ' + JSON.stringify(Object.keys(piItrPrimary)) + ', itr_entries count: ' + primaryItrEntries.length + ', raw itr_entries: ' + JSON.stringify(piItrPrimary.itr_entries?.slice?.(0, 2)));
 
       const primaryLabel = (ap.primary_label || '').trim() || 'Primary Applicant';
       html += buildPersonPages(primaryLabel, ap, pn, aa, rv, primaryItrEntries, true, rvImages);
@@ -2025,7 +2024,7 @@ Format the report professionally with clear headings and bullet points.`;
           --bg:#ffffff; --soft:#f5f7fa;
         }
         *{box-sizing:border-box}
-        html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+        html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'DejaVu Sans','Noto Sans',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
         .page{page-break-after:always}
         .page:last-child{page-break-after:auto}
         .cover{position:relative;min-height: 260mm;padding:18mm 14mm;background:var(--bg)}
@@ -4051,7 +4050,7 @@ Format the report professionally with clear headings and bullet points.`;
         <style>
           :root{--ink:#0f172a;--muted:#475569;--line:#dbe3ec;--soft:#f8fafc;--brand:#0b1f3a}
           *{box-sizing:border-box}
-          body{margin:0;padding:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--ink);background:#fff}
+          body{margin:0;padding:0;font-family:'DejaVu Sans','Noto Sans',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:var(--ink);background:#fff}
           .page{padding:10mm 0}
           h1{font-size:24px;color:var(--brand);margin:0 0 6px 0}
           h2{font-size:16px;color:var(--brand);margin:0 0 8px 0}

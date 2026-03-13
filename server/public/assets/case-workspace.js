@@ -5392,6 +5392,21 @@
                 });
               }
               STORAGE.setItem(storageKey(PERSONAL_INFO_STORAGE), JSON.stringify(piModel));
+              // Also sync ITR entries into the in-memory model so report builder picks them up
+              if (_personalInfoModel && typeof _personalInfoModel === 'object') {
+                if (!_personalInfoModel.personal_itr) _personalInfoModel.personal_itr = { primary: { name: '', itr_entries: [] }, designatedPersons: [] };
+                if (pitrD.primary?.itr_entries) {
+                  if (!_personalInfoModel.personal_itr.primary) _personalInfoModel.personal_itr.primary = {};
+                  _personalInfoModel.personal_itr.primary.itr_entries = pitrD.primary.itr_entries;
+                }
+                if (Array.isArray(pitrD.designatedPersons)) {
+                  pitrD.designatedPersons.forEach((sdp, idx) => {
+                    if (sdp?.itr_entries && _personalInfoModel.personal_itr.designatedPersons?.[idx]) {
+                      _personalInfoModel.personal_itr.designatedPersons[idx].itr_entries = sdp.itr_entries;
+                    }
+                  });
+                }
+              }
               if (typeof window._pitrRebuildPersons === 'function') window._pitrRebuildPersons();
             } catch { /* ignore */ }
           }
