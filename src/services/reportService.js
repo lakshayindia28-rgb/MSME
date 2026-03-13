@@ -1949,6 +1949,7 @@ Format the report professionally with clear headings and bullet points.`;
       const piPersonalItr = personalInfo.personal_itr || {};
       const piItrPrimary = piPersonalItr.primary || {};
       const primaryItrEntries = Array.isArray(piItrPrimary.itr_entries) ? piItrPrimary.itr_entries.filter(e => e && e.assessment_year) : [];
+      logger.info('[ITR-DEBUG] personalInfo.personal_itr keys: ' + JSON.stringify(Object.keys(piPersonalItr)) + ', primary keys: ' + JSON.stringify(Object.keys(piItrPrimary)) + ', itr_entries count: ' + primaryItrEntries.length + ', raw itr_entries: ' + JSON.stringify(piItrPrimary.itr_entries?.slice?.(0, 2)));
 
       const primaryLabel = (ap.primary_label || '').trim() || 'Primary Applicant';
       html += buildPersonPages(primaryLabel, ap, pn, aa, rv, primaryItrEntries, true, rvImages);

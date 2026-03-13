@@ -7,6 +7,7 @@ coverage/
 .DS_Store
 output/
 *.pdf
+!src/services/templates/*.pdf
 .cache/
 temp/
 document-intelligence-data/
