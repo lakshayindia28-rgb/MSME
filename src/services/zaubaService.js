@@ -49,8 +49,8 @@ class ZaubaService {
           'Sec-Fetch-Site': 'none',
           'Cache-Control': 'max-age=0'
         },
-        timeout: 15000,
-        validateStatus: (status) => status < 500
+        timeout: 20000,
+        maxRedirects: 5
       };
       if (this.proxy) axiosOpts.proxy = this.proxy;
 
