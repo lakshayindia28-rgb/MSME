@@ -5,6 +5,20 @@ import { logger } from '../utils/logger.js';
 class ZaubaService {
   constructor() {
     this.baseUrl = 'https://www.zaubacorp.com';
+    this.proxy = process.env.SCRAPE_PROXY ? this._parseProxy(process.env.SCRAPE_PROXY) : null;
+  }
+
+  _parseProxy(str) {
+    try {
+      // Format: IP:PORT:USER:PASS
+      const parts = str.split(':');
+      if (parts.length >= 2) {
+        const p = { host: parts[0], port: Number(parts[1]), protocol: 'http' };
+        if (parts.length >= 4) { p.auth = { username: parts[2], password: parts.slice(3).join(':') }; }
+        return p;
+      }
+    } catch {}
+    return null;
   }
 
   /**
@@ -22,7 +36,7 @@ class ZaubaService {
       // Search for company by CIN
       const searchUrl = `${this.baseUrl}/company/${cin}`;
       
-      const response = await axios.get(searchUrl, {
+      const axiosOpts = {
         headers: {
           'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0',
           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
@@ -37,7 +51,10 @@ class ZaubaService {
         },
         timeout: 15000,
         validateStatus: (status) => status < 500
-      });
+      };
+      if (this.proxy) axiosOpts.proxy = this.proxy;
+
+      const response = await axios.get(searchUrl, axiosOpts);
 
       if (response.status !== 200) {
         throw new Error(`Failed to fetch data. Status: ${response.status}`);

@@ -6,6 +6,20 @@ class SearchService {
   constructor() {
     this.googleSearchUrl = 'https://www.google.com/search';
     this.cache = new Map(); // Cache search results
+    this.proxy = process.env.SCRAPE_PROXY ? this._parseProxy(process.env.SCRAPE_PROXY) : null;
+  }
+
+  _parseProxy(str) {
+    try {
+      // Format: IP:PORT:USER:PASS
+      const parts = str.split(':');
+      if (parts.length >= 2) {
+        const p = { host: parts[0], port: Number(parts[1]), protocol: 'http' };
+        if (parts.length >= 4) { p.auth = { username: parts[2], password: parts.slice(3).join(':') }; }
+        return p;
+      }
+    } catch {}
+    return null;
   }
 
   /**
@@ -53,7 +67,7 @@ class SearchService {
       // Use Google to search for company data
       const googleQuery = `site:zaubacorp.com/company "${searchTerm}"`;
       
-      const response = await axios.get(this.googleSearchUrl, {
+      const axiosOpts = {
         params: {
           q: googleQuery,
           num: 10,
@@ -69,7 +83,10 @@ class SearchService {
           'Upgrade-Insecure-Requests': '1'
         },
         timeout: 10000
-      });
+      };
+      if (this.proxy) axiosOpts.proxy = this.proxy;
+
+      const response = await axios.get(this.googleSearchUrl, axiosOpts);
 
       const results = this.parseGoogleResults(response.data, searchTerm);
       
