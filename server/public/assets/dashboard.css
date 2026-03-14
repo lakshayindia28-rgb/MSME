@@ -1228,3 +1228,73 @@ body::after { display: none; }
 .btn-sm {
   padding: 6px 14px; font-size: 12px;
 }
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — Mobile (≤768px)
+   ══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .topbar {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+  .topbar-left { width: 100%; }
+  .topbar-right {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .queue-head {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .queue-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+  .queue-actions .search,
+  .queue-actions .filter,
+  .queue-actions .select {
+    width: 100%;
+    min-width: 0;
+  }
+  .queue-actions .search .input { width: 100%; }
+  .case-card-head {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .case-meta-row {
+    flex-direction: column;
+    gap: 2px;
+  }
+  .case-tags {
+    gap: 4px;
+  }
+  .case-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .case-actions > div {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+  .case-actions .btn { flex: 1; text-align: center; }
+  .modal-dialog {
+    width: 95vw;
+    max-width: 95vw;
+    margin: 10px;
+  }
+  .hero-card { padding: 16px; }
+  .hero-title { font-size: 20px; }
+  .hero-subtitle { font-size: 13px; }
+  .hero-actions { flex-direction: column; gap: 8px; }
+  .hero-actions .btn { width: 100%; text-align: center; }
+  .trust-row { flex-direction: column; }
+  .charts { gap: 12px; }
+  .card { padding: 0; }
+  .card-head { padding: 12px; }
+  .card-body { padding: 12px; }
+}

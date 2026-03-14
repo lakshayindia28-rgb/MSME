@@ -15,7 +15,8 @@
   function caseWorkspacePrefix(caseId) {
     const safeId = (caseId || '').toString().trim();
     if (!safeId) return 'cv360.caseWorkspace.default.';
-    return `cv360.caseWorkspace.${safeId}.`;
+    const normalized = safeId.replace(/[^A-Za-z0-9_-]/g, '_').slice(0, 80);
+    return `cv360.caseWorkspace.${normalized}.`;
   }
 
   function purgeCaseWorkspace(caseId) {

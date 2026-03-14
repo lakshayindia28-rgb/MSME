@@ -2910,6 +2910,7 @@
         main.removeAttribute('data-active-personal-module');
       }
       loadCaseOverviewFromStorage();
+      updateModuleNavigatorUI();
     } else if (key === 'personal') setActivePersonalModule(readActivePersonalModule());
     else if (key === 'report') {
       const main = qs('main.content') || qs('.content');
@@ -3157,6 +3158,7 @@
     const attr = (main?.getAttribute('data-active-block') || '').toString().trim().toLowerCase();
     if (attr === 'personal') return 'personal';
     if (attr === 'report') return 'report';
+    if (attr === 'case_overview') return 'case_overview';
     return 'business';
   }
 
@@ -3183,6 +3185,19 @@
       return;
     }
     if (wrap) wrap.removeAttribute('hidden');
+
+    // Case overview: show navigator with "Case Overview" label
+    if (blockKey === 'case_overview') {
+      if (label) label.textContent = 'Case Overview';
+      if (prev) prev.disabled = true;
+      if (next) next.disabled = false;
+      if (switchBtn) {
+        switchBtn.textContent = 'Go to Business Block';
+        switchBtn.setAttribute('aria-label', 'Go to Business Block');
+      }
+      return;
+    }
+
     const keys = blockKey === 'personal' ? PERSONAL_MODULE_KEYS : MODULE_KEYS;
     const activeKey = blockKey === 'personal' ? readActivePersonalModule() : readActiveModule();
     const idx = Math.max(0, keys.indexOf(activeKey));
@@ -3201,7 +3216,7 @@
 
   function switchToOtherBlock() {
     const blockKey = getActiveBlockFromView();
-    const nextBlock = blockKey === 'business' ? 'personal' : blockKey === 'personal' ? 'report' : 'business';
+    const nextBlock = blockKey === 'case_overview' ? 'business' : blockKey === 'business' ? 'personal' : blockKey === 'personal' ? 'report' : 'business';
 
     setWorkspaceUrl({ view: 'single', block: nextBlock }, 'replace');
     applyBlockView(nextBlock);
@@ -3223,6 +3238,17 @@
     const delta = Number(step) < 0 ? -1 : 1;
     const blockKey = getActiveBlockFromView();
     if (blockKey === 'report') return;
+
+    // From case_overview, next → first business module (GST), prev → stay
+    if (blockKey === 'case_overview') {
+      if (delta > 0) {
+        setWorkspaceUrl({ view: 'single', block: 'business' }, 'replace');
+        applyBlockView('business');
+        goToModule(MODULE_KEYS[0]);
+      }
+      return;
+    }
+
     const keys = blockKey === 'personal' ? PERSONAL_MODULE_KEYS : MODULE_KEYS;
     if (!Array.isArray(keys) || keys.length === 0) return;
 

@@ -3247,3 +3247,162 @@ select.field-input {
 .pi-form-collapsed .pi-edit-done-bar { display: none !important; }
 
 /* These are no longer needed — JS handles all show/hide for editing modes. */
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — Tablet (≤1024px)
+   ══════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .app-header {
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .case-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    padding: 6px 8px;
+  }
+  .case-status .progress { width: 100%; }
+  .block-head {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .block-head-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .module-head {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .module-head-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .form-grid-2col { grid-template-columns: 1fr; }
+  .panel-grid { grid-template-columns: 1fr; }
+  .overview-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — Mobile (≤768px)
+   ══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .app-header {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 8px 10px;
+    position: sticky;
+  }
+  .brand { justify-content: center; }
+  .brand-mark { width: 32px; height: 32px; font-size: 12px; }
+  .brand-title { font-size: 13px; }
+  .brand-subtitle { font-size: 10px; }
+
+  .case-meta {
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 4px 6px;
+  }
+  .meta-label { font-size: 10px; }
+  .meta-value { font-size: 12px; white-space: normal; word-break: break-word; }
+
+  .case-status {
+    justify-items: center;
+    text-align: center;
+  }
+  .status-row { justify-content: center; }
+  .case-status .progress { width: 100%; }
+
+  .shell { padding: calc(var(--app-header-current) + 8px) 6px 0; }
+  .content { padding: 8px 6px 16px; gap: 10px; }
+  .block-body { padding: 8px; gap: 10px; }
+
+  .tracker-tabs {
+    gap: 2px;
+    padding: 4px 6px 0;
+    top: calc(var(--app-header-current, 80px) + 6px);
+  }
+  .tracker-tabs .tracker-item {
+    padding: 6px 6px 6px;
+    min-width: 0;
+  }
+  .tracker-tabs .tracker-item .tracker-name { font-size: 10px; }
+  .tracker-tabs .tracker-item .tracker-status { font-size: 9px; }
+
+  .module-nav {
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px;
+  }
+  .module-nav .btn { font-size: 11px; padding: 6px 10px; }
+  .module-nav-current { font-size: 11px; text-align: center; }
+
+  .block-picker-card { padding: 12px; }
+  .block-picker-title { font-size: 16px; }
+  .block-picker-grid { grid-template-columns: 1fr; gap: 8px; }
+  .block-choice { padding: 12px; }
+
+  .overview-grid { grid-template-columns: 1fr; gap: 8px; }
+
+  .panel { padding: 10px; }
+  .panel-grid { grid-template-columns: 1fr; }
+  .panel-actions { flex-direction: column; }
+  .panel-actions .btn { width: 100%; text-align: center; }
+
+  .module-body .form-grid,
+  .form-grid-2col { grid-template-columns: 1fr; }
+
+  .btn { font-size: 12px; padding: 8px 12px; }
+  .btn-lg { font-size: 13px; padding: 10px 16px; }
+
+  .fc-year-tabs { flex-wrap: wrap; gap: 4px; }
+  .fc-year-tab { font-size: 11px; padding: 6px 10px; }
+  .fc-action-bar { flex-wrap: wrap; gap: 6px; }
+  .fc-ratio-grid { grid-template-columns: 1fr; }
+  .fc-summary-cards { grid-template-columns: 1fr; }
+  .fc-yearwise-table { font-size: 10px; }
+  .fc-yearwise-table th,
+  .fc-yearwise-table td { padding: 4px 6px; }
+
+  .itr-table { font-size: 11px; }
+  .itr-table th,
+  .itr-table td { padding: 6px 8px; }
+
+  .bank-status-row { grid-template-columns: 1fr; }
+
+  .gst-detail-grid,
+  .gst-gs-grid { grid-template-columns: 1fr; }
+
+  .report-module-list,
+  .report-sign-wrap { grid-template-columns: 1fr; }
+
+  /* Personal info cards */
+  .pi-saved-card { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .pi-saved-card .pi-sc-info { flex-direction: column; gap: 4px; }
+  .pi-saved-card .pi-sc-name { max-width: 100%; }
+  .pi-saved-card .pi-sc-detail { max-width: 100%; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — Small phones (≤480px)
+   ══════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .app-header { padding: 6px 8px; gap: 6px; }
+  .case-meta { grid-template-columns: 1fr; }
+  .shell { padding: calc(var(--app-header-current) + 4px) 4px 0; }
+  .content { padding: 4px 4px 12px; }
+  .block-body { padding: 4px; }
+  .panel { padding: 8px; }
+  .tracker-tabs {
+    padding: 2px 4px 0;
+    gap: 1px;
+  }
+  .tracker-tabs .tracker-item {
+    padding: 4px 4px;
+  }
+  .tracker-tabs .tracker-item .tracker-name { font-size: 9px; }
+  .tracker-tabs .tracker-item .tracker-status { display: none; }
+  .btn { font-size: 11px; padding: 6px 10px; }
+  .status-pill { font-size: 10px; padding: 4px 8px; }
+}

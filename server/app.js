@@ -875,9 +875,21 @@ app.get('/api/cases', async (req, res) => {
   try {
     const cases = await listCases();
 
-    // Enrich each case with server-side module statuses + progress
-    const MODULE_KEYS = ['gst', 'mca', 'compliance', 'pan', 'udyam', 'itr', 'bank_statement', 'financial', 'field_data', 'additional_details'];
-    res.json({ success: true, cases });
+    // Enrich each case with server-side module statuses from snapshots
+    const CaseSnapshot = (await import('../src/models/CaseSnapshot.js')).default;
+    const statusSnaps = await CaseSnapshot.find(
+      { moduleKey: 'module_statuses', isLatest: true },
+      { caseId: 1, data: 1 }
+    ).lean();
+    const statusMap = new Map();
+    for (const s of statusSnaps) {
+      if (s.caseId && s.data && typeof s.data === 'object') statusMap.set(s.caseId, s.data);
+    }
+    const enriched = cases.map(c => {
+      const ms = statusMap.get(c.id) || null;
+      return ms ? { ...c, moduleStatuses: ms } : c;
+    });
+    res.json({ success: true, cases: enriched });
   } catch (err) {
     logger.error('List cases error:', err);
     res.status(500).json({ success: false, error: 'Failed to load cases' });
