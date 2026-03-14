@@ -842,15 +842,8 @@ Format the report professionally with clear headings and bullet points.`;
       const black = rgb(0, 0, 0);
       const gray = rgb(0.39, 0.39, 0.39);
 
-      /* ── Helper: draw consistent footer on any page (skip on cover = page 1) ── */
-      const drawFooter = (pg, pageNum) => {
-        if (pageNum === 1) return;
-        pg.drawRectangle({ x: 28, y: 22, width: 540, height: 18, color: white });
-        pg.drawText(formattedDate, { x: 40, y: 28, size: 7, font: helvetica, color: gray });
-        const rightText = `${pageNum} / ${totalPages}    Private and Confidential`;
-        const rightWidth = helvetica.widthOfTextAtSize(rightText, 7);
-        pg.drawText(rightText, { x: PAGE_WIDTH - 40 - rightWidth, y: 28, size: 7, font: helvetica, color: gray });
-      };
+      /* ── Footer removed (was date + Private and Confidential) ── */
+      const drawFooter = () => {};
 
       let pageNum = 0;
 
