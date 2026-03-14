@@ -793,11 +793,6 @@
       el('purpose')?.focus();
       return null;
     }
-    if (!gstin) {
-      showToast('GSTIN is required.');
-      el('gstin')?.focus();
-      return null;
-    }
     if (!assignedTo) {
       showToast('Assigned Executive is required.');
       el('assigned')?.focus();
