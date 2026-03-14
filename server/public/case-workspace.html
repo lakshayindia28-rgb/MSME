@@ -1192,6 +1192,10 @@
                 <button class="btn btn-primary" type="button" id="btnSaveFieldDataSummary" style="font-size:11px;padding:5px 14px">💾 Save Summary</button>
                 <span class="muted" id="fieldDataSummaryStatus" style="font-size:11px"></span>
               </div>
+              <div style="margin-top:12px">
+                <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Verified By</label>
+                <input type="text" id="fieldDataVerifiedBy" class="input" style="width:100%;max-width:350px" placeholder="e.g., Aniket Chalke" />
+              </div>
             </div>
 
 
@@ -2706,6 +2710,10 @@
                       <div class="field" style="grid-column:span 2">
                         <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Resident Verification Summary</label>
                         <textarea class="notes" rows="5" style="width:100%;resize:vertical;font-size:12px;line-height:1.65" data-pi-field="resident_verification.primary.manual_summary" placeholder="Enter a summary of the resident verification findings, observations, and conclusions…"></textarea>
+                      </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Verified By</label>
+                        <input type="text" class="input" style="width:100%;max-width:350px" data-pi-field="resident_verification.primary.rv_verified_by" placeholder="e.g., Aniket Chalke" />
                       </div>
                     </div>
                   </div>

@@ -300,7 +300,7 @@
           doc_telephone_bill: 'No', doc_electricity_bill: 'No', doc_society_bill: 'No', doc_tax_receipt: 'No', doc_aadhaar_card: 'No', doc_voter_card: 'No', doc_title_deeds: 'No', doc_bank_passbook: 'No', doc_other: '',
           approx_rent: '', approx_value: '', tenant_residing: '', tenant_name: '', tenant_since: '', tenant_rent: '', tenant_docs_verified: '', tenant_confirms_owner: '',
           neighbour1_name: '', neighbour1_phone: '', neighbour2_name: '', neighbour2_phone: '', neighbour_findings: '',
-          manual_summary: '',
+          manual_summary: '', rv_verified_by: '',
           verification_image: null
         },
         designatedPersons: []
@@ -1413,8 +1413,10 @@
         try {
           fdSummarySaveBtn.disabled = true;
           fdSummarySaveBtn.textContent = 'Saving…';
-          STORAGE.setItem(storageKey('integration.fieldDataSummary'), JSON.stringify({ summary: text }));
-          await saveSnapshotToServer('field_data_summary', JSON.stringify({ summary: text }));
+          var vbEl = qs('#fieldDataVerifiedBy');
+          var vbVal = vbEl ? vbEl.value.trim() : '';
+          STORAGE.setItem(storageKey('integration.fieldDataSummary'), JSON.stringify({ summary: text, verified_by: vbVal }));
+          await saveSnapshotToServer('field_data_summary', JSON.stringify({ summary: text, verified_by: vbVal }));
           if (fdSummaryStatus) fdSummaryStatus.textContent = 'Saved ✓';
           fdSummarySaveBtn.textContent = '💾 Save Summary';
           fdSummarySaveBtn.disabled = false;
@@ -1434,8 +1436,10 @@
         clearTimeout(_fdSummaryAutoTimer);
         _fdSummaryAutoTimer = setTimeout(() => {
           const text = fdSummaryTextarea.value.trim();
-          try { STORAGE.setItem(storageKey('integration.fieldDataSummary'), JSON.stringify({ summary: text })); } catch(e) {}
-          if (HAS_CASE_ID) saveSnapshotToServer('field_data_summary', JSON.stringify({ summary: text })).catch(() => {});
+          var vbEl2 = qs('#fieldDataVerifiedBy');
+          var vbVal2 = vbEl2 ? vbEl2.value.trim() : '';
+          try { STORAGE.setItem(storageKey('integration.fieldDataSummary'), JSON.stringify({ summary: text, verified_by: vbVal2 })); } catch(e) {}
+          if (HAS_CASE_ID) saveSnapshotToServer('field_data_summary', JSON.stringify({ summary: text, verified_by: vbVal2 })).catch(() => {});
         }, 2000);
       });
     }
@@ -1452,8 +1456,10 @@
           const text = payload?.summary || '';
           if (text && fdSummaryTextarea) {
             fdSummaryTextarea.value = text;
-            STORAGE.setItem(storageKey('integration.fieldDataSummary'), JSON.stringify({ summary: text }));
+            STORAGE.setItem(storageKey('integration.fieldDataSummary'), JSON.stringify({ summary: text, verified_by: payload?.verified_by || '' }));
           }
+          var vbLoad = payload?.verified_by || '';
+          if (vbLoad) { var vbInput = qs('#fieldDataVerifiedBy'); if (vbInput) vbInput.value = vbLoad; }
         }
       } catch {}
     })();
@@ -1463,6 +1469,7 @@
       try {
         const stored = safeJSONParse(STORAGE.getItem(storageKey('integration.fieldDataSummary')), null);
         if (stored?.summary) fdSummaryTextarea.value = stored.summary;
+        if (stored?.verified_by) { var vbFb = qs('#fieldDataVerifiedBy'); if (vbFb) vbFb.value = stored.verified_by; }
       } catch {}
     }
   }
@@ -6752,6 +6759,7 @@
       additionalDetails: additionalDetailsForReport,
       assignedTo: q.assignedTo || '',
       preparedBy: preparedBy || '',
+      fieldDataVerifiedBy: (() => { var el = qs('#fieldDataVerifiedBy'); return el ? String(el.value || '').trim() : ''; })(),
       officer: (customSignatureDataUrl || customStampDataUrl) ? {
         signatureImage: customSignatureDataUrl ? { dataUrl: customSignatureDataUrl } : undefined,
         stampImage: customStampDataUrl ? { dataUrl: customStampDataUrl } : undefined

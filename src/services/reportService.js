@@ -944,6 +944,7 @@ Format the report professionally with clear headings and bullet points.`;
     const mca = p.mcaData || null;
     const fieldImages = Array.isArray(p.fieldImages) ? p.fieldImages.filter(img => img && img.dataUrl) : [];
     const businessSummary = typeof p.businessSummary === 'string' ? p.businessSummary.trim() : '';
+    const fieldDataVerifiedBy = typeof p.fieldDataVerifiedBy === 'string' ? p.fieldDataVerifiedBy.trim() : '';
     const moduleSummaries = p.moduleSummaries && typeof p.moduleSummaries === 'object' ? p.moduleSummaries : {};
     const overallObservation = typeof p.overallObservation === 'string' ? p.overallObservation.trim() : '';
     const udyamDocumentImage = typeof p.udyamDocumentImage === 'string' && p.udyamDocumentImage.startsWith('data:') ? p.udyamDocumentImage : null;
@@ -1848,6 +1849,7 @@ Format the report professionally with clear headings and bullet points.`;
               html += '<div style="padding:14px 16px;background:#f0f4ff;border:2px solid #1b2559;border-radius:10px;box-shadow:0 2px 8px rgba(27,37,89,0.08)">';
               html += '<div style="font-weight:800;font-size:12px;color:#1a3c5e;margin-bottom:10px;letter-spacing:0.5px;border-bottom:2px solid #1a3c5e;padding-bottom:6px">RESIDENTIAL VERIFICATION SUMMARY</div>';
               html += '<div style="font-size:11.5px;line-height:1.65;white-space:pre-wrap">' + safe(rvData.manual_summary) + '</div>';
+              if (rvData.rv_verified_by) html += '<div style="margin-top:10px;font-size:11.5px;font-weight:700;color:#1b2559">Verified By: ' + safe(rvData.rv_verified_by) + '</div>';
               html += '</div></div>';
             }
           }
@@ -3455,6 +3457,7 @@ Format the report professionally with clear headings and bullet points.`;
               <div style="font-size:11.5px;line-height:1.65;white-space:pre-wrap">${safe(moduleSummaries['field_data'])}</div>
             </div>
           </div>
+          ${fieldDataVerifiedBy ? `<div style="margin-top:14px;font-size:11.5px;font-weight:700;color:#1b2559">Verified By: ${safe(fieldDataVerifiedBy)}</div>` : ''}
         </div>
         ` : ''}
 
@@ -3628,7 +3631,7 @@ Format the report professionally with clear headings and bullet points.`;
           <!-- Signature (left) & Stamp (right) -->
           <div style="display:flex;justify-content:space-between;gap:30px;margin-bottom:24px">
             <div style="flex:1;text-align:center">
-              <div style="font-weight:800;font-size:10px;color:var(--navy);letter-spacing:0.5px;margin-bottom:8px;text-transform:uppercase">Authorized Signature</div>
+              <div style="font-weight:800;font-size:10px;color:var(--navy);letter-spacing:0.5px;margin-bottom:8px;text-transform:uppercase">Authorized Signatory</div>
               <div style="border:2px solid #e2e8f0;border-radius:10px;padding:12px;background:#fbfcfe;min-height:100px;display:flex;align-items:center;justify-content:center">
                 ${signatureDataUrl ? `<img src="${escapeHtml(signatureDataUrl)}" alt="Signature" style="max-width:200px;max-height:100px;object-fit:contain;display:block;margin:0 auto" />` : '<div style="color:#94a3b8;font-size:11px">—</div>'}
               </div>
@@ -3644,9 +3647,9 @@ Format the report professionally with clear headings and bullet points.`;
           <!-- Verified By (left) & Prepared By (right) -->
           <div style="display:flex;justify-content:space-between;gap:30px;margin-top:8px">
             <div style="flex:1">
-              <div style="font-weight:800;font-size:10px;color:var(--navy);letter-spacing:0.5px;margin-bottom:6px;text-transform:uppercase">Verified By</div>
+              <div style="font-weight:800;font-size:10px;color:var(--navy);letter-spacing:0.5px;margin-bottom:6px;text-transform:uppercase">Authorized By</div>
               <div style="border:2px solid var(--navy);border-radius:10px;padding:14px 18px;background:#f0f4ff;min-height:48px">
-                <div style="font-size:14px;font-weight:700;color:#0f172a;letter-spacing:0.3px">${assignedTo ? safe(assignedTo) : '<span style="color:#94a3b8">—</span>'}</div>
+                <div style="font-size:14px;font-weight:700;color:#0f172a;letter-spacing:0.3px">${safe('Aniket Chalke')}</div>
               </div>
             </div>
             <div style="flex:1">
