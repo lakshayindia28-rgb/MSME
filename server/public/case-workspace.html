@@ -42,7 +42,6 @@
         <a class="btn btn-secondary" href="/" title="Back to dashboard">Dashboard</a>
         <span class="status-pill" data-ui-build style="border-style:dashed" title="UI build/version">UI v20260212_7</span>
         <span class="status-pill" data-bind="overallStatus" data-status="draft">Draft</span>
-        <button class="btn btn-secondary" type="button" data-action="print">Print</button>
       </div>
 
       <div class="progress" role="progressbar" aria-label="Overall progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
@@ -2375,6 +2374,10 @@
                         <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Number of Family Members / Persons staying</label>
                         <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.family_members" placeholder="e.g., 4 or NOT CONFIRM" />
                       </div>
+                      <div class="field">
+                        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Number of Earning Members</label>
+                        <input type="text" class="input" style="width:100%" data-pi-field="resident_verification.primary.earning_members" placeholder="e.g., 2" />
+                      </div>
                       <div class="field" style="grid-column:span 2">
                         <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Special remarks / findings, if any</label>
                         <textarea class="notes" rows="2" style="width:100%" data-pi-field="resident_verification.primary.special_remarks" placeholder="NA"></textarea>
@@ -2781,6 +2784,7 @@
                           <tr><th>Ownership</th><td data-pi-out="resident_verification.ownership">—</td></tr>
                           <tr><th>Residing Since</th><td data-pi-out="resident_verification.residing_since">—</td></tr>
                           <tr><th>Family Members</th><td data-pi-out="resident_verification.family_members">—</td></tr>
+                          <tr><th>Earning Members</th><td data-pi-out="resident_verification.earning_members">—</td></tr>
                           <tr><th>Special Remarks</th><td data-pi-out="resident_verification.special_remarks">—</td></tr>
                           <tr><th colspan="2" style="background:var(--surface);font-size:13px;color:var(--accent)">Locality & Residence</th></tr>
                           <tr><th>Landmark</th><td data-pi-out="resident_verification.landmark">—</td></tr>

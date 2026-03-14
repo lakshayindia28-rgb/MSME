@@ -742,7 +742,7 @@ Format the report professionally with clear headings and bullet points.`;
     const pdfOpts = {
       format: 'A4',
       printBackground: true,
-      margin: { top: '10mm', right: '10mm', bottom: '10mm', left: '10mm' },
+      margin: { top: '10mm', right: '10mm', bottom: '18mm', left: '10mm' },
       displayHeaderFooter: false
     };
 
@@ -1686,6 +1686,7 @@ Format the report professionally with clear headings and bullet points.`;
         addRow('Ownership', rvObj.ownership);
         addRow('Residing Since', rvObj.residing_since);
         addRow('Family Members', rvObj.family_members);
+        addRow('Earning Members', rvObj.earning_members);
         addRow('Locality Type', rvObj.locality_type);
         addRow('Residence Type', rvObj.residence_type);
         addRow('Construction', rvObj.construction_type);

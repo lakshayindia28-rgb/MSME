@@ -292,7 +292,7 @@
       resident_verification: {
         primary: {
           promoter_name: '', permanent_address: '', present_address: '', phone: '', mobile: '', email: '',
-          residing_at_address: '', ownership: '', present_address_verification: '', residing_since: '', family_members: '', special_remarks: '',
+          residing_at_address: '', ownership: '', present_address_verification: '', residing_since: '', family_members: '', earning_members: '', special_remarks: '',
           landmark: '', locality_type: '',
           society_board: '', name_plate_sighted: '', residence_type: '', no_of_storied: '', lift: '', external_appearance: '', construction_type: '', internal_appearance: '', residence_seen_internally: '', area_of_residence: '', residence_confirmed_society: '',
           asset_television: '', asset_refrigerator: '', asset_ac: '', asset_music_system: '',
@@ -541,6 +541,7 @@
         { key: 'present_address_verification', label: 'Present address (if other than application)', placeholder: 'NA', type: 'textarea' },
         { key: 'residing_since', label: 'Residing since', placeholder: 'e.g., SINCE BIRTH, 5 YEARS', type: 'text' },
         { key: 'family_members', label: 'Family Members / Persons staying', placeholder: 'e.g., 4 or NOT CONFIRM', type: 'text' },
+        { key: 'earning_members', label: 'Number of Earning Members', placeholder: 'e.g., 2', type: 'text' },
         { key: 'special_remarks', label: 'Special Remarks / Findings', placeholder: 'NA', type: 'textarea' },
         // ── Locality ──
         { type: 'heading', label: 'Locality' },
@@ -2232,6 +2233,7 @@
       setPersonalOut('resident_verification.ownership', rvPrimary.ownership || null);
       setPersonalOut('resident_verification.residing_since', rvPrimary.residing_since || null);
       setPersonalOut('resident_verification.family_members', rvPrimary.family_members || null);
+      setPersonalOut('resident_verification.earning_members', rvPrimary.earning_members || null);
       setPersonalOut('resident_verification.special_remarks', rvPrimary.special_remarks || null);
       setPersonalOut('resident_verification.landmark', rvPrimary.landmark || null);
       setPersonalOut('resident_verification.locality_type', rvPrimary.locality_type || null);
