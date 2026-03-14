@@ -1835,13 +1835,11 @@ Format the report professionally with clear headings and bullet points.`;
           }
 
           if (hasRV) {
-            html += '<div style="margin-top:14px;break-inside:auto;page-break-inside:auto">';
+            html += '<div style="margin-top:14px">';
             const rvRows = buildRVRows(rvData);
-            // Custom wrapper without overflow:hidden to allow page breaks inside
-            html += '<div style="border:2px solid var(--navy);border-radius:10px;background:#fff;box-shadow:0 2px 10px rgba(11,31,58,0.05)">';
-            html += '<table style="width:100%;border-collapse:collapse;font-size:11.5px">';
-            html += '<thead><tr><th colspan="2" style="' + tblHead + '">RESIDENTIAL VERIFICATION DETAILS</th></tr></thead>';
-            html += '<tbody>' + rvRows + '</tbody></table></div>';
+            html += '<table class="pbt">';
+            html += '<thead><tr><th colspan="2">RESIDENTIAL VERIFICATION DETAILS</th></tr></thead>';
+            html += '<tbody>' + rvRows + '</tbody></table>';
             html += '</div>';
             // ── Residential Verification attached images ──
             const filteredRvImgs = Array.isArray(personRvImages) ? personRvImages.filter(img => img && img.dataUrl) : [];
@@ -2075,6 +2073,14 @@ Format the report professionally with clear headings and bullet points.`;
         .doc-frame-img{max-width:100%;max-height:250mm;width:auto;height:auto;object-fit:contain;border-radius:6px;display:block;margin:0 auto}
         .dp-photo-frame{display:inline-block;border:2px solid var(--border);border-radius:8px;padding:6px;background:#fff;box-shadow:0 1px 6px rgba(0,0,0,0.06);text-align:center;max-width:160px}
         .dp-photo-frame img{max-width:140px;max-height:170px;object-fit:contain;border-radius:4px;display:block;margin:0 auto}
+        /* Page-break safe tables */
+        .pbt{width:100%;border-collapse:collapse;font-size:11.5px;border-left:2px solid var(--navy);border-right:2px solid var(--navy);border-bottom:2px solid var(--navy)}
+        .pbt thead{display:table-header-group}
+        .pbt thead tr th{background:var(--navy);color:#fff;font-weight:800;font-size:11px;padding:10px 14px;text-align:left;letter-spacing:0.5px;border-bottom:2px solid var(--navy)}
+        .pbt tbody tr{break-inside:avoid;page-break-inside:avoid}
+        .pbt tbody tr td{padding:8px 14px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+        .pbt tbody tr td.k{font-weight:700;color:#475569;width:35%}
+        .pbt tbody tr:nth-child(even) td{background:#fbfcfe}
       </style>
     `;
 
