@@ -3185,6 +3185,13 @@
   function updateModuleNavigatorUI() {
     const wrap = qs('[data-module-nav]');
     if (!wrap) return;
+
+    // Hide module-nav when block picker is visible
+    if (isBlockSelectionMode()) {
+      wrap.setAttribute('hidden', '');
+      return;
+    }
+
     const label = qs('[data-module-nav-label]', wrap);
     const prev = qs('[data-module-nav-btn="prev"]', wrap);
     const next = qs('[data-module-nav-btn="next"]', wrap);
