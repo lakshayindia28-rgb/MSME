@@ -26,7 +26,7 @@ import { connectDB } from '../src/config/database.js';
 import {
   listCases, upsertCase, deleteCase as deleteCaseDb,
   saveSnapshot, getLatestSnapshot, getCaseMeta,
-  readLatestModuleData, cleanupAllSnapshots
+  readLatestModuleData, cleanupAllSnapshots, getCaseSnapshotTimestamps
 } from '../src/services/caseDbService.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -997,6 +997,17 @@ app.post('/api/case/cleanup-snapshots', async (req, res) => {
   } catch (error) {
     logger.error('Snapshot cleanup error', error);
     res.status(500).json({ success: false, error: error.message || 'Cleanup failed' });
+  }
+});
+
+/* ── Sync Check: poll for multi-user real-time updates ── */
+app.get('/api/case/:caseId/sync-check', async (req, res) => {
+  try {
+    const caseId = sanitizeCaseId(req.params.caseId);
+    const timestamps = await getCaseSnapshotTimestamps(caseId);
+    res.json({ success: true, timestamps });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message || 'Sync check failed' });
   }
 });
 
@@ -1984,6 +1995,11 @@ connectDB().then(() => {
   console.log(`  POST /api/financial-calc/report (Financial Calc Report Section)\n`);
   
   logger.info(`Server started on port ${PORT}`);
+
+  // One-time cleanup: remove duplicate snapshots (migrate to upsert model)
+  cleanupAllSnapshots().then(r => {
+    if (r.prunedTotal > 0) logger.info(`Startup cleanup: removed ${r.prunedTotal} duplicate snapshots`);
+  }).catch(() => {});
   });
 }).catch(err => {
   logger.error('Failed to connect to MongoDB:', err);

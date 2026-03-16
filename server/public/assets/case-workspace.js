@@ -10185,6 +10185,74 @@
     initMcaDirectorPicker();
 
     bindEvents();
+
+    // ── Multi-user real-time sync via polling ──
+    if (HAS_CASE_ID) {
+      const SYNC_INTERVAL = 10000; // 10 seconds
+      let _lastKnownTimestamps = {};
+      let _syncRunning = false;
+
+      // Remember our own save timestamps so we don't reload our own changes
+      const _ownSaveTimestamps = {};
+      const _origSaveSnapshotToServer = saveSnapshotToServer;
+
+      // Wrap saveSnapshotToServer to track our own writes
+      saveSnapshotToServer = async function(moduleKey, jsonText) {
+        const result = await _origSaveSnapshotToServer(moduleKey, jsonText);
+        if (result?.savedAt) {
+          _ownSaveTimestamps[moduleKey] = new Date(result.savedAt).getTime();
+        }
+        return result;
+      };
+
+      async function syncCheck() {
+        if (_syncRunning) return;
+        _syncRunning = true;
+        try {
+          const caseId = encodeURIComponent(RAW_CASE_ID);
+          const res = await fetch(`/api/case/${caseId}/sync-check`);
+          const json = await res.json();
+          if (!json?.success || !json?.timestamps) return;
+
+          const serverTs = json.timestamps;
+          const changedModules = [];
+
+          for (const [mk, ts] of Object.entries(serverTs)) {
+            const lastKnown = _lastKnownTimestamps[mk] || 0;
+            const ownTs = _ownSaveTimestamps[mk] || 0;
+            // Server has newer data AND it wasn't our own recent save
+            if (ts > lastKnown && ts > ownTs) {
+              changedModules.push(mk);
+            }
+          }
+
+          _lastKnownTimestamps = serverTs;
+
+          if (changedModules.length > 0) {
+            // Reload all snapshots from server to get latest data
+            loadSnapshots();
+          }
+        } catch {
+          // Network error — skip this cycle
+        } finally {
+          _syncRunning = false;
+        }
+      }
+
+      // Initial timestamp capture (after first loadSnapshots completes)
+      setTimeout(async () => {
+        try {
+          const caseId = encodeURIComponent(RAW_CASE_ID);
+          const res = await fetch(`/api/case/${caseId}/sync-check`);
+          const json = await res.json();
+          if (json?.success && json?.timestamps) {
+            _lastKnownTimestamps = json.timestamps;
+          }
+        } catch {}
+      }, 3000);
+
+      setInterval(syncCheck, SYNC_INTERVAL);
+    }
   }
 
   init();

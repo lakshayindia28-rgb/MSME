@@ -90,24 +90,11 @@ export async function saveSnapshot(caseId, moduleKey, data) {
 
   const now = new Date();
 
-  // Mark old latest as non-latest (becomes history)
-  await CaseSnapshot.updateMany(
-    { caseId, moduleKey, isLatest: true },
-    { $set: { isLatest: false } }
-  );
-
-  // Insert new snapshot as latest
-  const snap = await CaseSnapshot.create({
-    caseId,
-    moduleKey,
-    data,
-    isLatest: true,
-    savedAt: now
-  });
-
-  // Async cleanup — don't block the save response
-  _pruneOldSnapshots(caseId, moduleKey).catch(err =>
-    logger.warn('Snapshot cleanup failed', { caseId, moduleKey, error: err.message })
+  // Upsert: always keep only ONE document per (caseId, moduleKey)
+  const snap = await CaseSnapshot.findOneAndUpdate(
+    { caseId, moduleKey },
+    { $set: { data, isLatest: true, savedAt: now } },
+    { upsert: true, new: true, setDefaultsOnInsert: true }
   );
 
   return {
@@ -119,53 +106,54 @@ export async function saveSnapshot(caseId, moduleKey, data) {
 }
 
 /**
- * Prune old historical snapshots, keeping:
- *  - The current isLatest:true snapshot (always kept)
- *  - The most recent SNAPSHOT_HISTORY_LIMIT non-latest snapshots
- *  - All others are deleted
+ * Prune old historical snapshots — now a no-op since we upsert (single doc per module).
+ * Kept for backward compatibility; also cleans up any legacy duplicate docs.
  */
 async function _pruneOldSnapshots(caseId, moduleKey) {
-  // Find non-latest snapshots sorted newest-first (only _id needed)
-  const oldSnaps = await CaseSnapshot.find(
-    { caseId, moduleKey, isLatest: false }
-  ).sort({ savedAt: -1 }).select('_id savedAt').lean();
-
-  if (oldSnaps.length <= SNAPSHOT_HISTORY_LIMIT) return; // nothing to prune
-
-  const idsToDelete = oldSnaps.slice(SNAPSHOT_HISTORY_LIMIT).map(s => s._id);
-  const result = await CaseSnapshot.deleteMany({ _id: { $in: idsToDelete } });
-  logger.info(`Pruned ${result.deletedCount} old snapshots for ${caseId}/${moduleKey}`);
+  // Clean up any legacy duplicate documents (keep only the newest one)
+  const all = await CaseSnapshot.find({ caseId, moduleKey })
+    .sort({ savedAt: -1 }).select('_id').lean();
+  if (all.length <= 1) return;
+  const idsToDelete = all.slice(1).map(s => s._id);
+  await CaseSnapshot.deleteMany({ _id: { $in: idsToDelete } });
 }
 
 /**
- * Bulk cleanup: prune ALL (caseId, moduleKey) pairs in the database.
- * Useful for one-time cleanup of accumulated historical snapshots.
- * Returns { prunedTotal, pairsProcessed }.
+ * Bulk cleanup: remove duplicate snapshots across ALL (caseId, moduleKey) pairs.
+ * With the new upsert model, each pair should have exactly 1 doc.
  */
 export async function cleanupAllSnapshots(historyLimit) {
-  const limit = typeof historyLimit === 'number' && historyLimit >= 0 ? historyLimit : SNAPSHOT_HISTORY_LIMIT;
-
-  // Get distinct (caseId, moduleKey) pairs
   const pairs = await CaseSnapshot.aggregate([
-    { $group: { _id: { caseId: '$caseId', moduleKey: '$moduleKey' } } }
+    { $group: { _id: { caseId: '$caseId', moduleKey: '$moduleKey' }, count: { $sum: 1 } } },
+    { $match: { count: { $gt: 1 } } }
   ]).allowDiskUse(true);
 
   let prunedTotal = 0;
   for (const pair of pairs) {
     const { caseId, moduleKey } = pair._id;
-    const oldSnaps = await CaseSnapshot.find(
-      { caseId, moduleKey, isLatest: false }
-    ).sort({ savedAt: -1 }).select('_id savedAt').lean();
-
-    if (oldSnaps.length <= limit) continue;
-
-    const idsToDelete = oldSnaps.slice(limit).map(s => s._id);
+    const all = await CaseSnapshot.find({ caseId, moduleKey })
+      .sort({ savedAt: -1 }).select('_id').lean();
+    if (all.length <= 1) continue;
+    const idsToDelete = all.slice(1).map(s => s._id);
     const result = await CaseSnapshot.deleteMany({ _id: { $in: idsToDelete } });
     prunedTotal += result.deletedCount;
   }
 
-  logger.info(`Bulk snapshot cleanup: pruned ${prunedTotal} snapshots across ${pairs.length} pairs`);
+  logger.info(`Bulk snapshot cleanup: pruned ${prunedTotal} duplicate snapshots across ${pairs.length} pairs`);
   return { prunedTotal, pairsProcessed: pairs.length };
+}
+
+/**
+ * Get all snapshot timestamps for a case (used for multi-user sync polling).
+ */
+export async function getCaseSnapshotTimestamps(caseId) {
+  const snaps = await CaseSnapshot.find({ caseId })
+    .select('moduleKey savedAt -_id').lean();
+  const out = {};
+  for (const s of snaps) {
+    out[s.moduleKey] = s.savedAt ? new Date(s.savedAt).getTime() : 0;
+  }
+  return out;
 }
 
 export async function getLatestSnapshot(caseId, moduleKey) {
