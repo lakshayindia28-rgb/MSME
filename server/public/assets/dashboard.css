@@ -729,24 +729,24 @@ body::after { display: none; }
 .search { min-width: 320px; }
 
 .case-wrap {
-  padding: 12px 14px 16px;
+  padding: 8px 10px 10px;
 }
 
 .case-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 8px;
 }
 
 .case-card {
-  border-radius: calc(var(--radius) + 2px);
+  border-radius: var(--radius);
   border: 1px solid var(--border);
   background: var(--panel);
   box-shadow: var(--shadow);
   overflow: hidden;
   display: grid;
   position: relative;
-  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out), border-color 200ms var(--ease-out);
+  transition: transform 150ms var(--ease-out), box-shadow 150ms var(--ease-out), border-color 150ms var(--ease-out);
 }
 
 .case-card::before {
@@ -772,7 +772,7 @@ body::after { display: none; }
 }
 
 .case-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   border-color: rgba(29, 78, 216, 0.22);
   box-shadow: var(--shadow-lg);
 }
@@ -781,8 +781,8 @@ body::after { display: none; }
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 12px;
-  padding: 14px;
+  gap: 8px;
+  padding: 10px 12px;
   border-bottom: 1px solid var(--border);
   background: linear-gradient(180deg, var(--case-head-grad-start), var(--case-head-grad-end));
 }
@@ -801,9 +801,9 @@ body::after { display: none; }
 }
 
 .case-card-body {
-  padding: 12px 14px 14px;
+  padding: 8px 12px 10px;
   display: grid;
-  gap: 12px;
+  gap: 8px;
 }
 
 .case-meta {
@@ -829,13 +829,13 @@ body::after { display: none; }
 .tag {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
   border-radius: 999px;
-  padding: 6px 10px;
+  padding: 3px 8px;
   border: 1px solid var(--border);
   background: var(--chip);
   font-weight: 700;
-  font-size: 11px;
+  font-size: 10px;
   color: var(--muted);
 }
 
@@ -853,7 +853,8 @@ body::after { display: none; }
 }
 
 .case-actions .btn {
-  padding: 10px 12px;
+  padding: 6px 10px;
+  font-size: 11px;
 }
 
 .case-actions-left {

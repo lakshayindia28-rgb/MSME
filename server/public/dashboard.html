@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/dashboard.css?v=20260316_v2" />
+  <link rel="stylesheet" href="assets/dashboard.css?v=20260316_v3" />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -204,46 +204,7 @@
       </button>
     </section>
 
-    <section class="charts" aria-label="Dashboard charts">
-      <article class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Status Distribution</div>
-            <div class="card-subtitle">Pending vs ongoing vs completed</div>
-          </div>
-          <span class="badge">Live</span>
-        </div>
-        <div class="card-body">
-          <canvas id="chartStatus" class="chart-canvas" aria-label="Status distribution chart"></canvas>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Monthly Case Trend</div>
-            <div class="card-subtitle">Cases created in last 6 months</div>
-          </div>
-          <span class="badge">6M</span>
-        </div>
-        <div class="card-body">
-          <canvas id="chartMonthly" class="chart-canvas" aria-label="Monthly case trend chart"></canvas>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Risk Mix</div>
-            <div class="card-subtitle">Low, medium, high portfolio split</div>
-          </div>
-          <span class="badge">Risk</span>
-        </div>
-        <div class="card-body">
-          <canvas id="chartRisk" class="chart-canvas" aria-label="Risk distribution chart"></canvas>
-        </div>
-      </article>
-    </section>
+    <!-- Charts removed -->
 
     <!-- Workspace Blocks removed — open workspace via case cards -->
 
@@ -457,7 +418,7 @@
 
   <div data-toast role="status" aria-live="polite"></div>
 
-  <script src="assets/dashboard.js?v=20260316_v2"></script>
+  <script src="assets/dashboard.js?v=20260316_v3"></script>
   <script>
     (function () {
       const path = window.location.pathname;
@@ -477,19 +438,23 @@
         }
       }
 
-      // If on /cases, auto-show cases section and hide hero/charts/kpi
+      // If on /cases, auto-show cases section and hide hero/kpi
+      const hero = document.querySelector('.hero');
+      const kpi = document.querySelector('.kpi-strip');
       if (path === '/cases') {
-        const hero = document.querySelector('.hero');
-        const kpi = document.querySelector('.kpi-strip');
-        const charts = document.querySelector('.charts');
         if (hero) hero.style.display = 'none';
         if (kpi) kpi.style.display = 'none';
-        if (charts) charts.style.display = 'none';
         // Update page title
         const titleEl = document.querySelector('.page-title .title');
         const subEl = document.querySelector('.page-title .subtitle');
         if (titleEl) titleEl.textContent = 'Cases';
         if (subEl) subEl.textContent = 'All verification cases and their current status';
+      }
+
+      // On /dashboard, hide cases queue (only show on /cases)
+      if (path === '/dashboard' || path === '/') {
+        const queue = document.querySelector('.queue');
+        if (queue) queue.style.display = 'none';
       }
     })();
   </script>
