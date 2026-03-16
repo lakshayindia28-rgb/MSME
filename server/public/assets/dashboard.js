@@ -121,9 +121,7 @@
         local.forEach(lc => {
           if (deletedIds.has(lc.id)) return; // skip deleted cases
           if (!serverMap.has(lc.id)) {
-            // Push orphaned local case to server
-            pushCaseToServer(lc);
-            serverMap.set(lc.id, lc);
+            // Orphaned local case not on server — discard it (server is source of truth)
           } else {
             // Merge local fields the server might not have (like businessName set at create)
             const sc = serverMap.get(lc.id);

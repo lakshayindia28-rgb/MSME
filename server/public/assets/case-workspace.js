@@ -6298,6 +6298,14 @@
     }
   }
 
+  // Snapshot keys that map to a module status key (for auto-reset on re-save)
+  const SNAPSHOT_TO_MODULE = {
+    gst: 'gst', mca: 'mca', compliance: 'compliance', pan: 'pan', udyam: 'udyam',
+    itr: 'itr', bank_statement: 'bank_statement', financial: 'financial',
+    field_data: 'field_data', business_summary: 'business_summary',
+    additional_details: 'additional_details'
+  };
+
   async function saveSnapshotToServer(moduleKey, jsonText) {
     const caseId = (q.caseId || '').toString().trim();
     if (!caseId || caseId.toLowerCase() === 'default') {
@@ -6317,6 +6325,18 @@
     });
     const out = await res.json().catch(() => ({}));
     if (!out?.success) throw new Error(out?.error || 'Save failed');
+
+    // If this module was marked completed, reset it to pending (user re-saved data)
+    const statusKey = SNAPSHOT_TO_MODULE[moduleKey];
+    if (statusKey && moduleKey !== 'module_statuses' && moduleKey !== 'personal_module_completion') {
+      const current = readModuleStatuses();
+      if (current[statusKey] === STATUS.completed) {
+        const next = { ...current, [statusKey]: STATUS.pending };
+        writeModuleStatuses(next);
+        updateUIFromStatuses(next);
+      }
+    }
+
     return out;
   }
 

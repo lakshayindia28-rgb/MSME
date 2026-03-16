@@ -527,8 +527,8 @@ body::after { display: none; }
 }
 
 .main {
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
   padding: 18px;
   display: grid;
   gap: 14px;
@@ -1140,6 +1140,7 @@ body::after { display: none; }
     position: static;
     border-right: none;
     border-bottom: 1px solid var(--border);
+    background: var(--wb-sidebar);
   }
   .sidenav-brand { display: none; }
   .sidenav-nav {
@@ -1157,6 +1158,7 @@ body::after { display: none; }
   .nav-icon { display: none; }
   .sidenav-foot { display: none; }
   .app-content { min-height: auto; }
+  .main { padding: 12px; }
 }
 
 /* ── Resident Verification Section ── */
