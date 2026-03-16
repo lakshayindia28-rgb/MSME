@@ -925,6 +925,9 @@ app.delete('/api/cases/:caseId', async (req, res) => {
   try {
     const caseId = sanitizeCaseId(req.params.caseId);
     await deleteCaseDb(caseId);
+    // Also remove case directory from filesystem
+    const caseDir = path.join(CASES_DATA_DIR, caseId);
+    try { await fs.rm(caseDir, { recursive: true, force: true }); } catch {}
     res.json({ success: true, deleted: caseId });
   } catch (err) {
     logger.error('Delete case error:', err);

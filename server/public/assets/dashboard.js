@@ -84,8 +84,12 @@
       if (json.success && Array.isArray(json.cases)) {
         // Merge: server is source-of-truth; add any localStorage-only cases back
         const serverMap = new Map(json.cases.map(c => [c.id, c]));
+        const deletedIds = new Set(safeJSONParse(localStorage.getItem('gst_deleted_cases'), []));
+        // Remove server cases that were deleted locally
+        deletedIds.forEach(id => serverMap.delete(id));
         const local = loadCases();
         local.forEach(lc => {
+          if (deletedIds.has(lc.id)) return; // skip deleted cases
           if (!serverMap.has(lc.id)) {
             // Push orphaned local case to server
             pushCaseToServer(lc);
@@ -450,12 +454,18 @@
     localStorage.setItem(SEEDED_KEY, 'true');
   }
 
-  function deleteCaseById(caseId) {
+  async function deleteCaseById(caseId) {
     const all = loadCases();
     const next = all.filter((c) => c.id !== caseId);
     saveCases(next);
     purgeCaseWorkspace(caseId);
-    deleteCaseFromServer(caseId);
+    // Track deleted IDs so fetchCasesFromServer won't re-push them
+    try {
+      const deleted = safeJSONParse(localStorage.getItem('gst_deleted_cases'), []);
+      if (!deleted.includes(caseId)) deleted.push(caseId);
+      localStorage.setItem('gst_deleted_cases', JSON.stringify(deleted));
+    } catch {}
+    await deleteCaseFromServer(caseId);
   }
 
   function getFilteredCases(allCases, filters) {
