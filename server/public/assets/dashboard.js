@@ -131,22 +131,23 @@
       const res = await fetch('/api/cases');
       const json = await res.json();
       if (json.success && Array.isArray(json.cases)) {
-        // Merge: server is source-of-truth; add any localStorage-only cases back
+        // Server is source-of-truth — use server cases directly
         const serverMap = new Map(json.cases.map(c => [c.id, c]));
-        const deletedIds = new Set(safeJSONParse(localStorage.getItem('gst_deleted_cases'), []));
-        // Remove server cases that were deleted locally
-        deletedIds.forEach(id => serverMap.delete(id));
+
+        // Clean up stale deleted IDs: if a case exists on server, it's not deleted
+        try {
+          const deletedIds = safeJSONParse(localStorage.getItem('gst_deleted_cases'), []);
+          const stillDeleted = deletedIds.filter(id => !serverMap.has(id));
+          localStorage.setItem('gst_deleted_cases', JSON.stringify(stillDeleted));
+        } catch {}
+
+        // Merge local-only fields (like businessName set at create time)
         const local = loadCases();
         local.forEach(lc => {
-          if (deletedIds.has(lc.id)) return; // skip deleted cases
-          if (!serverMap.has(lc.id)) {
-            // Orphaned local case not on server — discard it (server is source of truth)
-          } else {
-            // Merge local fields the server might not have (like businessName set at create)
-            const sc = serverMap.get(lc.id);
-            if (!sc.businessName && lc.businessName) {
-              serverMap.set(lc.id, { ...sc, ...lc, progress: sc.progress ?? lc.progress, status: sc.status || lc.status });
-            }
+          if (!serverMap.has(lc.id)) return; // orphaned local case — discard
+          const sc = serverMap.get(lc.id);
+          if (!sc.businessName && lc.businessName) {
+            serverMap.set(lc.id, { ...sc, ...lc, progress: sc.progress ?? lc.progress, status: sc.status || lc.status });
           }
         });
         const merged = Array.from(serverMap.values()).sort((a, b) => (b.updatedAt || '').localeCompare(a.updatedAt || ''));
@@ -908,6 +909,11 @@
 
   function hydrateUIFromStorage() {
     const ui = loadUIState();
+    // Always reset KPI filter to 'all' on page load so all cases are visible
+    if (ui.kpi && ui.kpi !== 'all') {
+      ui.kpi = 'all';
+      saveUIState(ui);
+    }
     if (ui.search && el('searchInput')) el('searchInput').value = ui.search;
     if (ui.status && el('statusFilter')) el('statusFilter').value = ui.status;
     if (ui.risk && el('riskFilter')) el('riskFilter').value = ui.risk;
