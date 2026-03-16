@@ -1044,6 +1044,12 @@ body.header-collapsed .app-header {
   display: none;
 }
 
+/* Report & case_overview have no tracker-tabs, so lower the sticky top */
+.content[data-active-block="report"] .module-nav,
+.content[data-active-block="case_overview"] .module-nav {
+  top: calc(var(--app-header-current) + 14px);
+}
+
 .progress-meta {
   display: flex;
   justify-content: space-between;
