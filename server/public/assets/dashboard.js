@@ -573,11 +573,11 @@
   };
 
   function renderCards(cases) {
-    const grid = el('caseGrid');
+    const tbody = document.getElementById('caseGridBody') || el('caseGrid');
     const empty = el('emptyState');
-    if (!grid) return;
+    if (!tbody) return;
 
-    grid.innerHTML = '';
+    tbody.innerHTML = '';
 
     if (!cases.length) {
       if (empty) empty.hidden = false;
@@ -586,93 +586,40 @@
     if (empty) empty.hidden = true;
 
     cases.forEach((c) => {
-      const card = document.createElement('article');
-      card.className = 'case-card';
-      card.setAttribute('role', 'listitem');
-
-      // Use server-enriched moduleStatuses if available, else fall back to localStorage
       const serverStatuses = c.moduleStatuses || null;
       const workspaceStatuses = serverStatuses || readWorkspaceModuleStatuses(c.id);
-      const workspaceProgress = computeProgressFromModuleStatuses(workspaceStatuses);
       const derivedStatus = deriveStatusFromModuleStatuses(workspaceStatuses) || c.status;
 
-      card.dataset.status = derivedStatus;
-
-      const progressPct = clamp(Number(workspaceProgress ?? c.progress ?? calcProgressFromStatus(c.status)), 0, 100);
-
-      const statusPill = document.createElement('span');
-      statusPill.className = 'status-pill';
-      statusPill.dataset.status = derivedStatus;
-      statusPill.innerHTML = `<span class="status-dot"></span>${statusLabel(derivedStatus)}`;
-
-      // Build module progress dots
-      const modStatuses = workspaceStatuses || {};
-      const moduleDots = WORKSPACE_MODULE_KEYS.map((mk) => {
-        const st = (modStatuses[mk] || 'pending').toString().trim();
-        const color = st === 'completed' ? '#059669' : st === 'in_progress' ? '#d97706' : '#cbd5e1';
-        return `<span title="${escapeHTML(MODULE_LABELS[mk] || mk)}: ${st}" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${color}"></span>`;
-      }).join('');
-
-      const riskPill = document.createElement('span');
-      riskPill.className = 'badge';
       const col = riskBadgeColor(c.risk);
-      riskPill.style.background = col.bg;
-      riskPill.style.borderColor = col.border;
-      riskPill.style.color = col.text;
-      riskPill.textContent = `${riskLabel(c.risk)} Risk`;
+      const created = new Date(c.createdAt || nowISO()).toLocaleDateString('en-IN');
 
-      card.innerHTML = `
-        <div class="case-card-head">
-          <div style="min-width:0;">
-            <div class="case-title">${escapeHTML(c.businessName || '')}</div>
-            <div class="case-subtitle">${escapeHTML(c.purpose || '')}</div>
-          </div>
-          <div style="display:grid;gap:8px;justify-items:end;">
-            <span class="badge" style="background:${escapeHTML(riskBadgeColor(c.risk).bg)};border-color:${escapeHTML(riskBadgeColor(c.risk).border)};color:${escapeHTML(riskBadgeColor(c.risk).text)};">${escapeHTML(stageLabel(derivedStatus))}</span>
-            <span data-slot="status"></span>
-          </div>
-        </div>
+      const tr = document.createElement('tr');
+      tr.dataset.status = derivedStatus;
+      tr.style.cursor = 'pointer';
 
-        <div class="case-card-body">
-          <div class="case-meta">
-            <div class="case-meta-row"><span class="mono">${escapeHTML(c.id)}</span><span>${escapeHTML(c.assignedTo || '—')}</span></div>
-            <div class="case-meta-row"><span>GSTIN: <span class="mono">${escapeHTML(c.gstin || '—')}</span></span><span>CIN: <span class="mono">${escapeHTML(c.cin || '—')}</span></span></div>
-          </div>
-
-          <div class="case-tags">
-            <span class="tag">${escapeHTML(c.businessType || '—')}</span>
-            <span class="tag">${escapeHTML(riskLabel(c.risk))} Risk</span>
-            <span class="tag">Created: ${escapeHTML(new Date(c.createdAt || nowISO()).toLocaleDateString('en-IN'))}</span>
-          </div>
-
-          <div style="display:flex;align-items:center;gap:4px;margin:6px 0;flex-wrap:wrap">
-            <span style="font-size:11px;color:#64748b;font-weight:600;margin-right:4px">Modules:</span>
-            ${moduleDots}
-          </div>
-
-          <div class="card-progress">
-            <div class="progress-track"><div class="progress-fill" style="width:${progressPct}%;"></div></div>
-            <div class="progress-meta"><span>${progressPct}%</span><span>${escapeHTML(statusLabel(derivedStatus))}</span></div>
-          </div>
-
-          <div class="case-actions">
-            <div class="case-actions-left" data-slot="risk"></div>
-            <div>
-              <button class="btn btn-secondary btn-danger" type="button" data-action="delete">Delete</button>
-              <button class="btn btn-primary" type="button" data-action="open">Open Case</button>
-            </div>
-          </div>
-        </div>
+      tr.innerHTML = `
+        <td><strong>${escapeHTML(c.businessName || '—')}</strong></td>
+        <td class="mono" style="font-size:11px">${escapeHTML(c.id)}</td>
+        <td>${escapeHTML(c.businessType || '—')}</td>
+        <td><span class="status-pill" data-status="${escapeHTML(derivedStatus)}"><span class="status-dot"></span>${escapeHTML(statusLabel(derivedStatus))}</span></td>
+        <td><span class="badge" style="background:${escapeHTML(col.bg)};border-color:${escapeHTML(col.border)};color:${escapeHTML(col.text)};">${escapeHTML(riskLabel(c.risk))}</span></td>
+        <td>${escapeHTML(c.assignedTo || '—')}</td>
+        <td>${escapeHTML(created)}</td>
+        <td style="text-align:right;white-space:nowrap">
+          <button class="btn btn-secondary btn-danger btn-sm" type="button" data-action="delete" style="padding:4px 10px;font-size:11px">Delete</button>
+          <button class="btn btn-primary btn-sm" type="button" data-action="open" style="padding:4px 10px;font-size:11px">Open</button>
+        </td>
       `;
 
-      const statusSlot = card.querySelector('[data-slot="status"]');
-      if (statusSlot) statusSlot.replaceWith(statusPill);
+      // Row click opens case (except button clicks)
+      tr.addEventListener('click', (e) => {
+        if (e.target.closest('button')) return;
+        openCase(c);
+      });
 
-      const riskSlot = card.querySelector('[data-slot="risk"]');
-      if (riskSlot) riskSlot.appendChild(riskPill);
-
-      card.querySelector('[data-action="open"]')?.addEventListener('click', () => openCase(c));
-      card.querySelector('[data-action="delete"]')?.addEventListener('click', async () => {
+      tr.querySelector('[data-action="open"]')?.addEventListener('click', () => openCase(c));
+      tr.querySelector('[data-action="delete"]')?.addEventListener('click', async (e) => {
+        e.stopPropagation();
         const ok = window.confirm(`Delete case ${c.id}?\n\nThis will permanently delete this case and all its data.`);
         if (!ok) return;
         showToast('Deleting case…');
@@ -680,7 +627,7 @@
         showToast('Case deleted.');
         applyAndRender();
       });
-      grid.appendChild(card);
+      tbody.appendChild(tr);
     });
   }
 

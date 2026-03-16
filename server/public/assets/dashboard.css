@@ -865,7 +865,7 @@ body::after { display: none; }
 
 .table-wrap {
   overflow: auto;
-  max-height: 520px;
+  max-height: 70vh;
 }
 
 .table {
@@ -874,6 +874,9 @@ body::after { display: none; }
   border-spacing: 0;
   font-size: 12.5px;
 }
+
+.case-table tbody tr { cursor: pointer; transition: background 120ms ease; }
+.case-table tbody tr:hover td { background: var(--table-row-hover); }
 
 .table thead th {
   position: sticky;
