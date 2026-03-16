@@ -10016,15 +10016,9 @@
     const hasExplicitView = viewMode === 'blocks' || viewMode === 'all' || viewMode === 'single';
 
     if (!hasExplicitView || viewMode === 'blocks') {
-      // Fix: If a case already has a saved block preference, restore it directly
-      // instead of forcing the user through the block picker every time.
-      const savedBlock = HAS_CASE_ID ? (STORAGE.getItem(storageKey('selectedBlock')) || '').toString().trim().toLowerCase() : '';
-      if (savedBlock && HAS_CASE_ID && (savedBlock === 'business' || savedBlock === 'personal' || savedBlock === 'report' || savedBlock === 'case_overview')) {
-        exitBlockSelection(savedBlock);
-      } else {
-        setWorkspaceUrl({ view: 'blocks', block: '' }, 'replace');
-        enterBlockSelection();
-      }
+      // Always show block picker first when opening a case.
+      setWorkspaceUrl({ view: 'blocks', block: '' }, 'replace');
+      enterBlockSelection();
     } else {
       const picker = qs('[data-ui="block-picker"]');
       const blocksWrap = qs('.blocks');
