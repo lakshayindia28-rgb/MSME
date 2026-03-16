@@ -3198,10 +3198,24 @@
 
     const blockKey = getActiveBlockFromView();
     if (blockKey === 'report') {
-      if (wrap) wrap.setAttribute('hidden', '');
+      // Show module-nav for report with only the block switcher
+      if (wrap) wrap.removeAttribute('hidden');
+      if (prev) prev.style.display = 'none';
+      if (next) next.style.display = 'none';
+      if (label) label.style.display = 'none';
+      const blockSwitcher = qs('[data-block-switcher]', wrap);
+      if (blockSwitcher) {
+        blockSwitcher.selectedIndex = 0;
+        Array.from(blockSwitcher.options).forEach((opt) => {
+          opt.disabled = opt.value === 'report';
+        });
+      }
       return;
     }
     if (wrap) wrap.removeAttribute('hidden');
+    if (prev) prev.style.display = '';
+    if (next) next.style.display = '';
+    if (label) label.style.display = '';
 
     // Case overview: hide module-nav entirely (block-head already has cross-block buttons)
     if (blockKey === 'case_overview') {
