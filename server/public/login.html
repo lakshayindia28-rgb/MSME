@@ -6,7 +6,7 @@
   <title>CrediVerify 360 — Login</title>
   <script>
   // Instant redirect if already logged in (before any rendering)
-  try{var s=sessionStorage.getItem('cv360:auth:session')||localStorage.getItem('cv360:auth:session');if(s&&JSON.parse(s).userId){window.location.replace('/cases');document.write('');}}catch(e){}
+  try{var s=sessionStorage.getItem('cv360:auth:session')||localStorage.getItem('cv360:auth:session');if(s&&JSON.parse(s).userId){window.location.replace('/dashboard');document.write('');}}catch(e){}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -429,7 +429,7 @@
       if (raw) {
         const sess = JSON.parse(raw);
         if (sess && sess.userId) {
-          window.location.replace('/cases');
+          window.location.replace('/dashboard');
           return;
         }
       }
@@ -506,7 +506,7 @@
         const toast = document.getElementById('loginSuccess');
         if (toast) toast.classList.add('show');
 
-        setTimeout(() => { window.location.href = '/cases'; }, 1200);
+        setTimeout(() => { window.location.href = '/dashboard'; }, 1200);
 
       } catch (err) {
         loginBtn.classList.remove('loading');
