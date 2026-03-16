@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CrediVerify 360 — Login</title>
+  <script>
+  // Instant redirect if already logged in (before any rendering)
+  try{var s=sessionStorage.getItem('cv360:auth:session')||localStorage.getItem('cv360:auth:session');if(s&&JSON.parse(s).userId){window.location.replace('/cases');document.write('');}}catch(e){}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -419,13 +423,13 @@
     const loginError = document.getElementById('loginError');
     const togglePass = document.querySelector('.toggle-pass');
 
-    // If already logged in, redirect based on role
+    // If already logged in, redirect to dashboard
     try {
       const raw = sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY);
       if (raw) {
         const sess = JSON.parse(raw);
         if (sess && sess.userId) {
-          window.location.replace(sess.role === 'admin' ? '/admin' : '/cases');
+          window.location.replace('/cases');
           return;
         }
       }
@@ -502,8 +506,7 @@
         const toast = document.getElementById('loginSuccess');
         if (toast) toast.classList.add('show');
 
-        const redirectUrl = data.user.role === 'admin' ? '/admin' : '/cases';
-        setTimeout(() => { window.location.href = redirectUrl; }, 1200);
+        setTimeout(() => { window.location.href = '/cases'; }, 1200);
 
       } catch (err) {
         loginBtn.classList.remove('loading');

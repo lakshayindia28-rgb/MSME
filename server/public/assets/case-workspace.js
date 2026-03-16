@@ -231,7 +231,7 @@
 
   /* ── Gate: redirect to dashboard if no caseId ── */
   if (!HAS_CASE_ID) {
-    window.location.replace('/');
+    window.location.replace('/cases');
     return;
   }
 
