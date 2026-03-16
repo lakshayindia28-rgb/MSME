@@ -201,6 +201,38 @@
     .login-footer{margin-top:36px;text-align:center;padding-top:20px;border-top:1px solid var(--border)}
     .login-footer p{font-size:0.78rem;color:var(--ink3)}
 
+    /* ── Login Success Toast ── */
+    .login-success{
+      position:fixed;top:24px;right:24px;z-index:9999;
+      display:flex;align-items:center;gap:12px;
+      background:#fff;border:1px solid #d1fae5;border-radius:12px;
+      padding:14px 20px;box-shadow:0 8px 30px rgba(5,150,105,0.18);
+      opacity:0;transform:translateY(-20px) scale(0.95);
+      pointer-events:none;
+      transition:opacity 0.35s ease,transform 0.35s ease;
+    }
+    .login-success.show{
+      opacity:1;transform:translateY(0) scale(1);pointer-events:auto;
+    }
+    .success-tick{width:40px;height:40px;flex-shrink:0}
+    .tick-circle{
+      stroke-dasharray:150;stroke-dashoffset:150;
+      animation:none;
+    }
+    .tick-check{
+      stroke-dasharray:50;stroke-dashoffset:50;
+      animation:none;
+    }
+    .login-success.show .tick-circle{
+      animation:tickCircle 0.5s ease forwards;
+    }
+    .login-success.show .tick-check{
+      animation:tickDraw 0.4s ease 0.35s forwards;
+    }
+    @keyframes tickCircle{to{stroke-dashoffset:0}}
+    @keyframes tickDraw{to{stroke-dashoffset:0}}
+    .success-text{font-size:0.95rem;font-weight:700;color:#059669}
+
     /* ── Responsive ── */
     @media(max-width:960px){
       body{flex-direction:column}
@@ -311,6 +343,16 @@
     <div class="login-footer">
       <p>Secure Login &nbsp;&bull;&nbsp; Powered by CrediVerify 360</p>
     </div>
+
+    <!-- Success Toast -->
+    <div class="login-success" id="loginSuccess">
+      <svg class="success-tick" viewBox="0 0 52 52" fill="none">
+        <circle cx="26" cy="26" r="24" fill="#059669" opacity="0.12"/>
+        <circle class="tick-circle" cx="26" cy="26" r="24" stroke="#059669" stroke-width="2" fill="none"/>
+        <path class="tick-check" d="M14 27l8 8 16-16" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="success-text">Login Successful</span>
+    </div>
   </div>
 
   <script>
@@ -383,8 +425,12 @@
         localStorage.setItem(SESSION_KEY, JSON.stringify(session));
         sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
 
-        // Redirect to dashboard
-        window.location.href = '/dashboard';
+        // Show success toast then redirect
+        loginBtn.classList.remove('loading');
+        loginBtn.disabled = false;
+        const toast = document.getElementById('loginSuccess');
+        if (toast) toast.classList.add('show');
+        setTimeout(() => { window.location.href = '/dashboard'; }, 1500);
       }, 800);
     });
   })();

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/dashboard.css?v=20260316_v6" />
+  <link rel="stylesheet" href="assets/dashboard.css?v=20260316_v7" />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -41,6 +41,11 @@
     </aside>
 
     <div class="app-content">
+
+  <!-- Blue loading bar -->
+  <div class="page-loader" id="pageLoader">
+    <div class="page-loader-bar"></div>
+  </div>
 
   <!-- Top header (Sticky) -->
   <header class="topbar" role="banner">
@@ -414,7 +419,7 @@
 
   <div data-toast role="status" aria-live="polite"></div>
 
-  <script src="assets/dashboard.js?v=20260316_v6"></script>
+  <script src="assets/dashboard.js?v=20260316_v7"></script>
   <script>
     (function () {
       const path = window.location.pathname;
@@ -452,6 +457,12 @@
         const queue = document.querySelector('.queue');
         if (queue) queue.style.display = 'none';
       }
+
+      // Finish the blue loader bar
+      window.addEventListener('load', () => {
+        const loader = document.getElementById('pageLoader');
+        if (loader) loader.classList.add('done');
+      });
     })();
   </script>
     </div>
