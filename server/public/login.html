@@ -57,16 +57,16 @@
       100%{transform:translateY(-100vh) rotate(720deg);opacity:0}
     }
 
-    .brand-section{position:relative;z-index:1;text-align:center;max-width:480px}
+    .brand-section{position:relative;z-index:1;text-align:center;max-width:420px}
     .brand-logo{
-      width:80px;height:80px;border-radius:20px;
+      width:72px;height:72px;border-radius:18px;
       background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);
       display:flex;align-items:center;justify-content:center;
-      margin:0 auto 32px;border:1px solid rgba(255,255,255,0.15);
+      margin:0 auto 28px;border:1px solid rgba(255,255,255,0.15);
     }
-    .brand-logo span{font-size:28px;font-weight:800;color:#fff;letter-spacing:-1px}
-    .brand-title{font-size:2.4rem;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:12px}
-    .brand-tagline{font-size:1.05rem;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:48px}
+    .brand-logo span{font-size:26px;font-weight:800;color:#fff;letter-spacing:-1px}
+    .brand-title{font-size:2.2rem;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:12px}
+    .brand-tagline{font-size:0.95rem;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:40px}
 
     /* SVG Shield Animation */
     .shield-container{margin:0 auto;width:220px;height:220px;position:relative}
@@ -101,13 +101,14 @@
     .orbit-dot:nth-child(4){right:0;top:50%;transform:translateY(-50%)}
     @keyframes orbitSpin{to{transform:rotate(360deg)}}
 
-    .stats-row{
-      display:flex;gap:24px;justify-content:center;margin-top:48px;
-      position:relative;z-index:1;
+    .stats-row{display:none}
+
+    /* Login page footer */
+    .page-footer{
+      position:absolute;bottom:0;left:0;right:0;
+      padding:20px 40px;text-align:center;z-index:1;
     }
-    .stat{text-align:center}
-    .stat-value{font-size:1.6rem;font-weight:800;color:#fff}
-    .stat-label{font-size:0.78rem;color:rgba(255,255,255,0.5);margin-top:4px;text-transform:uppercase;letter-spacing:0.05em}
+    .page-footer p{font-size:0.75rem;color:rgba(255,255,255,0.35);letter-spacing:0.02em}
 
     /* ── Right Panel (Login Form) ── */
     .right-panel{
@@ -197,8 +198,8 @@
       0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}
     }
 
-    .login-footer{margin-top:40px;text-align:center}
-    .login-footer p{font-size:0.8rem;color:var(--ink3)}
+    .login-footer{margin-top:36px;text-align:center;padding-top:20px;border-top:1px solid var(--border)}
+    .login-footer p{font-size:0.78rem;color:var(--ink3)}
 
     /* ── Responsive ── */
     @media(max-width:960px){
@@ -226,7 +227,7 @@
     <div class="brand-section">
       <div class="brand-logo"><span>CV</span></div>
       <div class="brand-title">CrediVerify 360</div>
-      <p class="brand-tagline">Enterprise-grade business verification platform. Run faster, auditable GST, MCA, compliance checks with evidence-backed reporting.</p>
+      <p class="brand-tagline">Business verification & compliance platform for GST, MCA, and evidence-backed reporting.</p>
 
       <!-- Animated Shield SVG -->
       <div class="shield-container">
@@ -237,14 +238,10 @@
           <div class="orbit-dot"></div>
         </div>
         <svg class="shield-svg" viewBox="0 0 200 220" fill="none">
-          <!-- Shield outline -->
           <path class="shield-body shield-body-fill" d="M100 20 L170 55 L170 120 Q170 175 100 200 Q30 175 30 120 L30 55 Z"/>
           <path class="shield-body" d="M100 20 L170 55 L170 120 Q170 175 100 200 Q30 175 30 120 L30 55 Z"/>
-          <!-- Pulse ring -->
           <path class="shield-pulse" d="M100 10 L180 50 L180 125 Q180 185 100 210 Q20 185 20 125 L20 50 Z"/>
-          <!-- Checkmark -->
           <polyline class="shield-check" points="70,115 92,138 135,88"/>
-          <!-- Small decorative elements -->
           <circle cx="100" cy="70" r="3" fill="rgba(59,130,246,0.3)">
             <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite"/>
           </circle>
@@ -256,21 +253,10 @@
           </circle>
         </svg>
       </div>
+    </div>
 
-      <div class="stats-row">
-        <div class="stat">
-          <div class="stat-value" id="statCases">—</div>
-          <div class="stat-label">Cases</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">9+</div>
-          <div class="stat-label">Modules</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">PDF</div>
-          <div class="stat-label">Reports</div>
-        </div>
-      </div>
+    <div class="page-footer">
+      <p>&copy; 2026 CrediVerify 360. All rights reserved. &nbsp;|&nbsp; Internal Use Only</p>
     </div>
   </div>
 
@@ -317,7 +303,7 @@
     </form>
 
     <div class="login-footer">
-      <p>CrediVerify 360 &mdash; Internal Use Only</p>
+      <p>Secure Login &nbsp;&bull;&nbsp; Powered by CrediVerify 360</p>
     </div>
   </div>
 
@@ -358,13 +344,6 @@
         ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
         : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
     });
-
-    // Fetch total cases for the stat
-    fetch('/api/cases').then(r => r.json()).then(d => {
-      if (d.success && Array.isArray(d.cases)) {
-        document.getElementById('statCases').textContent = d.cases.length;
-      }
-    }).catch(() => {});
 
     // Login handler
     form.addEventListener('submit', (e) => {

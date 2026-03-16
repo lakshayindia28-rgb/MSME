@@ -70,49 +70,100 @@
   </header>
 
   <main id="main" class="main" role="main">
-    <!-- Hero (SaaS-style) -->
+    <!-- Hero with SVG animation -->
     <section class="hero" aria-label="Overview">
       <div class="hero-card">
         <div class="hero-grid">
           <div>
-            <div class="hero-kicker">Enterprise verification workspace</div>
-            <h1 class="hero-title">Run faster, auditable business verification.</h1>
-            <p class="hero-subtitle">A clean case workflow for GST, MCA, compliance checks, and evidence-backed reporting — designed for internal operations and review-ready outputs.</p>
+            <h1 class="hero-title">Case Management Dashboard</h1>
+            <p class="hero-subtitle">Manage verification workflows, track compliance, and generate evidence-backed reports.</p>
 
             <div class="hero-actions">
-              <button class="btn btn-primary" type="button" data-action="open-create">Create New Case</button>
-              <a class="btn btn-secondary" href="#caseGrid">View Cases</a>
-            </div>
-
-            <div class="trust" aria-label="Trust signals">
-              <div class="trust-title">Designed for internal auditability</div>
-              <div class="trust-row" role="list">
-                <div class="trust-pill" role="listitem">Evidence hashing</div>
-                <div class="trust-pill" role="listitem">Structured outputs</div>
-                <div class="trust-pill" role="listitem">Role-based workflows</div>
-                <div class="trust-pill" role="listitem">Export-ready reports</div>
-              </div>
+              <button class="btn btn-primary" type="button" data-action="open-create">+ Create New Case</button>
+              <a class="btn btn-secondary" href="/cases">View All Cases</a>
             </div>
           </div>
 
-          <div class="hero-side" aria-label="Quick links">
-            <div class="hero-side-card">
-              <div class="hero-side-title">Quick access</div>
-              <div class="hero-side-links">
-                <a class="hero-link" href="#caseGrid">View Cases</a>
-              </div>
-            </div>
-            <div class="hero-side-card">
-              <div class="hero-side-title">Today</div>
-              <div class="hero-side-meta">
-                <div class="meta-k">Open cases</div>
-                <div class="meta-v" data-kpi="total">0</div>
-              </div>
-              <div class="hero-side-meta">
-                <div class="meta-k">Pending</div>
-                <div class="meta-v" data-kpi="pending">0</div>
-              </div>
-            </div>
+          <div class="hero-visual" aria-hidden="true">
+            <svg class="hero-svg" viewBox="0 0 400 280" fill="none">
+              <!-- Background grid dots -->
+              <g opacity="0.15">
+                <circle cx="20" cy="20" r="1.5" fill="#3b82f6"/><circle cx="60" cy="20" r="1.5" fill="#3b82f6"/>
+                <circle cx="100" cy="20" r="1.5" fill="#3b82f6"/><circle cx="140" cy="20" r="1.5" fill="#3b82f6"/>
+                <circle cx="180" cy="20" r="1.5" fill="#3b82f6"/><circle cx="220" cy="20" r="1.5" fill="#3b82f6"/>
+                <circle cx="20" cy="60" r="1.5" fill="#3b82f6"/><circle cx="60" cy="60" r="1.5" fill="#3b82f6"/>
+                <circle cx="100" cy="60" r="1.5" fill="#3b82f6"/><circle cx="140" cy="60" r="1.5" fill="#3b82f6"/>
+                <circle cx="180" cy="60" r="1.5" fill="#3b82f6"/><circle cx="220" cy="60" r="1.5" fill="#3b82f6"/>
+              </g>
+
+              <!-- Dashboard mockup card -->
+              <rect x="60" y="40" width="280" height="190" rx="14" fill="#fff" stroke="#e2e8f0" stroke-width="1.5">
+                <animate attributeName="opacity" values="0;1" dur="0.6s" fill="freeze"/>
+              </rect>
+              <!-- Title bar -->
+              <rect x="60" y="40" width="280" height="36" rx="14" fill="#f8fafc"/>
+              <rect x="60" y="62" width="280" height="14" fill="#f8fafc"/>
+              <circle cx="80" cy="58" r="5" fill="#ef4444" opacity="0.6"/>
+              <circle cx="96" cy="58" r="5" fill="#f59e0b" opacity="0.6"/>
+              <circle cx="112" cy="58" r="5" fill="#22c55e" opacity="0.6"/>
+
+              <!-- Mini bar chart -->
+              <g transform="translate(80, 100)">
+                <rect x="0" y="60" width="22" height="50" rx="4" fill="#3b82f6" opacity="0.2">
+                  <animate attributeName="height" from="0" to="50" dur="0.8s" begin="0.3s" fill="freeze"/>
+                  <animate attributeName="y" from="110" to="60" dur="0.8s" begin="0.3s" fill="freeze"/>
+                </rect>
+                <rect x="30" y="35" width="22" height="75" rx="4" fill="#3b82f6" opacity="0.4">
+                  <animate attributeName="height" from="0" to="75" dur="0.8s" begin="0.5s" fill="freeze"/>
+                  <animate attributeName="y" from="110" to="35" dur="0.8s" begin="0.5s" fill="freeze"/>
+                </rect>
+                <rect x="60" y="15" width="22" height="95" rx="4" fill="#3b82f6" opacity="0.7">
+                  <animate attributeName="height" from="0" to="95" dur="0.8s" begin="0.7s" fill="freeze"/>
+                  <animate attributeName="y" from="110" to="15" dur="0.8s" begin="0.7s" fill="freeze"/>
+                </rect>
+                <rect x="90" y="45" width="22" height="65" rx="4" fill="#3b82f6" opacity="0.5">
+                  <animate attributeName="height" from="0" to="65" dur="0.8s" begin="0.9s" fill="freeze"/>
+                  <animate attributeName="y" from="110" to="45" dur="0.8s" begin="0.9s" fill="freeze"/>
+                </rect>
+              </g>
+
+              <!-- Mini donut -->
+              <g transform="translate(270, 150)">
+                <circle cx="0" cy="0" r="32" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+                <circle cx="0" cy="0" r="32" fill="none" stroke="#3b82f6" stroke-width="8"
+                  stroke-dasharray="140 200" stroke-linecap="round" transform="rotate(-90)">
+                  <animate attributeName="stroke-dasharray" from="0 200" to="140 200" dur="1.2s" begin="0.4s" fill="freeze"/>
+                </circle>
+                <circle cx="0" cy="0" r="32" fill="none" stroke="#22c55e" stroke-width="8"
+                  stroke-dasharray="50 200" stroke-dashoffset="-140" stroke-linecap="round" transform="rotate(-90)">
+                  <animate attributeName="stroke-dasharray" from="0 200" to="50 200" dur="1s" begin="0.8s" fill="freeze"/>
+                </circle>
+              </g>
+
+              <!-- Floating checkmark badge -->
+              <g transform="translate(330, 60)">
+                <circle cx="0" cy="0" r="18" fill="#22c55e" opacity="0.12">
+                  <animate attributeName="r" values="18;21;18" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="0" cy="0" r="14" fill="#22c55e" opacity="0.15"/>
+                <polyline points="-6,0 -2,5 7,-4" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <animate attributeName="opacity" values="0;1" dur="0.4s" begin="1s" fill="freeze"/>
+                </polyline>
+              </g>
+
+              <!-- Floating shield badge -->
+              <g transform="translate(55, 200)">
+                <circle cx="0" cy="0" r="16" fill="#3b82f6" opacity="0.1">
+                  <animate attributeName="r" values="16;19;16" dur="4s" repeatCount="indefinite"/>
+                </circle>
+                <path d="M0-10 L8-5 L8 3 Q8 9 0 12 Q-8 9 -8 3 L-8-5 Z" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.5"/>
+              </g>
+
+              <!-- Animated line connecting elements -->
+              <path d="M200 210 Q260 180 270 150" fill="none" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4 4" opacity="0.3">
+                <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="2s" repeatCount="indefinite"/>
+              </path>
+            </svg>
           </div>
         </div>
       </div>
@@ -322,8 +373,18 @@
     </section>
 
     <footer class="footer" role="contentinfo" aria-label="Footer">
-      <div class="footer-title">CrediVerify 360</div>
-      <div class="footer-meta">Internal Use Only • Enterprise Dashboard</div>
+      <div class="footer-inner">
+        <div class="footer-left">
+          <div class="footer-brand">
+            <span class="footer-logo">CV</span>
+            <span class="footer-title">CrediVerify 360</span>
+          </div>
+          <div class="footer-meta">&copy; 2026 All rights reserved. Internal Use Only.</div>
+        </div>
+        <div class="footer-right">
+          <span class="footer-version">v1.0</span>
+        </div>
+      </div>
     </footer>
   </main>
 
