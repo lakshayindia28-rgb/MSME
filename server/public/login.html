@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CrediVerify 360 — Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --primary:#1e40af;--primary-light:#3b82f6;--primary-dark:#1e3a8a;
+      --accent:#0ea5e9;--surface:#ffffff;--bg:#f0f4f8;
+      --ink:#0f172a;--ink2:#334155;--ink3:#64748b;
+      --border:#e2e8f0;--radius:16px;
+    }
+    html{height:100%}
+    body{
+      font-family:'Inter',system-ui,-apple-system,sans-serif;
+      min-height:100vh;display:flex;
+      background:var(--bg);color:var(--ink);
+      overflow-x:hidden;
+    }
+
+    /* ── Left Panel (Branding + SVG) ── */
+    .left-panel{
+      flex:1;display:flex;flex-direction:column;
+      justify-content:center;align-items:center;
+      background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 50%,#1e40af 100%);
+      position:relative;overflow:hidden;padding:60px 40px;
+      min-height:100vh;
+    }
+    .left-panel::before{
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse at 30% 20%,rgba(59,130,246,0.15) 0%,transparent 60%),
+                 radial-gradient(ellipse at 70% 80%,rgba(14,165,233,0.1) 0%,transparent 50%);
+    }
+
+    /* Floating dots animation */
+    .floating-dots{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+    .floating-dots span{
+      position:absolute;display:block;border-radius:50%;
+      background:rgba(255,255,255,0.04);
+      animation:floatUp linear infinite;
+    }
+    .floating-dots span:nth-child(1){width:80px;height:80px;left:10%;animation-duration:18s;animation-delay:0s}
+    .floating-dots span:nth-child(2){width:40px;height:40px;left:25%;animation-duration:22s;animation-delay:2s}
+    .floating-dots span:nth-child(3){width:60px;height:60px;left:50%;animation-duration:16s;animation-delay:4s}
+    .floating-dots span:nth-child(4){width:100px;height:100px;left:70%;animation-duration:20s;animation-delay:1s}
+    .floating-dots span:nth-child(5){width:30px;height:30px;left:85%;animation-duration:24s;animation-delay:3s}
+    .floating-dots span:nth-child(6){width:50px;height:50px;left:40%;animation-duration:19s;animation-delay:5s}
+    @keyframes floatUp{
+      0%{transform:translateY(100vh) rotate(0deg);opacity:0}
+      10%{opacity:1}
+      90%{opacity:1}
+      100%{transform:translateY(-100vh) rotate(720deg);opacity:0}
+    }
+
+    .brand-section{position:relative;z-index:1;text-align:center;max-width:480px}
+    .brand-logo{
+      width:80px;height:80px;border-radius:20px;
+      background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 32px;border:1px solid rgba(255,255,255,0.15);
+    }
+    .brand-logo span{font-size:28px;font-weight:800;color:#fff;letter-spacing:-1px}
+    .brand-title{font-size:2.4rem;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:12px}
+    .brand-tagline{font-size:1.05rem;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:48px}
+
+    /* SVG Shield Animation */
+    .shield-container{margin:0 auto;width:220px;height:220px;position:relative}
+    .shield-svg{width:100%;height:100%}
+    .shield-body{fill:none;stroke:rgba(255,255,255,0.2);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .shield-body-fill{fill:rgba(59,130,246,0.08)}
+    .shield-check{
+      fill:none;stroke:#3b82f6;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;
+      stroke-dasharray:60;stroke-dashoffset:60;
+      animation:drawCheck 1.5s ease 1s forwards;
+    }
+    .shield-pulse{
+      fill:none;stroke:rgba(59,130,246,0.3);stroke-width:1;
+      animation:shieldPulse 3s ease-in-out infinite;
+      transform-origin:center;
+    }
+    @keyframes drawCheck{to{stroke-dashoffset:0}}
+    @keyframes shieldPulse{
+      0%,100%{transform:scale(1);opacity:0.3}
+      50%{transform:scale(1.08);opacity:0.6}
+    }
+
+    /* Orbit dots around shield */
+    .orbit{position:absolute;inset:-20px;animation:orbitSpin 12s linear infinite}
+    .orbit-dot{
+      position:absolute;width:8px;height:8px;border-radius:50%;
+      background:#3b82f6;box-shadow:0 0 12px rgba(59,130,246,0.5);
+    }
+    .orbit-dot:nth-child(1){top:0;left:50%;transform:translateX(-50%)}
+    .orbit-dot:nth-child(2){bottom:0;left:50%;transform:translateX(-50%)}
+    .orbit-dot:nth-child(3){left:0;top:50%;transform:translateY(-50%)}
+    .orbit-dot:nth-child(4){right:0;top:50%;transform:translateY(-50%)}
+    @keyframes orbitSpin{to{transform:rotate(360deg)}}
+
+    .stats-row{
+      display:flex;gap:24px;justify-content:center;margin-top:48px;
+      position:relative;z-index:1;
+    }
+    .stat{text-align:center}
+    .stat-value{font-size:1.6rem;font-weight:800;color:#fff}
+    .stat-label{font-size:0.78rem;color:rgba(255,255,255,0.5);margin-top:4px;text-transform:uppercase;letter-spacing:0.05em}
+
+    /* ── Right Panel (Login Form) ── */
+    .right-panel{
+      width:520px;min-width:420px;display:flex;flex-direction:column;
+      justify-content:center;padding:60px 56px;
+      background:var(--surface);position:relative;
+    }
+    .right-panel::before{
+      content:'';position:absolute;left:0;top:10%;height:80%;width:1px;
+      background:linear-gradient(to bottom,transparent,var(--border),transparent);
+    }
+
+    .login-header{margin-bottom:40px}
+    .login-header h2{font-size:1.8rem;font-weight:800;color:var(--ink);letter-spacing:-0.02em;margin-bottom:8px}
+    .login-header p{color:var(--ink3);font-size:0.95rem;line-height:1.6}
+
+    .login-badge{
+      display:inline-flex;align-items:center;gap:8px;
+      background:linear-gradient(135deg,#eff6ff,#dbeafe);
+      color:var(--primary);font-size:0.82rem;font-weight:600;
+      padding:6px 14px;border-radius:20px;margin-bottom:20px;
+      border:1px solid rgba(59,130,246,0.15);
+    }
+    .login-badge svg{width:14px;height:14px}
+
+    .form-group{margin-bottom:22px}
+    .form-label{
+      display:block;font-size:0.82rem;font-weight:600;color:var(--ink2);
+      margin-bottom:8px;text-transform:uppercase;letter-spacing:0.04em;
+    }
+    .form-input{
+      width:100%;padding:14px 16px;border:1.5px solid var(--border);
+      border-radius:12px;font-size:0.95rem;font-family:inherit;
+      color:var(--ink);background:var(--bg);
+      transition:border-color 0.2s,box-shadow 0.2s;outline:none;
+    }
+    .form-input:focus{
+      border-color:var(--primary-light);
+      box-shadow:0 0 0 3px rgba(59,130,246,0.1);
+    }
+    .form-input::placeholder{color:var(--ink3)}
+
+    .password-wrap{position:relative}
+    .password-wrap .form-input{padding-right:48px}
+    .toggle-pass{
+      position:absolute;right:14px;top:50%;transform:translateY(-50%);
+      background:none;border:none;cursor:pointer;color:var(--ink3);
+      padding:4px;display:flex;align-items:center;
+    }
+    .toggle-pass:hover{color:var(--ink)}
+
+    .form-options{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+    .remember-row{display:flex;align-items:center;gap:8px}
+    .remember-row input[type="checkbox"]{
+      width:16px;height:16px;accent-color:var(--primary);cursor:pointer;
+    }
+    .remember-row label{font-size:0.85rem;color:var(--ink2);cursor:pointer}
+
+    .btn-login{
+      width:100%;padding:15px;border:none;border-radius:12px;
+      background:linear-gradient(135deg,var(--primary) 0%,var(--primary-light) 100%);
+      color:#fff;font-size:1rem;font-weight:700;font-family:inherit;
+      cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;
+      box-shadow:0 4px 14px rgba(30,64,175,0.3);
+      position:relative;overflow:hidden;
+    }
+    .btn-login:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(30,64,175,0.4)}
+    .btn-login:active{transform:translateY(0)}
+    .btn-login:disabled{opacity:0.7;cursor:not-allowed;transform:none}
+
+    .btn-login .spinner{
+      display:none;width:20px;height:20px;border:2.5px solid rgba(255,255,255,0.3);
+      border-top-color:#fff;border-radius:50%;animation:spin 0.6s linear infinite;
+      margin:0 auto;
+    }
+    .btn-login.loading .btn-text{display:none}
+    .btn-login.loading .spinner{display:block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .login-error{
+      display:none;padding:12px 16px;border-radius:10px;
+      background:#fef2f2;border:1px solid #fecaca;color:#991b1b;
+      font-size:0.85rem;margin-bottom:18px;
+    }
+    .login-error.show{display:block;animation:shake 0.4s ease}
+    @keyframes shake{
+      0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}
+    }
+
+    .login-footer{margin-top:40px;text-align:center}
+    .login-footer p{font-size:0.8rem;color:var(--ink3)}
+
+    /* ── Responsive ── */
+    @media(max-width:960px){
+      body{flex-direction:column}
+      .left-panel{min-height:40vh;padding:40px 24px}
+      .right-panel{width:100%;min-width:unset;padding:40px 28px}
+      .brand-title{font-size:1.8rem}
+      .shield-container{width:160px;height:160px}
+      .stats-row{gap:16px}
+    }
+    @media(max-width:480px){
+      .right-panel{padding:32px 20px}
+      .login-header h2{font-size:1.4rem}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── LEFT: Branding + Animated SVG ── -->
+  <div class="left-panel">
+    <div class="floating-dots">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="brand-section">
+      <div class="brand-logo"><span>CV</span></div>
+      <div class="brand-title">CrediVerify 360</div>
+      <p class="brand-tagline">Enterprise-grade business verification platform. Run faster, auditable GST, MCA, compliance checks with evidence-backed reporting.</p>
+
+      <!-- Animated Shield SVG -->
+      <div class="shield-container">
+        <div class="orbit">
+          <div class="orbit-dot"></div>
+          <div class="orbit-dot"></div>
+          <div class="orbit-dot"></div>
+          <div class="orbit-dot"></div>
+        </div>
+        <svg class="shield-svg" viewBox="0 0 200 220" fill="none">
+          <!-- Shield outline -->
+          <path class="shield-body shield-body-fill" d="M100 20 L170 55 L170 120 Q170 175 100 200 Q30 175 30 120 L30 55 Z"/>
+          <path class="shield-body" d="M100 20 L170 55 L170 120 Q170 175 100 200 Q30 175 30 120 L30 55 Z"/>
+          <!-- Pulse ring -->
+          <path class="shield-pulse" d="M100 10 L180 50 L180 125 Q180 185 100 210 Q20 185 20 125 L20 50 Z"/>
+          <!-- Checkmark -->
+          <polyline class="shield-check" points="70,115 92,138 135,88"/>
+          <!-- Small decorative elements -->
+          <circle cx="100" cy="70" r="3" fill="rgba(59,130,246,0.3)">
+            <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="70" cy="90" r="2" fill="rgba(59,130,246,0.2)">
+            <animate attributeName="opacity" values="0.2;0.6;0.2" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="130" cy="90" r="2" fill="rgba(59,130,246,0.2)">
+            <animate attributeName="opacity" values="0.2;0.6;0.2" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-value" id="statCases">—</div>
+          <div class="stat-label">Cases</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">9+</div>
+          <div class="stat-label">Modules</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">PDF</div>
+          <div class="stat-label">Reports</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RIGHT: Login Form ── -->
+  <div class="right-panel">
+    <div class="login-header">
+      <div class="login-badge">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd"/></svg>
+        Executive Portal
+      </div>
+      <h2>Welcome back</h2>
+      <p>Sign in to access the case management dashboard and verification workflows.</p>
+    </div>
+
+    <div class="login-error" id="loginError">Invalid credentials. Please try again.</div>
+
+    <form id="loginForm" autocomplete="on">
+      <div class="form-group">
+        <label class="form-label" for="loginId">User ID</label>
+        <input class="form-input" id="loginId" name="username" type="text" placeholder="Enter your user ID" autocomplete="username" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="loginPass">Password</label>
+        <div class="password-wrap">
+          <input class="form-input" id="loginPass" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required />
+          <button type="button" class="toggle-pass" aria-label="Toggle password visibility" tabindex="-1">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="form-options">
+        <div class="remember-row">
+          <input type="checkbox" id="rememberMe" checked />
+          <label for="rememberMe">Remember me</label>
+        </div>
+      </div>
+
+      <button class="btn-login" type="submit" id="loginBtn">
+        <span class="btn-text">Sign In</span>
+        <div class="spinner"></div>
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>CrediVerify 360 &mdash; Internal Use Only</p>
+    </div>
+  </div>
+
+  <script>
+  (function() {
+    const CRED_KEY = 'cv360:auth:credentials';
+    const SESSION_KEY = 'cv360:auth:session';
+
+    const form = document.getElementById('loginForm');
+    const loginId = document.getElementById('loginId');
+    const loginPass = document.getElementById('loginPass');
+    const rememberMe = document.getElementById('rememberMe');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginError = document.getElementById('loginError');
+    const togglePass = document.querySelector('.toggle-pass');
+
+    // If already logged in, redirect to dashboard
+    if (sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY)) {
+      window.location.replace('/dashboard');
+      return;
+    }
+
+    // Hydrate saved credentials
+    try {
+      const saved = JSON.parse(localStorage.getItem(CRED_KEY));
+      if (saved && saved.userId) {
+        loginId.value = saved.userId;
+        loginPass.value = saved.password || '';
+        rememberMe.checked = true;
+      }
+    } catch {}
+
+    // Toggle password visibility
+    togglePass.addEventListener('click', () => {
+      const isPass = loginPass.type === 'password';
+      loginPass.type = isPass ? 'text' : 'password';
+      togglePass.innerHTML = isPass
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+    });
+
+    // Fetch total cases for the stat
+    fetch('/api/cases').then(r => r.json()).then(d => {
+      if (d.success && Array.isArray(d.cases)) {
+        document.getElementById('statCases').textContent = d.cases.length;
+      }
+    }).catch(() => {});
+
+    // Login handler
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      loginError.classList.remove('show');
+
+      const uid = loginId.value.trim();
+      const pwd = loginPass.value;
+
+      if (!uid || !pwd) {
+        loginError.textContent = 'Please enter both User ID and Password.';
+        loginError.classList.add('show');
+        return;
+      }
+
+      // Show loading
+      loginBtn.classList.add('loading');
+      loginBtn.disabled = true;
+
+      // Simulate brief auth delay for UX
+      setTimeout(() => {
+        // Save credentials if "Remember me" is checked
+        if (rememberMe.checked) {
+          localStorage.setItem(CRED_KEY, JSON.stringify({ userId: uid, password: pwd }));
+        } else {
+          localStorage.removeItem(CRED_KEY);
+        }
+
+        // Save session
+        const session = { userId: uid, role: 'Executive', loggedInAt: new Date().toISOString() };
+        localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+
+        // Redirect to dashboard
+        window.location.href = '/dashboard';
+      }, 800);
+    });
+  })();
+  </script>
+</body>
+</html>

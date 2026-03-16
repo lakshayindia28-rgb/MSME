@@ -295,9 +295,16 @@ body::after { display: none; }
   border-color: rgba(9, 105, 218, 0.18);
 }
 
-.nav-item[aria-current="page"] {
+.nav-item[aria-current="page"],
+.nav-item.active {
   background: var(--sidebar-active);
   border-color: rgba(9, 105, 218, 0.28);
+}
+
+.role-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
 }
 
 .nav-icon {

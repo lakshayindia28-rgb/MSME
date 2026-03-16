@@ -10,6 +10,36 @@
   const UI_KEY = 'cv360:cma:ui:v1';
   const SEEDED_KEY = 'cv360:cma:seeded:v1';
 
+  const SESSION_KEY = 'cv360:auth:session';
+
+  // ── Session guard: redirect to login if not authenticated ──
+  function getSession() {
+    try {
+      const raw = sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+  }
+  const _session = getSession();
+  if (!_session) {
+    window.location.replace('/');
+    return; // stop executing
+  }
+
+  // Show logged-in user info
+  (function hydrateUser() {
+    const nameEl = document.getElementById('userNameDisplay');
+    const avatarEl = document.getElementById('userAvatar');
+    if (nameEl && _session.userId) nameEl.textContent = _session.userId;
+    if (avatarEl && _session.userId) avatarEl.textContent = _session.userId.charAt(0).toUpperCase();
+  })();
+
+  // Logout handler
+  document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    sessionStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(SESSION_KEY);
+    window.location.replace('/');
+  });
+
   const WORKSPACE_MODULE_KEYS = ['gst', 'mca', 'compliance', 'pan', 'udyam', 'itr', 'bank_statement', 'financial', 'field_data'];
 
   function caseWorkspacePrefix(caseId) {
@@ -1104,7 +1134,6 @@
 
   async function init() {
     hydrateUIFromStorage();
-    initRoleSelector();
     bindEvents();
     applyAndRender(); // render immediately from localStorage
 

@@ -847,14 +847,19 @@ app.get('/api/queue/status', (req, res) => {
   }
 });
 
-// Single landing page: CrediVerify 360 dashboard
+// Landing page: Login
 app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+// Dashboard (post-login)
+app.get('/dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
-// Back-compat: redirect legacy dashboard route to landing
-app.get('/dashboard', (req, res) => {
-  res.redirect('/');
+// Cases page
+app.get('/cases', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
 // Case Workspace entry point (query params supported)
