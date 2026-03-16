@@ -24,19 +24,39 @@
       </div>
     </div>
   </div>
+  <!-- Decline blocker overlay -->
+  <div id="cookieBlocker" style="display:none; position:fixed; inset:0; z-index:99998; background:rgba(15,23,42,.92); backdrop-filter:blur(6px); color:#fff; font-family:inherit;">
+    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; max-width:420px; padding:32px;">
+      <div style="font-size:48px; margin-bottom:12px;">🔒</div>
+      <h2 style="font-size:20px; font-weight:800; margin:0 0 8px;">Cookies Required</h2>
+      <p style="font-size:13px; color:#94a3b8; line-height:1.5; margin:0 0 20px;">CrediVerify 360 requires cookies &amp; local storage to save your case data, login session and preferences. The application cannot function without them.</p>
+      <button id="cookieReconsider" style="padding:10px 28px; border-radius:8px; border:none; background:linear-gradient(135deg,#3b82f6,#2563eb); color:#fff; font-size:13px; font-weight:700; cursor:pointer; box-shadow:0 2px 8px rgba(59,130,246,.35);">Allow Cookies &amp; Continue</button>
+    </div>
+  </div>
   <script>
   (function(){
-    var KEY='cv360:cookieConsent';
+    var COOKIE_NAME='cv360_consent';
+    function getCookie(n){var m=document.cookie.match(new RegExp('(?:^|; )'+n+'=([^;]*)'));return m?decodeURIComponent(m[1]):null;}
+    function setCookie(n,v,days){var d=new Date();d.setTime(d.getTime()+days*864e5);document.cookie=n+'='+encodeURIComponent(v)+';expires='+d.toUTCString()+';path=/;SameSite=Lax';}
     var banner=document.getElementById('cookieConsent');
-    var consent=localStorage.getItem(KEY);
-    if(!consent){banner.style.display='block';}
+    var blocker=document.getElementById('cookieBlocker');
+    var consent=getCookie(COOKIE_NAME);
+    if(consent==='allowed'){/* all good */}
+    else if(consent==='declined'){blocker.style.display='block';}
+    else{banner.style.display='block';}
     document.getElementById('cookieAccept').addEventListener('click',function(){
-      localStorage.setItem(KEY,'allowed');
+      setCookie(COOKIE_NAME,'allowed',365);
       banner.style.display='none';
+      blocker.style.display='none';
     });
     document.getElementById('cookieDecline').addEventListener('click',function(){
-      localStorage.setItem(KEY,'declined');
+      setCookie(COOKIE_NAME,'declined',365);
       banner.style.display='none';
+      blocker.style.display='block';
+    });
+    document.getElementById('cookieReconsider').addEventListener('click',function(){
+      setCookie(COOKIE_NAME,'allowed',365);
+      blocker.style.display='none';
     });
   })();
   </script>
