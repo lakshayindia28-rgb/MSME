@@ -1036,6 +1036,10 @@ body.header-collapsed .app-header {
   margin-left: auto;
 }
 
+.module-nav [data-block-switcher] {
+  margin-left: auto;
+}
+
 .content[data-view="blocks"] .module-nav {
   display: none;
 }
