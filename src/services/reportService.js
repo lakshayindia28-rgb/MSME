@@ -1849,7 +1849,13 @@ Format the report professionally with clear headings and bullet points.`;
               html += '<div style="padding:14px 16px;background:#f0f4ff;border:2px solid #1b2559;border-radius:10px;box-shadow:0 2px 8px rgba(27,37,89,0.08)">';
               html += '<div style="font-weight:800;font-size:12px;color:#1a3c5e;margin-bottom:10px;letter-spacing:0.5px;border-bottom:2px solid #1a3c5e;padding-bottom:6px">RESIDENTIAL VERIFICATION SUMMARY</div>';
               html += '<div style="font-size:11.5px;line-height:1.65;white-space:pre-wrap">' + safe(rvData.manual_summary) + '</div>';
-              if (rvData.rv_verified_by) html += '<div style="margin-top:10px;font-size:11.5px;font-weight:700;color:#1b2559">Verified By: ' + safe(rvData.rv_verified_by) + '</div>';
+              html += '</div></div>';
+            }
+            if (rvData.rv_verified_by) {
+              html += '<div class="block" style="margin-top:12px;break-inside:avoid;page-break-inside:avoid">';
+              html += '<div style="padding:12px 16px;background:#f8fafc;border:2px solid #1b2559;border-radius:10px;display:flex;align-items:center;gap:10px">';
+              html += '<div style="font-weight:800;font-size:11px;color:#1a3c5e;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap">VERIFIED BY:</div>';
+              html += '<div style="font-size:12px;font-weight:700;color:#1b2559">' + safe(rvData.rv_verified_by) + '</div>';
               html += '</div></div>';
             }
           }
