@@ -590,7 +590,6 @@
       const workspaceStatuses = serverStatuses || readWorkspaceModuleStatuses(c.id);
       const derivedStatus = deriveStatusFromModuleStatuses(workspaceStatuses) || c.status;
 
-      const col = riskBadgeColor(c.risk);
       const created = new Date(c.createdAt || nowISO()).toLocaleDateString('en-IN');
 
       const tr = document.createElement('tr');
@@ -598,13 +597,12 @@
       tr.style.cursor = 'pointer';
 
       tr.innerHTML = `
-        <td><strong>${escapeHTML(c.businessName || '—')}</strong></td>
-        <td class="mono" style="font-size:11px">${escapeHTML(c.id)}</td>
-        <td>${escapeHTML(c.businessType || '—')}</td>
-        <td><span class="status-pill" data-status="${escapeHTML(derivedStatus)}"><span class="status-dot"></span>${escapeHTML(statusLabel(derivedStatus))}</span></td>
-        <td><span class="badge" style="background:${escapeHTML(col.bg)};border-color:${escapeHTML(col.border)};color:${escapeHTML(col.text)};">${escapeHTML(riskLabel(c.risk))}</span></td>
-        <td>${escapeHTML(c.assignedTo || '—')}</td>
-        <td>${escapeHTML(created)}</td>
+        <td data-label="Business"><strong>${escapeHTML(c.businessName || '—')}</strong></td>
+        <td data-label="Case ID" class="mono" style="font-size:11px">${escapeHTML(c.id)}</td>
+        <td data-label="Type">${escapeHTML(c.businessType || '—')}</td>
+        <td data-label="Status"><span class="status-pill" data-status="${escapeHTML(derivedStatus)}"><span class="status-dot"></span>${escapeHTML(statusLabel(derivedStatus))}</span></td>
+        <td data-label="Executive">${escapeHTML(c.assignedTo || '—')}</td>
+        <td data-label="Created">${escapeHTML(created)}</td>
         <td style="text-align:right;white-space:nowrap">
           <button class="btn btn-secondary btn-danger btn-sm" type="button" data-action="delete" style="padding:4px 10px;font-size:11px">Delete</button>
           <button class="btn btn-primary btn-sm" type="button" data-action="open" style="padding:4px 10px;font-size:11px">Open</button>
