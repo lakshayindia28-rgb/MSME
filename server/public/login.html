@@ -409,6 +409,7 @@
   (function() {
     const CRED_KEY = 'cv360:auth:credentials';
     const SESSION_KEY = 'cv360:auth:session';
+    const TOKEN_KEY = 'cv360:auth:token';
 
     const form = document.getElementById('loginForm');
     const loginId = document.getElementById('loginId');
@@ -418,11 +419,17 @@
     const loginError = document.getElementById('loginError');
     const togglePass = document.querySelector('.toggle-pass');
 
-    // If already logged in, redirect to dashboard
-    if (sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY)) {
-      window.location.replace('/dashboard');
-      return;
-    }
+    // If already logged in, redirect based on role
+    try {
+      const raw = sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY);
+      if (raw) {
+        const sess = JSON.parse(raw);
+        if (sess && sess.userId) {
+          window.location.replace(sess.role === 'admin' ? '/admin' : '/cases');
+          return;
+        }
+      }
+    } catch {}
 
     // Hydrate saved credentials
     try {
@@ -443,8 +450,8 @@
         : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
     });
 
-    // Login handler
-    form.addEventListener('submit', (e) => {
+    // Login handler — real server authentication
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       loginError.classList.remove('show');
 
@@ -457,12 +464,25 @@
         return;
       }
 
-      // Show loading
       loginBtn.classList.add('loading');
       loginBtn.disabled = true;
 
-      // Simulate brief auth delay for UX
-      setTimeout(() => {
+      try {
+        const resp = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: uid, password: pwd })
+        });
+        const data = await resp.json();
+
+        if (!resp.ok || !data.success) {
+          loginBtn.classList.remove('loading');
+          loginBtn.disabled = false;
+          loginError.textContent = data.error || 'Invalid username or password.';
+          loginError.classList.add('show');
+          return;
+        }
+
         // Save credentials if "Remember me" is checked
         if (rememberMe.checked) {
           localStorage.setItem(CRED_KEY, JSON.stringify({ userId: uid, password: pwd }));
@@ -470,18 +490,27 @@
           localStorage.removeItem(CRED_KEY);
         }
 
-        // Save session
-        const session = { userId: uid, role: 'Executive', loggedInAt: new Date().toISOString() };
+        // Save session + token
+        const session = { userId: data.user.username, role: data.user.role, loggedInAt: new Date().toISOString() };
         localStorage.setItem(SESSION_KEY, JSON.stringify(session));
         sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+        localStorage.setItem(TOKEN_KEY, data.token);
 
         // Show success toast then redirect
         loginBtn.classList.remove('loading');
         loginBtn.disabled = false;
         const toast = document.getElementById('loginSuccess');
         if (toast) toast.classList.add('show');
-        setTimeout(() => { window.location.href = '/dashboard'; }, 1500);
-      }, 800);
+
+        const redirectUrl = data.user.role === 'admin' ? '/admin' : '/cases';
+        setTimeout(() => { window.location.href = redirectUrl; }, 1200);
+
+      } catch (err) {
+        loginBtn.classList.remove('loading');
+        loginBtn.disabled = false;
+        loginError.textContent = 'Network error. Please try again.';
+        loginError.classList.add('show');
+      }
     });
   })();
   </script>

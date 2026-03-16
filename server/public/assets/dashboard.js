@@ -35,8 +35,14 @@
 
   // Logout handler
   document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    // Invalidate server session
+    const token = localStorage.getItem('cv360:auth:token');
+    if (token) {
+      fetch('/api/auth/logout', { method: 'POST', headers: { 'Authorization': 'Bearer ' + token } }).catch(() => {});
+    }
     sessionStorage.removeItem(SESSION_KEY);
     localStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem('cv360:auth:token');
     const toast = document.getElementById('logoutToast');
     if (toast) {
       toast.classList.add('show');

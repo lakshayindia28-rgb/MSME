@@ -28,11 +28,66 @@ import {
   saveSnapshot, getLatestSnapshot, getCaseMeta,
   readLatestModuleData, cleanupAllSnapshots, getCaseSnapshotTimestamps
 } from '../src/services/caseDbService.js';
+import User from '../src/models/User.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+
+// ─── In-memory session store ───
+const activeSessions = new Map(); // token -> { username, role, createdAt }
+
+function createSessionToken() {
+  return crypto.randomBytes(32).toString('hex');
+}
+
+function getSessionFromRequest(req) {
+  const auth = req.headers.authorization;
+  if (!auth || !auth.startsWith('Bearer ')) return null;
+  return activeSessions.get(auth.slice(7)) || null;
+}
+
+function requireAdmin(req, res, next) {
+  const session = getSessionFromRequest(req);
+  if (!session || session.role !== 'admin') {
+    return res.status(403).json({ success: false, error: 'Admin access required' });
+  }
+  req.userSession = session;
+  next();
+}
+
+// ─── Seed default users on first run ───
+async function seedDefaultUsers() {
+  try {
+    const adminExists = await User.findOne({ username: 'admin' });
+    if (!adminExists) {
+      const salt = User.generateSalt();
+      await User.create({
+        username: 'admin',
+        salt,
+        passwordHash: User.hashPassword('Curx@88088', salt),
+        role: 'admin',
+        createdBy: 'system'
+      });
+      logger.info('Default admin user created');
+    }
+    const testExists = await User.findOne({ username: 'test' });
+    if (!testExists) {
+      const salt = User.generateSalt();
+      await User.create({
+        username: 'test',
+        salt,
+        passwordHash: User.hashPassword('test', salt),
+        role: 'user',
+        createdBy: 'admin'
+      });
+      logger.info('Default test user created');
+    }
+  } catch (err) {
+    logger.error('Failed to seed default users:', err?.message || err);
+  }
+}
 const PORT = process.env.PORT || 3000;
 
 function parsePositiveInt(raw, fallback) {
@@ -562,6 +617,134 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+/* ══════════════════════════════════════════════════════════════
+   Authentication & Admin User Management
+   ══════════════════════════════════════════════════════════════ */
+
+/**
+ * POST /api/auth/login — validate credentials, return session token
+ */
+app.post('/api/auth/login', async (req, res) => {
+  try {
+    const username = String(req.body.username || '').trim().toLowerCase();
+    const password = String(req.body.password || '');
+
+    if (!username || !password) {
+      return res.status(400).json({ success: false, error: 'Username and password are required' });
+    }
+
+    const user = await User.findOne({ username });
+    if (!user || !user.verifyPassword(password)) {
+      return res.status(401).json({ success: false, error: 'Invalid username or password' });
+    }
+
+    const token = createSessionToken();
+    activeSessions.set(token, { username: user.username, role: user.role, createdAt: Date.now() });
+
+    res.json({
+      success: true,
+      user: { username: user.username, role: user.role },
+      token
+    });
+  } catch (err) {
+    logger.error('Login error:', err?.message || err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+/**
+ * POST /api/auth/logout — invalidate session token
+ */
+app.post('/api/auth/logout', (req, res) => {
+  const auth = req.headers.authorization;
+  if (auth && auth.startsWith('Bearer ')) {
+    activeSessions.delete(auth.slice(7));
+  }
+  res.json({ success: true });
+});
+
+/**
+ * GET /api/admin/users — list all users (admin only)
+ */
+app.get('/api/admin/users', requireAdmin, async (req, res) => {
+  try {
+    const users = await User.find({}, { passwordHash: 0, salt: 0 }).sort({ createdAt: 1 }).lean();
+    res.json({ success: true, users });
+  } catch (err) {
+    logger.error('List users error:', err?.message || err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+/**
+ * POST /api/admin/users — create a new user (admin only)
+ */
+app.post('/api/admin/users', requireAdmin, async (req, res) => {
+  try {
+    const username = String(req.body.username || '').trim().toLowerCase();
+    const password = String(req.body.password || '');
+
+    if (!username || !password) {
+      return res.status(400).json({ success: false, error: 'Username and password are required' });
+    }
+    if (username.length < 2 || username.length > 30) {
+      return res.status(400).json({ success: false, error: 'Username must be 2-30 characters' });
+    }
+    if (!/^[a-z0-9_.-]+$/.test(username)) {
+      return res.status(400).json({ success: false, error: 'Username can only contain letters, numbers, dots, hyphens, underscores' });
+    }
+    if (password.length < 3) {
+      return res.status(400).json({ success: false, error: 'Password must be at least 3 characters' });
+    }
+
+    const existing = await User.findOne({ username });
+    if (existing) {
+      return res.status(409).json({ success: false, error: 'Username already exists' });
+    }
+
+    const salt = User.generateSalt();
+    const user = await User.create({
+      username,
+      salt,
+      passwordHash: User.hashPassword(password, salt),
+      role: 'user',
+      createdBy: req.userSession.username
+    });
+
+    res.json({ success: true, user: { username: user.username, role: user.role, createdAt: user.createdAt } });
+  } catch (err) {
+    logger.error('Create user error:', err?.message || err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+/**
+ * DELETE /api/admin/users/:username — delete a user (admin only, cannot delete self)
+ */
+app.delete('/api/admin/users/:username', requireAdmin, async (req, res) => {
+  try {
+    const target = String(req.params.username || '').trim().toLowerCase();
+    if (!target) {
+      return res.status(400).json({ success: false, error: 'Username required' });
+    }
+    if (target === req.userSession.username) {
+      return res.status(400).json({ success: false, error: 'Cannot delete your own account' });
+    }
+    const deleted = await User.findOneAndDelete({ username: target });
+    if (!deleted) {
+      return res.status(404).json({ success: false, error: 'User not found' });
+    }
+    // Remove any active sessions for deleted user
+    for (const [token, sess] of activeSessions) {
+      if (sess.username === target) activeSessions.delete(token);
+    }
+    res.json({ success: true });
+  } catch (err) {
+    logger.error('Delete user error:', err?.message || err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
 /**
  * Get captcha image from GST portal
  * Simple HTTP proxy - maintains session for user-assisted verification
@@ -850,6 +1033,11 @@ app.get('/api/queue/status', (req, res) => {
 // Landing page: Login
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+// Admin Panel
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
 // Dashboard (post-login)
@@ -1967,7 +2155,8 @@ app.use((error, req, res, next) => {
 });
 
 // Start server (connect MongoDB first)
-connectDB().then(() => {
+connectDB().then(async () => {
+  await seedDefaultUsers();
   app.listen(PORT, () => {
     console.log('\n╔═══════════════════════════════════════════════════════════════╗');
     console.log('║    GST & MCA Record Fetcher - Web Server Started             ║');
