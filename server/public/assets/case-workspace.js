@@ -2940,12 +2940,14 @@
     const businessTracker = qs('[data-tracker="business"]');
     const personalTracker = qs('[data-tracker="personal"]');
     const overview = qs('section.overview');
+    const moduleNav = qs('[data-module-nav]');
 
     setHidden(picker, false);
     setHidden(blocksWrap, true);
     if (businessTracker) setHidden(businessTracker, true);
     if (personalTracker) setHidden(personalTracker, true);
     if (overview) setHidden(overview, true);
+    if (moduleNav) setHidden(moduleNav, true);
 
     if (!blockPickerBound) {
       blockPickerBound = true;

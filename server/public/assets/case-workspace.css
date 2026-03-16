@@ -76,6 +76,9 @@ body {
 .block-picker {
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--app-header-current, 80px) - 40px);
 }
 
 .block-picker-card {
@@ -83,7 +86,8 @@ body {
   background: var(--card);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 18px;
+  padding: 24px;
+  flex: 1;
 }
 
 .block-picker-title {
@@ -100,32 +104,79 @@ body {
 
 .block-picker-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 0;
 }
 
+/* Block choice icons */
+.block-choice-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+  line-height: 1;
+}
+
+/* Colorful block choice cards */
 .block-choice {
   appearance: none;
   text-align: left;
   border: 1px solid var(--border);
   background: var(--card-2);
-  border-radius: var(--radius);
-  padding: 12px;
+  border-radius: 14px;
+  padding: 20px;
   cursor: pointer;
-  transition: transform 140ms ease, border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+  position: relative;
+  overflow: hidden;
 }
 
+.block-choice::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 14px 14px 0 0;
+}
+
+.block-choice--overview { border-color: color-mix(in srgb, #8b5cf6 20%, var(--border)); }
+.block-choice--overview::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+.block-choice--overview:hover { background: color-mix(in srgb, #8b5cf6 5%, #fff); border-color: #8b5cf6; box-shadow: 0 8px 24px rgba(139, 92, 246, 0.15); }
+
+.block-choice--business { border-color: color-mix(in srgb, #3b82f6 20%, var(--border)); }
+.block-choice--business::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+.block-choice--business:hover { background: color-mix(in srgb, #3b82f6 5%, #fff); border-color: #3b82f6; box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15); }
+
+.block-choice--personal { border-color: color-mix(in srgb, #10b981 20%, var(--border)); }
+.block-choice--personal::before { background: linear-gradient(90deg, #10b981, #34d399); }
+.block-choice--personal:hover { background: color-mix(in srgb, #10b981 5%, #fff); border-color: #10b981; box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15); }
+
+.block-choice--report { border-color: color-mix(in srgb, #f59e0b 20%, var(--border)); }
+.block-choice--report::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.block-choice--report:hover { background: color-mix(in srgb, #f59e0b 5%, #fff); border-color: #f59e0b; box-shadow: 0 8px 24px rgba(245, 158, 11, 0.15); }
+
 .block-choice:hover {
-  transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--primary-2) 26%, var(--border));
-  background: #ffffff;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  transform: translateY(-3px);
 }
 
 .block-choice:focus {
   outline: none;
   box-shadow: var(--focus);
+}
+
+/* Block picker footer */
+.block-picker-footer {
+  text-align: center;
+  padding: 18px 12px;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+
+.block-picker-footer-sep {
+  margin: 0 6px;
+  opacity: 0.4;
 }
 
 .block-choice-head {
