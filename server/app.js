@@ -48,6 +48,15 @@ function getSessionFromRequest(req) {
   return activeSessions.get(auth.slice(7)) || null;
 }
 
+function requireAuth(req, res, next) {
+  const session = getSessionFromRequest(req);
+  if (!session) {
+    return res.status(401).json({ success: false, error: 'Authentication required' });
+  }
+  req.userSession = session;
+  next();
+}
+
 function requireAdmin(req, res, next) {
   const session = getSessionFromRequest(req);
   if (!session || session.role !== 'admin') {
@@ -664,9 +673,44 @@ app.post('/api/auth/logout', (req, res) => {
 });
 
 /**
- * GET /api/admin/users — list all users (admin only)
+ * POST /api/auth/change-password — change own password (any authenticated user)
  */
-app.get('/api/admin/users', requireAdmin, async (req, res) => {
+app.post('/api/auth/change-password', requireAuth, async (req, res) => {
+  try {
+    const currentPassword = String(req.body.currentPassword || '');
+    const newPassword = String(req.body.newPassword || '');
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ success: false, error: 'Current password and new password are required' });
+    }
+    if (newPassword.length < 3) {
+      return res.status(400).json({ success: false, error: 'New password must be at least 3 characters' });
+    }
+
+    const user = await User.findOne({ username: req.userSession.username });
+    if (!user) {
+      return res.status(404).json({ success: false, error: 'User not found' });
+    }
+    if (!user.verifyPassword(currentPassword)) {
+      return res.status(401).json({ success: false, error: 'Current password is incorrect' });
+    }
+
+    const salt = User.generateSalt();
+    user.salt = salt;
+    user.passwordHash = User.hashPassword(newPassword, salt);
+    await user.save();
+
+    res.json({ success: true, message: 'Password changed successfully' });
+  } catch (err) {
+    logger.error('Change password error:', err?.message || err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+/**
+ * GET /api/admin/users — list all users (any authenticated user)
+ */
+app.get('/api/admin/users', requireAuth, async (req, res) => {
   try {
     const users = await User.find({}, { passwordHash: 0, salt: 0 }).sort({ createdAt: 1 }).lean();
     res.json({ success: true, users });
@@ -677,9 +721,9 @@ app.get('/api/admin/users', requireAdmin, async (req, res) => {
 });
 
 /**
- * POST /api/admin/users — create a new user (admin only)
+ * POST /api/admin/users — create a new user (any authenticated user)
  */
-app.post('/api/admin/users', requireAdmin, async (req, res) => {
+app.post('/api/admin/users', requireAuth, async (req, res) => {
   try {
     const username = String(req.body.username || '').trim().toLowerCase();
     const password = String(req.body.password || '');
@@ -719,9 +763,9 @@ app.post('/api/admin/users', requireAdmin, async (req, res) => {
 });
 
 /**
- * DELETE /api/admin/users/:username — delete a user (admin only, cannot delete self)
+ * DELETE /api/admin/users/:username — delete a user (any authenticated user, cannot delete self)
  */
-app.delete('/api/admin/users/:username', requireAdmin, async (req, res) => {
+app.delete('/api/admin/users/:username', requireAuth, async (req, res) => {
   try {
     const target = String(req.params.username || '').trim().toLowerCase();
     if (!target) {
