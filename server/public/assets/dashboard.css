@@ -96,6 +96,35 @@
   100% { width: 92%; }
 }
 
+/* ── Toast popup (logout / generic) ── */
+.toast-popup {
+  position: fixed; top: 24px; right: 24px; z-index: 9999;
+  display: flex; align-items: center; gap: 12px;
+  background: #fff; border: 1px solid #fecaca; border-radius: 12px;
+  padding: 14px 20px; box-shadow: 0 8px 30px rgba(239,68,68,0.18);
+  opacity: 0; transform: translateY(-20px) scale(0.95);
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.toast-popup.show {
+  opacity: 1; transform: translateY(0) scale(1); pointer-events: auto;
+}
+.toast-icon { width: 40px; height: 40px; flex-shrink: 0; }
+.toast-circle {
+  stroke-dasharray: 150; stroke-dashoffset: 150; animation: none;
+}
+.toast-check {
+  stroke-dasharray: 50; stroke-dashoffset: 50; animation: none;
+}
+.toast-popup.show .toast-circle {
+  animation: toastDraw 0.5s ease forwards;
+}
+.toast-popup.show .toast-check {
+  animation: toastDraw 0.4s ease 0.35s forwards;
+}
+@keyframes toastDraw { to { stroke-dashoffset: 0; } }
+.toast-text { font-size: 0.95rem; font-weight: 700; }
+
 html, body { height: 100%; }
 body {
   margin: 0;

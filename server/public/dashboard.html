@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/dashboard.css?v=20260316_v7" />
+  <link rel="stylesheet" href="assets/dashboard.css?v=20260316_v8" />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -52,7 +52,6 @@
     <div class="topbar-left">
       <div class="page-title" aria-label="Page title">
         <div class="title">Dashboard</div>
-        <div class="subtitle">Enterprise case management view for verification workflows</div>
       </div>
     </div>
 
@@ -69,6 +68,15 @@
       <button class="btn btn-secondary" type="button" id="logoutBtn" style="padding:8px 16px;font-size:0.82rem" title="Sign out">Logout</button>
     </div>
   </header>
+
+  <!-- Logout success toast -->
+  <div class="toast-popup" id="logoutToast">
+    <svg class="toast-icon" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle class="toast-circle" cx="26" cy="26" r="24" stroke="#ef4444" stroke-width="3" fill="none"/>
+      <path class="toast-check" d="M16 16 L36 36 M36 16 L16 36" stroke="#ef4444" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <span class="toast-text" style="color:#ef4444">Logged out successfully</span>
+  </div>
 
   <main id="main" class="main" role="main">
     <!-- Hero with SVG animation -->
@@ -419,7 +427,7 @@
 
   <div data-toast role="status" aria-live="polite"></div>
 
-  <script src="assets/dashboard.js?v=20260316_v7"></script>
+  <script src="assets/dashboard.js?v=20260316_v8"></script>
   <script>
     (function () {
       const path = window.location.pathname;

@@ -37,7 +37,13 @@
   document.getElementById('logoutBtn')?.addEventListener('click', () => {
     sessionStorage.removeItem(SESSION_KEY);
     localStorage.removeItem(SESSION_KEY);
-    window.location.replace('/');
+    const toast = document.getElementById('logoutToast');
+    if (toast) {
+      toast.classList.add('show');
+      setTimeout(() => window.location.replace('/'), 1400);
+    } else {
+      window.location.replace('/');
+    }
   });
 
   const WORKSPACE_MODULE_KEYS = ['gst', 'mca', 'compliance', 'pan', 'udyam', 'itr', 'bank_statement', 'financial', 'field_data'];
@@ -107,7 +113,20 @@
   // Alias kept for backward compat in this file
   function saveCases(cases) { saveCasesLocal(cases); }
 
+  function showTopLoader() {
+    const l = document.getElementById('pageLoader');
+    if (!l) return;
+    l.classList.remove('done');
+    const bar = l.querySelector('.page-loader-bar');
+    if (bar) { bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; }
+  }
+  function hideTopLoader() {
+    const l = document.getElementById('pageLoader');
+    if (l) l.classList.add('done');
+  }
+
   async function fetchCasesFromServer() {
+    showTopLoader();
     try {
       const res = await fetch('/api/cases');
       const json = await res.json();
@@ -133,11 +152,13 @@
         const merged = Array.from(serverMap.values()).sort((a, b) => (b.updatedAt || '').localeCompare(a.updatedAt || ''));
         _casesCache = merged;
         saveCasesLocal(merged);
+        hideTopLoader();
         return merged;
       }
     } catch (err) {
       console.warn('Failed to fetch cases from server, using localStorage fallback', err);
     }
+    hideTopLoader();
     return loadCases();
   }
 
