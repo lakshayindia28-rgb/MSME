@@ -708,9 +708,9 @@ app.post('/api/auth/change-password', requireAuth, async (req, res) => {
 });
 
 /**
- * GET /api/admin/users — list all users (any authenticated user)
+ * GET /api/admin/users — list all users (admin only)
  */
-app.get('/api/admin/users', requireAuth, async (req, res) => {
+app.get('/api/admin/users', requireAdmin, async (req, res) => {
   try {
     const users = await User.find({}, { passwordHash: 0, salt: 0 }).sort({ createdAt: 1 }).lean();
     res.json({ success: true, users });
@@ -721,9 +721,9 @@ app.get('/api/admin/users', requireAuth, async (req, res) => {
 });
 
 /**
- * POST /api/admin/users — create a new user (any authenticated user)
+ * POST /api/admin/users — create a new user (admin only)
  */
-app.post('/api/admin/users', requireAuth, async (req, res) => {
+app.post('/api/admin/users', requireAdmin, async (req, res) => {
   try {
     const username = String(req.body.username || '').trim().toLowerCase();
     const password = String(req.body.password || '');
@@ -763,9 +763,9 @@ app.post('/api/admin/users', requireAuth, async (req, res) => {
 });
 
 /**
- * DELETE /api/admin/users/:username — delete a user (any authenticated user, cannot delete self)
+ * DELETE /api/admin/users/:username — delete a user (admin only, cannot delete self)
  */
-app.delete('/api/admin/users/:username', requireAuth, async (req, res) => {
+app.delete('/api/admin/users/:username', requireAdmin, async (req, res) => {
   try {
     const target = String(req.params.username || '').trim().toLowerCase();
     if (!target) {

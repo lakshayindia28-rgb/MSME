@@ -494,6 +494,16 @@
         }
       }
 
+      // ── Hide Manage Users nav for non-admin ──
+      try {
+        const raw = sessionStorage.getItem('cv360:auth:session') || localStorage.getItem('cv360:auth:session');
+        const sess = raw ? JSON.parse(raw) : null;
+        if (!sess || sess.role !== 'admin') {
+          const muNav = document.getElementById('navUsers');
+          if (muNav) muNav.style.display = 'none';
+        }
+      } catch {}
+
       // ── Page-based visibility (same for admin and user) ──
       if (path === '/cases') {
         const hero = document.querySelector('.hero');

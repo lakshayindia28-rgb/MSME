@@ -240,7 +240,7 @@
     }
 
     const session = getSession();
-    if (!session || !session.userId) {
+    if (!session || !session.userId || session.role !== 'admin') {
       window.location.replace('/');
       return;
     }
