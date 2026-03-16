@@ -9,23 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/dashboard.css?v=20260316_v8" />
-  <style>
-    .mu-card{background:var(--clr-surface,#fff);border:1px solid var(--clr-border,#e2e8f0);border-radius:14px;padding:20px 24px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
-    .mu-card-title{font-size:.95rem;font-weight:700;color:var(--clr-ink,#0f172a);margin-bottom:12px}
-    .mu-label{display:block;font-size:.75rem;font-weight:600;color:var(--clr-muted,#64748b);margin-bottom:5px;text-transform:uppercase;letter-spacing:.03em}
-    .mu-input{padding:9px 13px!important;font-size:.88rem!important;border-radius:10px!important}
-    .mu-msg{padding:8px 12px;border-radius:8px;font-size:.82rem;font-weight:500;margin-bottom:10px;display:none}
-    .mu-msg.show{display:block;animation:muFade .3s ease}
-    .mu-msg.error{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
-    .mu-msg.success{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46}
-    @keyframes muFade{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
-    .mu-table .role-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700}
-    .mu-table .role-badge.admin{background:#dbeafe;color:#1e40af}
-    .mu-table .role-badge.user{background:#f0fdf4;color:#15803d}
-    .mu-table .btn-del{padding:5px 12px;border:none;border-radius:8px;font-size:.75rem;font-weight:600;cursor:pointer;background:#fef2f2;color:#dc2626;transition:all .15s}
-    .mu-table .btn-del:hover{background:#fee2e2}
-    .manage-users-section .queue-head{margin-bottom:16px}
-  </style>
 </head>
 <body>
   <!-- Cookie Consent Banner -->
@@ -102,7 +85,7 @@
           <span class="nav-icon" aria-hidden="true">▣</span>
           <span class="nav-text">Cases</span>
         </a>
-        <a class="nav-item" href="#manageUsersSection" data-nav="users" id="navUsers">
+        <a class="nav-item" href="/admin" data-nav="users" id="navUsers">
           <span class="nav-icon" aria-hidden="true">👥</span>
           <span class="nav-text">Manage Users</span>
         </a>
@@ -407,66 +390,6 @@
       </div>
     </section>
 
-    <!-- ═══ MANAGE USERS SECTION ═══ -->
-    <section class="manage-users-section" id="manageUsersSection" style="display:none;">
-      <div class="queue-head">
-        <div>
-          <h2 class="queue-title">👥 Manage Users</h2>
-          <p class="queue-subtitle">Create, delete user accounts and change passwords.</p>
-        </div>
-      </div>
-
-      <!-- Change Password -->
-      <div class="mu-card" id="changePasswordCard">
-        <div class="mu-card-title">🔑 Change Your Password</div>
-        <div class="mu-msg" id="cpMsg"></div>
-        <form id="changePasswordForm" autocomplete="off" style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
-          <div style="flex:1;min-width:160px">
-            <label class="mu-label">Current Password</label>
-            <input class="input mu-input" id="cpCurrent" type="password" required placeholder="Current password" autocomplete="current-password" />
-          </div>
-          <div style="flex:1;min-width:160px">
-            <label class="mu-label">New Password</label>
-            <input class="input mu-input" id="cpNew" type="password" required minlength="3" placeholder="New password (min 3 chars)" autocomplete="new-password" />
-          </div>
-          <button class="btn btn-primary" type="submit" id="cpBtn" style="flex-shrink:0">Change Password</button>
-        </form>
-      </div>
-
-      <!-- Create User -->
-      <div class="mu-card">
-        <div class="mu-card-title">➕ Create New User</div>
-        <div class="mu-msg" id="cuMsg"></div>
-        <form id="createUserForm" autocomplete="off" style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
-          <div style="flex:1;min-width:160px">
-            <label class="mu-label">Username</label>
-            <input class="input mu-input" id="cuUsername" type="text" required minlength="2" maxlength="30" placeholder="e.g. john_doe" autocomplete="off" />
-          </div>
-          <div style="flex:1;min-width:160px">
-            <label class="mu-label">Password</label>
-            <input class="input mu-input" id="cuPassword" type="password" required minlength="3" placeholder="Min 3 characters" autocomplete="new-password" />
-          </div>
-          <button class="btn btn-primary" type="submit" id="cuBtn" style="flex-shrink:0">Create User</button>
-        </form>
-      </div>
-
-      <!-- Users List -->
-      <div class="mu-card">
-        <div class="mu-card-title">📋 All Users</div>
-        <div class="mu-msg" id="ulMsg"></div>
-        <div class="table-wrap">
-          <table class="table case-table mu-table" id="usersTable">
-            <thead>
-              <tr><th>Username</th><th>Role</th><th>Created</th><th>Created By</th><th style="text-align:right">Actions</th></tr>
-            </thead>
-            <tbody id="usersTableBody">
-              <tr><td colspan="5" style="text-align:center;color:var(--clr-muted);padding:24px;">Loading…</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
     <footer class="footer" role="contentinfo" aria-label="Footer">
       <div class="footer-inner">
         <div class="footer-left">
@@ -549,27 +472,10 @@
 
   <div data-toast role="status" aria-live="polite"></div>
 
-  <script src="assets/dashboard.js?v=20260316_v11"></script>
+  <script src="assets/dashboard.js?v=20260316_v12"></script>
   <script>
     (function () {
-      const SESSION_KEY = 'cv360:auth:session';
-      const TOKEN_KEY = 'cv360:auth:token';
       const path = window.location.pathname;
-
-      // ── Get session ──
-      function getSession() {
-        try {
-          const raw = sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY);
-          return raw ? JSON.parse(raw) : null;
-        } catch { return null; }
-      }
-      const sess = getSession();
-      const isAdmin = sess && sess.role === 'admin';
-      const token = localStorage.getItem(TOKEN_KEY) || '';
-
-      function authHeaders() {
-        return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
-      }
 
       // ── Nav highlighting ──
       const navLinks = document.querySelectorAll('.sidenav .nav-item[data-nav]');
@@ -588,202 +494,18 @@
         }
       }
 
-      // ── Role-based visibility ──
-      if (isAdmin) {
-        // Admin: hide cases nav, KPI, cases queue, hero "View All Cases" button, create case modal
-        const navCases = document.getElementById('navCases');
-        if (navCases) navCases.style.display = 'none';
-
+      // ── Page-based visibility (same for admin and user) ──
+      if (path === '/cases') {
+        const hero = document.querySelector('.hero');
         const kpi = document.querySelector('.kpi-strip');
+        if (hero) hero.style.display = 'none';
         if (kpi) kpi.style.display = 'none';
-
+        const titleEl = document.querySelector('.page-title .title');
+        if (titleEl) titleEl.textContent = 'Cases';
+      }
+      if (path === '/dashboard' || path === '/') {
         const queue = document.querySelector('.queue');
         if (queue) queue.style.display = 'none';
-
-        const hero = document.querySelector('.hero');
-        if (hero) hero.style.display = 'none';
-
-        const createModal = document.getElementById('createCaseModal');
-        if (createModal) createModal.remove();
-
-        // Show manage users section always for admin
-        const muSection = document.getElementById('manageUsersSection');
-        if (muSection) muSection.style.display = '';
-      } else {
-        // Regular user: /cases hides hero/kpi, /dashboard hides queue but shows manage users
-        const hero = document.querySelector('.hero');
-        const kpi = document.querySelector('.kpi-strip');
-        if (path === '/cases') {
-          if (hero) hero.style.display = 'none';
-          if (kpi) kpi.style.display = 'none';
-          const titleEl = document.querySelector('.page-title .title');
-          if (titleEl) titleEl.textContent = 'Cases';
-        }
-        if (path === '/dashboard' || path === '/') {
-          const queue = document.querySelector('.queue');
-          if (queue) queue.style.display = 'none';
-          // Show manage users section on dashboard
-          const muSection = document.getElementById('manageUsersSection');
-          if (muSection) muSection.style.display = '';
-        }
-      }
-
-      // ── Manage Users nav click handler ──
-      const navUsers = document.getElementById('navUsers');
-      if (navUsers) {
-        navUsers.addEventListener('click', (e) => {
-          e.preventDefault();
-          // If admin, just scroll to section (already on /dashboard)
-          // If regular user, go to /dashboard which shows manage users
-          if (path === '/dashboard') {
-            document.getElementById('manageUsersSection')?.scrollIntoView({ behavior: 'smooth' });
-          } else {
-            window.location.href = '/dashboard';
-          }
-        });
-      }
-
-      // ── Helper ──
-      function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
-      function showMuMsg(el, text, type) {
-        el.textContent = text;
-        el.className = 'mu-msg show ' + type;
-        setTimeout(() => { el.classList.remove('show'); }, 4000);
-      }
-
-      // ── Change Password ──
-      const cpForm = document.getElementById('changePasswordForm');
-      const cpMsg = document.getElementById('cpMsg');
-      if (cpForm) {
-        cpForm.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const currentPassword = document.getElementById('cpCurrent').value;
-          const newPassword = document.getElementById('cpNew').value;
-          if (!currentPassword || !newPassword) return;
-          const cpBtn = document.getElementById('cpBtn');
-          cpBtn.disabled = true; cpBtn.textContent = 'Changing…';
-          try {
-            const resp = await fetch('/api/auth/change-password', {
-              method: 'POST', headers: authHeaders(),
-              body: JSON.stringify({ currentPassword, newPassword })
-            });
-            const data = await resp.json();
-            cpBtn.disabled = false; cpBtn.textContent = 'Change Password';
-            if (!resp.ok || !data.success) {
-              showMuMsg(cpMsg, data.error || 'Failed to change password', 'error');
-              return;
-            }
-            showMuMsg(cpMsg, 'Password changed successfully!', 'success');
-            cpForm.reset();
-          } catch {
-            cpBtn.disabled = false; cpBtn.textContent = 'Change Password';
-            showMuMsg(cpMsg, 'Network error', 'error');
-          }
-        });
-      }
-
-      // ── Create User ──
-      const cuForm = document.getElementById('createUserForm');
-      const cuMsg = document.getElementById('cuMsg');
-      if (cuForm) {
-        cuForm.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const username = document.getElementById('cuUsername').value.trim();
-          const password = document.getElementById('cuPassword').value;
-          if (!username || !password) return;
-          const cuBtn = document.getElementById('cuBtn');
-          cuBtn.disabled = true; cuBtn.textContent = 'Creating…';
-          try {
-            const resp = await fetch('/api/admin/users', {
-              method: 'POST', headers: authHeaders(),
-              body: JSON.stringify({ username, password })
-            });
-            const data = await resp.json();
-            cuBtn.disabled = false; cuBtn.textContent = 'Create User';
-            if (!resp.ok || !data.success) {
-              showMuMsg(cuMsg, data.error || 'Failed to create user', 'error');
-              return;
-            }
-            showMuMsg(cuMsg, 'User "' + esc(username) + '" created!', 'success');
-            cuForm.reset();
-            loadUsersList();
-          } catch {
-            cuBtn.disabled = false; cuBtn.textContent = 'Create User';
-            showMuMsg(cuMsg, 'Network error', 'error');
-          }
-        });
-      }
-
-      // ── Load Users List ──
-      const usersBody = document.getElementById('usersTableBody');
-      const ulMsg = document.getElementById('ulMsg');
-
-      async function loadUsersList() {
-        if (!usersBody) return;
-        try {
-          const resp = await fetch('/api/admin/users', { headers: authHeaders() });
-          if (resp.status === 401 || resp.status === 403) {
-            usersBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--clr-muted);padding:20px;">Session expired. Please refresh.</td></tr>';
-            return;
-          }
-          const data = await resp.json();
-          if (!data.success) {
-            usersBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--clr-muted);padding:20px;">Failed to load users</td></tr>';
-            return;
-          }
-          renderUsersList(data.users);
-        } catch {
-          usersBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--clr-muted);padding:20px;">Network error</td></tr>';
-        }
-      }
-
-      function renderUsersList(users) {
-        if (!users || !users.length) {
-          usersBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--clr-muted);padding:20px;">No users found</td></tr>';
-          return;
-        }
-        const currentUser = sess ? sess.userId : '';
-        usersBody.innerHTML = users.map(u => {
-          const dateStr = u.createdAt ? new Date(u.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
-          const isSelf = u.username === currentUser;
-          return '<tr>' +
-            '<td><strong>' + esc(u.username) + '</strong></td>' +
-            '<td><span class="role-badge ' + u.role + '">' + (u.role === 'admin' ? 'Admin' : 'User') + '</span></td>' +
-            '<td style="color:var(--clr-muted,#64748b);font-size:.82rem">' + dateStr + '</td>' +
-            '<td style="color:var(--clr-muted,#64748b);font-size:.82rem">' + esc(u.createdBy || '—') + '</td>' +
-            '<td style="text-align:right">' +
-              (isSelf ? '<span style="font-size:.75rem;color:var(--clr-muted,#64748b)">You</span>' :
-                '<button class="btn-del" data-del-user="' + esc(u.username) + '">Delete</button>') +
-            '</td></tr>';
-        }).join('');
-
-        usersBody.querySelectorAll('[data-del-user]').forEach(btn => {
-          btn.addEventListener('click', () => deleteUser(btn.dataset.delUser));
-        });
-      }
-
-      async function deleteUser(username) {
-        if (!confirm('Delete user "' + username + '"? This cannot be undone.')) return;
-        try {
-          const resp = await fetch('/api/admin/users/' + encodeURIComponent(username), {
-            method: 'DELETE', headers: authHeaders()
-          });
-          const data = await resp.json();
-          if (!resp.ok || !data.success) {
-            showMuMsg(ulMsg, data.error || 'Failed to delete user', 'error');
-            return;
-          }
-          showMuMsg(ulMsg, 'User "' + esc(username) + '" deleted.', 'success');
-          loadUsersList();
-        } catch {
-          showMuMsg(ulMsg, 'Network error', 'error');
-        }
-      }
-
-      // ── Init: load users if manage section is visible ──
-      const muSection = document.getElementById('manageUsersSection');
-      if (muSection && muSection.style.display !== 'none') {
-        loadUsersList();
       }
 
       // ── Finish the blue loader bar ──

@@ -153,7 +153,7 @@
       <span class="topbar-badge">ADMIN</span>
     </div>
     <div class="topbar-right">
-      <a href="/cases" class="topbar-btn secondary">📊 Dashboard</a>
+      <a href="/dashboard" class="topbar-btn secondary">📊 Dashboard</a>
       <button class="topbar-btn danger" id="logoutBtn">⏻ Logout</button>
     </div>
   </div>
@@ -162,6 +162,29 @@
   <div class="main">
     <h1 class="page-title">Manage Users</h1>
     <p class="page-desc">Create and manage user accounts for the CrediVerify 360 platform.</p>
+
+    <!-- Change Password -->
+    <div class="card">
+      <div class="card-title"><span class="icon">🔑</span> Change Your Password</div>
+      <div class="msg" id="cpMsg"></div>
+      <form id="cpForm" autocomplete="off">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="cpCurrent">Current Password</label>
+            <input class="form-input" id="cpCurrent" type="password" placeholder="Current password" required autocomplete="current-password" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cpNew">New Password</label>
+            <input class="form-input" id="cpNew" type="password" placeholder="Min 3 characters" required minlength="3" autocomplete="new-password" />
+          </div>
+          <div style="flex-shrink:0">
+            <button class="btn btn-primary" type="submit" id="cpBtn">
+              <span class="btn-text">Change Password</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
 
     <!-- Create User -->
     <div class="card">
@@ -217,7 +240,7 @@
     }
 
     const session = getSession();
-    if (!session || session.role !== 'admin') {
+    if (!session || !session.userId) {
       window.location.replace('/');
       return;
     }
@@ -364,6 +387,36 @@
       localStorage.removeItem(SESSION_KEY);
       localStorage.removeItem(TOKEN_KEY);
       window.location.replace('/');
+    });
+
+    // ── Change Password ──
+    document.getElementById('cpForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const currentPassword = document.getElementById('cpCurrent').value;
+      const newPassword = document.getElementById('cpNew').value;
+      if (!currentPassword || !newPassword) return;
+      const cpBtn = document.getElementById('cpBtn');
+      cpBtn.disabled = true;
+      cpBtn.innerHTML = '<div class="spinner"></div>';
+      try {
+        const resp = await fetch('/api/auth/change-password', {
+          method: 'POST', headers: authHeaders(),
+          body: JSON.stringify({ currentPassword, newPassword })
+        });
+        const data = await resp.json();
+        cpBtn.disabled = false;
+        cpBtn.innerHTML = '<span class="btn-text">Change Password</span>';
+        if (!resp.ok || !data.success) {
+          showMsg(document.getElementById('cpMsg'), data.error || 'Failed to change password', 'error');
+          return;
+        }
+        showMsg(document.getElementById('cpMsg'), 'Password changed successfully!', 'success');
+        document.getElementById('cpForm').reset();
+      } catch {
+        cpBtn.disabled = false;
+        cpBtn.innerHTML = '<span class="btn-text">Change Password</span>';
+        showMsg(document.getElementById('cpMsg'), 'Network error', 'error');
+      }
     });
 
     // ── Init ──
