@@ -237,14 +237,6 @@
         </div>
       </button>
 
-      <button class="kpi" type="button" data-filter="pending">
-        <div class="kpi-icon" aria-hidden="true">P</div>
-        <div class="kpi-body">
-          <div class="kpi-label">Pending Cases</div>
-          <div class="kpi-value" data-kpi="pending">0</div>
-        </div>
-      </button>
-
       <button class="kpi" type="button" data-filter="ongoing">
         <div class="kpi-icon" aria-hidden="true">O</div>
         <div class="kpi-body">
@@ -360,8 +352,7 @@
             <span class="sr-only">Filter</span>
             <select id="statusFilter" class="select" data-action="status-filter">
               <option value="all">All</option>
-              <option value="pending">Pending</option>
-              <option value="ongoing">Ongoing</option>
+              <option value="ongoing">In Progress</option>
               <option value="completed">Completed</option>
             </select>
           </label>
@@ -477,7 +468,7 @@
 
   <div data-toast role="status" aria-live="polite"></div>
 
-  <script src="assets/dashboard.js?v=20260316_v9"></script>
+  <script src="assets/dashboard.js?v=20260316_v10"></script>
   <script>
     (function () {
       const path = window.location.pathname;

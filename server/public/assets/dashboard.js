@@ -240,8 +240,7 @@
     if (!statuses || typeof statuses !== 'object') return null;
     const values = WORKSPACE_MODULE_KEYS.map((k) => normalizeModuleStatus(statuses[k]));
     if (values.every((s) => s === 'completed')) return STATUS.COMPLETED;
-    if (values.some((s) => s === 'completed' || s === 'in_progress')) return STATUS.ONGOING;
-    return STATUS.PENDING;
+    return STATUS.ONGOING;
   }
 
   function deriveRisk({ purpose, businessType, gstin, cin }) {
@@ -280,9 +279,8 @@
   }
 
   function statusLabel(status) {
-    if (status === STATUS.ONGOING) return 'Ongoing';
     if (status === STATUS.COMPLETED) return 'Completed';
-    return 'Pending';
+    return 'In Progress';
   }
 
   function riskLabel(risk) {
@@ -549,18 +547,16 @@
 
   function computeKPIs(cases) {
     const total = cases.length;
-    const pending = cases.filter((c) => c.status === STATUS.PENDING).length;
-    const ongoing = cases.filter((c) => c.status === STATUS.ONGOING).length;
     const completed = cases.filter((c) => c.status === STATUS.COMPLETED).length;
+    const ongoing = total - completed;
 
-    return { total, pending, ongoing, completed };
+    return { total, ongoing, completed };
   }
 
   function renderKPIs(kpis, activeKpi) {
     // KPI strip uses buttons with data-filter and value targets with data-kpi.
     const valueMap = {
       total: kpis.total,
-      pending: kpis.pending,
       ongoing: kpis.ongoing,
       completed: kpis.completed
     };
@@ -606,9 +602,10 @@
     if (empty) empty.hidden = true;
 
     cases.forEach((c) => {
-      const serverStatuses = c.moduleStatuses || null;
-      const workspaceStatuses = serverStatuses || readWorkspaceModuleStatuses(c.id);
-      const derivedStatus = deriveStatusFromModuleStatuses(workspaceStatuses) || c.status;
+      // Respect explicit 'completed' from server (set when Done is clicked)
+      const derivedStatus = c.status === STATUS.COMPLETED
+        ? STATUS.COMPLETED
+        : (deriveStatusFromModuleStatuses(c.moduleStatuses || readWorkspaceModuleStatuses(c.id)) || STATUS.ONGOING);
 
       const created = new Date(c.createdAt || nowISO()).toLocaleDateString('en-IN');
 
@@ -669,8 +666,7 @@
       drawDonut(
         statusCanvas,
         [
-          { label: 'Pending', value: kpis.pending, color: '#94a3b8' },
-          { label: 'Ongoing', value: kpis.ongoing, color: '#1d4ed8' },
+          { label: 'In Progress', value: kpis.ongoing, color: '#1d4ed8' },
           { label: 'Completed', value: kpis.completed, color: '#0f766e' }
         ],
         { centerText: String(kpis.total), subText: 'Total Cases' }
@@ -749,7 +745,7 @@
 
     const subtitle = el('queueSubtitle');
     if (subtitle) {
-      subtitle.textContent = `Showing ${filtered.length} of ${all.length} cases • Pending ${kpis.pending} • Ongoing ${kpis.ongoing} • Completed ${kpis.completed}`;
+      subtitle.textContent = `Showing ${filtered.length} of ${all.length} cases • In Progress ${kpis.ongoing} • Completed ${kpis.completed}`;
     }
   }
 
@@ -811,7 +807,7 @@
     }
 
     const createdAt = nowISO();
-    const status = STATUS.PENDING;
+    const status = STATUS.ONGOING;
 
     const next = {
       id: idFromTime(),

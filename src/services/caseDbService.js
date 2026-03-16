@@ -31,10 +31,12 @@ export async function listCases() {
       }, 0);
       const progress = Math.round((done / Math.max(1, total)) * 100);
 
-      let status = 'pending';
+      let status = 'ongoing';
       const vals = MODULE_KEYS.map(k => (statuses[k] || 'pending').toString().trim());
       if (vals.every(s => s === 'completed')) status = 'completed';
-      else if (vals.some(s => s === 'completed' || s === 'in_progress')) status = 'ongoing';
+
+      // Respect explicit 'completed' status set when user clicks Done
+      if (c.status === 'completed') status = 'completed';
 
       return { ...c, id: c.caseId, progress, status, moduleStatuses: statuses };
     } catch {
