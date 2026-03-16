@@ -531,6 +531,15 @@ app.get('/api/financial-model/report', async (req, res) => {
   }
 });
 
+// Disable browser caching for HTML/JS/CSS so updates take effect immediately
+app.use((req, res, next) => {
+  if (/\.(html?|js|css)$/i.test(req.path)) {
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+  }
+  next();
+});
 // Serve static files (disable automatic index.html so we can control '/')
 app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 

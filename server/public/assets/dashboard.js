@@ -125,8 +125,13 @@
 
   async function deleteCaseFromServer(caseId) {
     try {
-      await fetch('/api/cases/' + encodeURIComponent(caseId), { method: 'DELETE' });
-    } catch { /* best-effort */ }
+      const res = await fetch('/api/cases/' + encodeURIComponent(caseId), { method: 'DELETE' });
+      if (!res.ok) console.error('Server delete failed:', res.status);
+      return res.ok;
+    } catch (err) {
+      console.error('Delete request failed:', err);
+      return false;
+    }
   }
 
   function loadUIState() {
@@ -637,10 +642,11 @@
       if (riskSlot) riskSlot.appendChild(riskPill);
 
       card.querySelector('[data-action="open"]')?.addEventListener('click', () => openCase(c));
-      card.querySelector('[data-action="delete"]')?.addEventListener('click', () => {
-        const ok = window.confirm(`Delete case ${c.id}?\n\nThis will remove it from the dashboard and clear its saved workspace data on this browser.`);
+      card.querySelector('[data-action="delete"]')?.addEventListener('click', async () => {
+        const ok = window.confirm(`Delete case ${c.id}?\n\nThis will permanently delete this case and all its data.`);
         if (!ok) return;
-        deleteCaseById(c.id);
+        showToast('Deleting case…');
+        await deleteCaseById(c.id);
         showToast('Case deleted.');
         applyAndRender();
       });
