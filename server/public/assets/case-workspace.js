@@ -1464,6 +1464,21 @@
       } catch {}
     })();
 
+    // Auto-save when Verified By input changes
+    const fdVerifiedByInput = qs('#fieldDataVerifiedBy', section);
+    let _fdVBAutoTimer = null;
+    if (fdVerifiedByInput) {
+      fdVerifiedByInput.addEventListener('input', () => {
+        clearTimeout(_fdVBAutoTimer);
+        _fdVBAutoTimer = setTimeout(() => {
+          const text = fdSummaryTextarea ? fdSummaryTextarea.value.trim() : '';
+          const vb = fdVerifiedByInput.value.trim();
+          try { STORAGE.setItem(storageKey('integration.fieldDataSummary'), JSON.stringify({ summary: text, verified_by: vb })); } catch(e) {}
+          if (HAS_CASE_ID) saveSnapshotToServer('field_data_summary', JSON.stringify({ summary: text, verified_by: vb })).catch(() => {});
+        }, 1500);
+      });
+    }
+
     // Also try localStorage fallback
     if (fdSummaryTextarea && !fdSummaryTextarea.value) {
       try {
@@ -6598,23 +6613,20 @@
   function readReportConfig() {
     const parsed = safeJSONParse(STORAGE.getItem(storageKey(REPORT_CONFIG_STORAGE)), null);
     const base = defaultReportConfig();
-    // If no saved config, use auto-detected defaults
+    // If no saved config, use auto-detected defaults (first time)
     if (!parsed) {
       return { selectedModules: [...base.selectedModules], selectedPersonalModules: [...base.selectedPersonalModules], includeCaseOverview: false, includeBusinessEntity: false };
     }
-    // Merge: saved selection + any newly completed business modules
-    const saved = Array.isArray(parsed.selectedModules)
+    // Use saved selection exactly as-is (respect user's untick choices)
+    const selected = Array.isArray(parsed.selectedModules)
       ? parsed.selectedModules.map((k) => String(k || '').trim()).filter((k) => MODULE_KEYS.includes(k))
-      : [];
-    const merged = [...new Set([...saved, ...base.selectedModules])];
-    // Merge: saved personal selection + any personal modules that now have data
-    const savedPersonal = Array.isArray(parsed.selectedPersonalModules)
+      : base.selectedModules;
+    const selectedPersonal = Array.isArray(parsed.selectedPersonalModules)
       ? parsed.selectedPersonalModules.map((k) => String(k || '').trim()).filter((k) => PERSONAL_MODULE_KEYS.includes(k))
-      : [];
-    const mergedPersonal = [...new Set([...savedPersonal, ...base.selectedPersonalModules])];
+      : base.selectedPersonalModules;
     const includeCaseOverview = parsed?.includeCaseOverview === true;
     const includeBusinessEntity = parsed?.includeBusinessEntity === true;
-    return { selectedModules: merged, selectedPersonalModules: mergedPersonal, includeCaseOverview, includeBusinessEntity };
+    return { selectedModules: [...new Set(selected)], selectedPersonalModules: [...new Set(selectedPersonal)], includeCaseOverview, includeBusinessEntity };
   }
 
   function writeReportConfig(next) {
