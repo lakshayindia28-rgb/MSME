@@ -290,7 +290,13 @@
         <button class="btn btn-secondary" type="button" data-module-nav-btn="prev" aria-label="Previous module">← Previous</button>
         <div class="module-nav-current" data-module-nav-label>Module 1/1</div>
         <button class="btn btn-secondary" type="button" data-module-nav-btn="next" aria-label="Next module">Next →</button>
-        <button class="btn btn-secondary" type="button" data-switch-block aria-label="Switch to other block">Go to Personal Block</button>
+        <select class="btn btn-secondary" data-block-switcher aria-label="Switch to another block" style="cursor:pointer;font-weight:600;">
+          <option value="" disabled selected>⇄ Switch Block</option>
+          <option value="case_overview">📋 Case Overview</option>
+          <option value="business">🏢 Business Details</option>
+          <option value="personal">👤 Personal Info</option>
+          <option value="report">📊 Report Builder</option>
+        </select>
       </div>
 
       <section class="overview" aria-label="Case overview" hidden>
@@ -2999,6 +3005,6 @@
     </div>
   </div>
 
-  <script src="assets/case-workspace.js?v=20260316_fix6"></script>
+  <script src="assets/case-workspace.js?v=20260316_fix7"></script>
 </body>
 </html>

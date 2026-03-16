@@ -3195,7 +3195,6 @@
     const label = qs('[data-module-nav-label]', wrap);
     const prev = qs('[data-module-nav-btn="prev"]', wrap);
     const next = qs('[data-module-nav-btn="next"]', wrap);
-    const switchBtn = qs('[data-switch-block]', wrap);
 
     const blockKey = getActiveBlockFromView();
     if (blockKey === 'report') {
@@ -3210,6 +3209,15 @@
       return;
     }
 
+    // Disable current block in the switcher dropdown
+    const blockSwitcher = qs('[data-block-switcher]', wrap);
+    if (blockSwitcher) {
+      blockSwitcher.selectedIndex = 0;
+      Array.from(blockSwitcher.options).forEach((opt) => {
+        opt.disabled = opt.value === blockKey;
+      });
+    }
+
     const keys = blockKey === 'personal' ? PERSONAL_MODULE_KEYS : MODULE_KEYS;
     const activeKey = blockKey === 'personal' ? readActivePersonalModule() : readActiveModule();
     const idx = Math.max(0, keys.indexOf(activeKey));
@@ -3219,11 +3227,6 @@
     if (label) label.textContent = `${blockKey === 'personal' ? 'Personal' : 'Business'}: ${display} (${idx + 1}/${total})`;
     if (prev) prev.disabled = total <= 1;
     if (next) next.disabled = total <= 1;
-    if (switchBtn) {
-      const switchLabel = blockKey === 'business' ? 'Go to Personal Block' : blockKey === 'personal' ? 'Go to Report Block' : 'Go to Business Block';
-      switchBtn.textContent = switchLabel;
-      switchBtn.setAttribute('aria-label', switchLabel);
-    }
   }
 
   function switchToOtherBlock() {
@@ -9211,9 +9214,36 @@
       });
     });
 
-    qsa('[data-switch-block]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        switchToOtherBlock();
+    qsa('[data-block-switcher]').forEach((sel) => {
+      sel.addEventListener('change', () => {
+        const target = (sel.value || '').toString().trim().toLowerCase();
+        if (!target) return;
+        sel.selectedIndex = 0; // reset to placeholder
+
+        if (target === 'case_overview') {
+          setWorkspaceUrl({ view: 'single', block: 'case_overview' }, 'replace');
+          applyBlockView('case_overview');
+          loadCaseOverviewFromStorage();
+          updateModuleNavigatorUI();
+          return;
+        }
+        if (target === 'personal') {
+          setWorkspaceUrl({ view: 'single', block: 'personal' }, 'replace');
+          applyBlockView('personal');
+          setActivePersonalModule(readActivePersonalModule());
+          return;
+        }
+        if (target === 'report') {
+          setWorkspaceUrl({ view: 'single', block: 'report' }, 'replace');
+          applyBlockView('report');
+          renderReportBuilderPreview();
+          updateModuleNavigatorUI();
+          return;
+        }
+        // default: business
+        setWorkspaceUrl({ view: 'single', block: 'business' }, 'replace');
+        applyBlockView('business');
+        setActiveModule(readActiveModule());
       });
     });
 
