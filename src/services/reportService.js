@@ -3463,7 +3463,14 @@ Format the report professionally with clear headings and bullet points.`;
               <div style="font-size:11.5px;line-height:1.65;white-space:pre-wrap">${safe(moduleSummaries['field_data'])}</div>
             </div>
           </div>
-          ${fieldDataVerifiedBy ? `<div style="margin-top:14px;font-size:11.5px;font-weight:700;color:#1b2559">Verified By: ${safe(fieldDataVerifiedBy)}</div>` : ''}
+          ${fieldDataVerifiedBy ? `
+          <div class="block" style="margin-top:12px;break-inside:avoid;page-break-inside:avoid">
+            <div style="padding:12px 16px;background:#f8fafc;border:2px solid #1b2559;border-radius:10px;display:flex;align-items:center;gap:10px">
+              <div style="font-weight:800;font-size:11px;color:#1a3c5e;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap">VERIFIED BY:</div>
+              <div style="font-size:12px;font-weight:700;color:#1b2559">${safe(fieldDataVerifiedBy)}</div>
+            </div>
+          </div>
+          ` : ''}
         </div>
         ` : ''}
 

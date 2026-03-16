@@ -1454,11 +1454,13 @@
           const json = await res.json();
           const payload = json?.data?.data || json?.data || {};
           const text = payload?.summary || '';
+          const vbLoad = payload?.verified_by || '';
           if (text && fdSummaryTextarea) {
             fdSummaryTextarea.value = text;
-            STORAGE.setItem(storageKey('integration.fieldDataSummary'), JSON.stringify({ summary: text, verified_by: payload?.verified_by || '' }));
           }
-          var vbLoad = payload?.verified_by || '';
+          if (text || vbLoad) {
+            STORAGE.setItem(storageKey('integration.fieldDataSummary'), JSON.stringify({ summary: text, verified_by: vbLoad }));
+          }
           if (vbLoad) { var vbInput = qs('#fieldDataVerifiedBy'); if (vbInput) vbInput.value = vbLoad; }
         }
       } catch {}
@@ -1467,16 +1469,19 @@
     // Auto-save when Verified By input changes
     const fdVerifiedByInput = qs('#fieldDataVerifiedBy', section);
     let _fdVBAutoTimer = null;
+    function _saveFdVerifiedBy() {
+      const text = fdSummaryTextarea ? fdSummaryTextarea.value.trim() : '';
+      const vb = fdVerifiedByInput ? fdVerifiedByInput.value.trim() : '';
+      try { STORAGE.setItem(storageKey('integration.fieldDataSummary'), JSON.stringify({ summary: text, verified_by: vb })); } catch(e) {}
+      if (HAS_CASE_ID) saveSnapshotToServer('field_data_summary', JSON.stringify({ summary: text, verified_by: vb })).catch(() => {});
+    }
     if (fdVerifiedByInput) {
       fdVerifiedByInput.addEventListener('input', () => {
         clearTimeout(_fdVBAutoTimer);
-        _fdVBAutoTimer = setTimeout(() => {
-          const text = fdSummaryTextarea ? fdSummaryTextarea.value.trim() : '';
-          const vb = fdVerifiedByInput.value.trim();
-          try { STORAGE.setItem(storageKey('integration.fieldDataSummary'), JSON.stringify({ summary: text, verified_by: vb })); } catch(e) {}
-          if (HAS_CASE_ID) saveSnapshotToServer('field_data_summary', JSON.stringify({ summary: text, verified_by: vb })).catch(() => {});
-        }, 1500);
+        _fdVBAutoTimer = setTimeout(_saveFdVerifiedBy, 1500);
       });
+      fdVerifiedByInput.addEventListener('change', () => { clearTimeout(_fdVBAutoTimer); _saveFdVerifiedBy(); });
+      fdVerifiedByInput.addEventListener('blur', () => { clearTimeout(_fdVBAutoTimer); _saveFdVerifiedBy(); });
     }
 
     // Also try localStorage fallback
