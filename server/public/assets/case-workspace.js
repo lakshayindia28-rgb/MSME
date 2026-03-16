@@ -6598,15 +6598,23 @@
   function readReportConfig() {
     const parsed = safeJSONParse(STORAGE.getItem(storageKey(REPORT_CONFIG_STORAGE)), null);
     const base = defaultReportConfig();
-    const selected = Array.isArray(parsed?.selectedModules)
+    // If no saved config, use auto-detected defaults
+    if (!parsed) {
+      return { selectedModules: [...base.selectedModules], selectedPersonalModules: [...base.selectedPersonalModules], includeCaseOverview: false, includeBusinessEntity: false };
+    }
+    // Merge: saved selection + any newly completed business modules
+    const saved = Array.isArray(parsed.selectedModules)
       ? parsed.selectedModules.map((k) => String(k || '').trim()).filter((k) => MODULE_KEYS.includes(k))
-      : base.selectedModules;
-    const selectedPersonal = Array.isArray(parsed?.selectedPersonalModules)
+      : [];
+    const merged = [...new Set([...saved, ...base.selectedModules])];
+    // Merge: saved personal selection + any personal modules that now have data
+    const savedPersonal = Array.isArray(parsed.selectedPersonalModules)
       ? parsed.selectedPersonalModules.map((k) => String(k || '').trim()).filter((k) => PERSONAL_MODULE_KEYS.includes(k))
-      : base.selectedPersonalModules;
+      : [];
+    const mergedPersonal = [...new Set([...savedPersonal, ...base.selectedPersonalModules])];
     const includeCaseOverview = parsed?.includeCaseOverview === true;
     const includeBusinessEntity = parsed?.includeBusinessEntity === true;
-    return { selectedModules: [...new Set(selected)], selectedPersonalModules: [...new Set(selectedPersonal)], includeCaseOverview, includeBusinessEntity };
+    return { selectedModules: merged, selectedPersonalModules: mergedPersonal, includeCaseOverview, includeBusinessEntity };
   }
 
   function writeReportConfig(next) {

@@ -1495,7 +1495,7 @@ Format the report professionally with clear headings and bullet points.`;
 
     // ── Module selection gate — only ticked modules appear in the report ──
     const selSet = new Set(selectedModules);
-    const isModuleSelected = (key) => !selSet.size || selSet.has(key);
+    const isModuleSelected = (key) => selSet.has(key);
 
     const showGst = isModuleSelected('gst');
     const showMca = isModuleSelected('mca');
@@ -1508,7 +1508,7 @@ Format the report professionally with clear headings and bullet points.`;
     const dynamicModuleEntries = Object.entries(modules || {})
       .filter(([key, value]) => key && value != null)
       .filter(([key]) => key !== 'compliance' && key !== 'gst' && key !== 'financial' && key !== 'mca' && key !== 'udyam' && key !== 'itr')
-      .filter(([key]) => !selectedModules.length || selectedModules.includes(String(key || '').trim().toLowerCase()));
+      .filter(([key]) => selSet.has(String(key || '').trim().toLowerCase()));
 
     const dynamicModulesHtml = dynamicModuleEntries.length
       ? dynamicModuleEntries.map(([moduleKey, moduleValue]) => {
@@ -1612,7 +1612,7 @@ Format the report professionally with clear headings and bullet points.`;
       ? p.reportConfig.selectedPersonalModules.map((k) => String(k || '').trim().toLowerCase()).filter(Boolean)
       : [];
     const personalSelSet = new Set(selectedPersonalModules);
-    const isPersonalModuleSelected = (key) => !personalSelSet.size || personalSelSet.has(key);
+    const isPersonalModuleSelected = (key) => personalSelSet.has(key);
 
     const buildPersonalInfoHtml = () => {
       if (!hasPersonalInfo) return '';
