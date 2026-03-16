@@ -3195,15 +3195,9 @@
     }
     if (wrap) wrap.removeAttribute('hidden');
 
-    // Case overview: show navigator with "Case Overview" label
+    // Case overview: hide module-nav entirely (block-head already has cross-block buttons)
     if (blockKey === 'case_overview') {
-      if (label) label.textContent = 'Case Overview';
-      if (prev) prev.disabled = true;
-      if (next) next.disabled = false;
-      if (switchBtn) {
-        switchBtn.textContent = 'Go to Business Block';
-        switchBtn.setAttribute('aria-label', 'Go to Business Block');
-      }
+      if (wrap) wrap.setAttribute('hidden', '');
       return;
     }
 
