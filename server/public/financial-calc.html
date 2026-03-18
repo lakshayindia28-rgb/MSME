@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/financial-calc.css" />
+  <link rel="stylesheet" href="assets/financial-calc.css?v=2" />
 </head>
 <body>
   <div class="app">
@@ -78,6 +78,10 @@
           <button class="btn btn-primary btn-lg" id="calculateBtn" type="button">
             <span class="btn-icon">⚡</span> Calculate All Ratios
           </button>
+          <button class="btn btn-success" id="pushReportBtn" type="button">
+            <span class="btn-icon">📤</span> Push to Report
+          </button>
+          <div class="action-bar-divider"></div>
           <button class="btn btn-secondary" id="clearAllBtn" type="button">Clear All</button>
           <button class="btn btn-secondary" id="loadSampleBtn" type="button">Load Sample Data</button>
           <button class="btn btn-secondary" id="exportJsonBtn" type="button">Export JSON</button>
@@ -152,6 +156,6 @@
     </div>
   </div>
 
-  <script src="assets/financial-calc.js"></script>
+  <script src="assets/financial-calc.js?v=2"></script>
 </body>
 </html>

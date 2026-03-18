@@ -1385,19 +1385,21 @@ Format the report professionally with clear headings and bullet points.`;
       // Asset keys (balance sheet)
       const bsAssetKeys = [
         'gross_block','accumulated_depreciation','net_block','capital_work_in_progress','net_fixed_assets',
-        'investments_affiliate','marketable_securities','total_investments',
+        'investments_affiliate','non_current_investments','non_current_loans_advances',
+        'deferred_tax_assets','other_non_current_assets','non_current_assets',
         'receivables_gt6m','receivables_lt6m','provision_doubtful_debts','bills_receivable','total_receivables',
-        'loans_advances_subsidiaries','loans_advances_affiliates','loans_advances_current_ops',
+        'investments_marketable_securities','loans_advances_subsidiaries','loans_advances_affiliates','loans_advances_current_ops',
         'cash_and_bank','total_inventories_non_ops','loans_advances_non_ops','advance_tax_paid',
         'total_other_assets','total_current_assets_ops','total_assets'
       ];
       // Liability keys (balance sheet)
       const bsLiabilityKeys = [
-        'paid_up_equity_share_capital','share_application_money','quasi_equity',
+        'paid_up_equity_share_capital','reserves_surplus','share_application_money','quasi_equity',
         'gross_reserves','intangible_assets','misc_expenses_not_written_off','debit_balance_pnl',
         'net_reserves','tangible_net_worth',
-        'deferred_payment_credit','rupee_term_loans','total_long_term_debt','current_portion_ltd','net_long_term_debt',
-        'current_portion_ltd_dup','working_capital_bank_borrowings','intercorporate_borrowings',
+        'deferred_payment_credit','rupee_term_loans','total_long_term_debt',
+        'long_term_provisions','other_long_term_liabilities','current_portion_ltd','net_long_term_debt',
+        'working_capital_bank_borrowings','intercorporate_borrowings',
         'loans_advances_from_subsidiaries','loans_advances_from_promoters','other_short_term_loans','new_short_term_loans',
         'total_short_term_debt',
         'creditors_for_goods','creditors_for_expenses','other_current_liabilities_ops','current_liabilities_non_ops',
@@ -1436,7 +1438,7 @@ Format the report professionally with clear headings and bullet points.`;
         if (!displayKeys.length) return;
 
         // Highlight keys (totals / subtotals) get bold styling
-        const highlightKeys = ['net_fixed_assets','total_investments','total_receivables','total_other_assets','total_current_assets_ops','total_assets','tangible_net_worth','total_long_term_debt','net_long_term_debt','total_short_term_debt','total_other_liabilities','total_provisions','total_current_liabilities_ops','total_outside_liabilities','total_liabilities'];
+        const highlightKeys = ['net_fixed_assets','non_current_assets','total_receivables','total_other_assets','total_current_assets_ops','total_assets','tangible_net_worth','total_long_term_debt','net_long_term_debt','total_short_term_debt','total_other_liabilities','total_provisions','total_current_liabilities_ops','total_outside_liabilities','total_liabilities'];
 
         // Each section is a separate compact table with break-inside:avoid
         let secHtml = '<div style="break-inside:avoid;page-break-inside:avoid;margin-bottom:4px">';

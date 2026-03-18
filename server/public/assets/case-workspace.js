@@ -3771,9 +3771,9 @@
 
     // ── Financial field sections — all years side by side ──
     var sectionDefs = [
-      { label: 'Profitability Statement', start: 'net_sales', end: 'apat' },
-      { label: 'Balance Sheet: Assets', start: 'gross_block', end: 'total_assets' },
-      { label: 'Balance Sheet: Liabilities', start: 'paid_up_equity_share_capital', end: 'total_liabilities' }
+      { label: 'Profitability Statement (Row 7–32)', start: 'net_sales', end: 'gross_cash_accruals' },
+      { label: 'Balance Sheet: Assets (Row 39–66)', start: 'gross_block', end: 'total_assets' },
+      { label: 'Balance Sheet: Liabilities (Row 73–108)', start: 'paid_up_equity_share_capital', end: 'total_liabilities' }
     ];
 
     var sectionsHtml = '';
@@ -3782,6 +3782,7 @@
       sectionsHtml += '<div class="fc-form-section"><div class="fc-form-section-head" onclick="this.parentElement.classList.toggle(\'collapsed\')">' + fcEsc(sec.label) + '</div><div class="fc-form-section-body">';
       sectionsHtml += yearHeaders;
       fields.forEach(function (f) {
+        if (f.computed) return;          // skip formula fields — they are not inputs
         sectionsHtml += '<div class="fc-field-row">';
         sectionsHtml += '<div class="fc-field-label">' + fcEsc(f.label) + ' <span class="fc-field-hint">(Row ' + f.row + ')</span></div>';
         for (var yi = 0; yi < fcYearCount; yi++) {

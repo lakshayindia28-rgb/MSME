@@ -24,6 +24,7 @@
   --radius: 10px;
   --shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
   --shadow-lg: 0 4px 12px rgba(0,0,0,.08);
+  --section-accent: var(--primary);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -104,7 +105,7 @@ html, body {
   border-radius: 6px;
   font-size: 13px;
   outline: none;
-  transition: border-color .15s;
+  transition: border-color .15s, box-shadow .15s;
   background: var(--white);
   min-width: 0;
 }
@@ -112,7 +113,7 @@ html, body {
 .input-number {
   text-align: right;
   font-variant-numeric: tabular-nums;
-  width: 130px;
+  width: 150px;
 }
 
 /* ─── Buttons ─── */
@@ -137,7 +138,10 @@ html, body {
 .btn-lg { padding: 10px 24px; font-size: 14px; font-weight: 600; }
 .btn-icon { font-size: 16px; }
 .btn-success { background: var(--success); color: #fff; border-color: var(--success); }
+.btn-success:hover { background: #047857; }
 .btn-danger { background: var(--danger); color: #fff; border-color: var(--danger); }
+.btn-warn { background: var(--warn); color: #fff; border-color: var(--warn); }
+.btn-warn:hover { background: #b45309; }
 
 /* ─── Panels ─── */
 .panel {
@@ -187,75 +191,156 @@ html, body {
 .year-form { display: none; }
 .year-form.active { display: block; }
 
+/* ─── Form Sections (with accent stripe) ─── */
 .form-section {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--white);
   overflow: hidden;
+  border-left: 4px solid var(--section-accent, var(--primary));
+  box-shadow: var(--shadow);
 }
+
+/* Section-specific accent colors */
+.section-meta { --section-accent: #6366f1; border-left-color: #6366f1; }
+.section-profitability_statement { border-left-color: #2563eb; }
+.section-balance_sheet_assets { border-left-color: #059669; }
+.section-balance_sheet_liabilities { border-left-color: #d97706; }
+
 .form-section-head {
-  padding: 10px 16px;
+  padding: 12px 16px;
   background: var(--soft);
   border-bottom: 1px solid var(--border);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--navy);
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 8px;
   user-select: none;
+  transition: background .15s;
 }
+.form-section-head:hover { background: #eef2f7; }
 .form-section-head::after {
   content: '▾';
   font-size: 11px;
   transition: transform .2s;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 .form-section.collapsed .form-section-head::after { transform: rotate(-90deg); }
 .form-section.collapsed .form-section-body { display: none; }
 
-.form-section-body { padding: 8px 0; }
+.section-icon { font-size: 18px; flex-shrink: 0; }
+.section-title { flex: 1; }
+.section-badge {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  background: var(--white);
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
 
+.form-section-body { padding: 0; }
+
+/* Field grid header */
+.field-grid-header {
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+  background: var(--soft);
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.fgh-label { flex: 1; }
+.fgh-value { width: 150px; text-align: right; flex-shrink: 0; }
+
+/* Field rows */
 .field-row {
   display: flex;
   align-items: center;
-  padding: 4px 16px;
+  padding: 5px 16px;
   gap: 12px;
   transition: background .1s;
 }
-.field-row:hover { background: var(--soft); }
+.field-row.even { background: var(--white); }
+.field-row.odd { background: #fafbfc; }
+.field-row:hover { background: #eef3fb; }
 .field-label {
   flex: 1;
   font-size: 12.5px;
   color: var(--ink);
   min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-.field-label .field-hint {
+.field-num {
   color: var(--muted);
   font-size: 10px;
-  font-weight: 400;
+  font-weight: 600;
+  min-width: 20px;
 }
 .field-input {
-  width: 140px;
+  width: 150px;
   flex-shrink: 0;
 }
-.field-row.computed {
+
+/* Auto badge for computed fields */
+.auto-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--info);
   background: var(--info-bg);
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: .5px;
+  vertical-align: middle;
+}
+
+/* Computed field rows */
+.field-row.computed {
+  background: #f0f9ff !important;
+  border-top: 1px solid #bfdbfe;
+  border-bottom: 1px solid #bfdbfe;
 }
 .field-row.computed .field-label {
   font-weight: 600;
   color: var(--info);
 }
+.field-row.computed .computed-field {
+  background: #e0f2fe;
+  color: var(--info);
+  font-weight: 600;
+  cursor: not-allowed;
+  opacity: 0.9;
+  border-color: #93c5fd;
+}
 
-/* Metadata row */
+/* Metadata section */
 .meta-row {
   display: flex;
   gap: 16px;
-  padding: 10px 16px;
+  padding: 12px 16px;
   flex-wrap: wrap;
 }
-.meta-row .input-group-sm { min-width: 180px; }
+.meta-row .input-group-sm { min-width: 180px; flex: 1; }
+.meta-note {
+  padding: 6px 16px 10px;
+  font-size: 11px;
+  color: var(--muted);
+  font-style: italic;
+}
 
 /* ─── Action Bar ─── */
 .action-bar {
@@ -264,6 +349,12 @@ html, body {
   align-items: center;
   padding: 16px 0;
   flex-wrap: wrap;
+}
+.action-bar-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border);
+  margin: 0 4px;
 }
 
 /* ─── Results Section ─── */
@@ -365,6 +456,14 @@ html, body {
   text-transform: uppercase;
   letter-spacing: .5px;
 }
+.yearwise-table tr.computed-row td {
+  background: #f0f9ff;
+  font-weight: 600;
+  color: var(--info);
+}
+.yearwise-table tr.computed-row:hover td {
+  background: #e0f2fe;
+}
 
 /* ─── JSON Output ─── */
 .json-output {
@@ -420,6 +519,7 @@ html, body {
   z-index: 200;
   animation: fadeIn .3s ease;
   box-shadow: var(--shadow-lg);
+  max-width: 400px;
 }
 .toast-success { background: var(--success); }
 .toast-error { background: var(--danger); }
@@ -432,4 +532,9 @@ html, body {
   .nav-item { justify-content: center; padding: 12px; }
   .ratio-grid { grid-template-columns: 1fr; }
   .topbar { flex-direction: column; align-items: flex-start; }
+  .meta-row { flex-direction: column; }
+  .field-label { min-width: 120px; }
+  .input-number { width: 120px; }
+  .fgh-value { width: 120px; }
+  .field-input { width: 120px; }
 }
