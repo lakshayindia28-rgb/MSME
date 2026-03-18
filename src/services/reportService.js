@@ -955,6 +955,23 @@ Format the report professionally with clear headings and bullet points.`;
     // Additional Details (supplementary business params for Details of Business Entity page)
     const additionalDetails = p.additionalDetails && typeof p.additionalDetails === 'object' ? p.additionalDetails : {};
 
+    // Quotation Verification (multi-entry)
+    const qvRaw = modules?.quotation_verification || {};
+    const qvPayload = qvRaw && typeof qvRaw === 'object' ? qvRaw : {};
+    const qvEntries = (() => {
+      if (Array.isArray(qvPayload.entries) && qvPayload.entries.length) return qvPayload.entries.filter(e => e && typeof e === 'object');
+      // Unwrap nested data wrapper
+      if (qvPayload.data && typeof qvPayload.data === 'object') {
+        const inner = qvPayload.data;
+        if (Array.isArray(inner.entries) && inner.entries.length) return inner.entries.filter(e => e && typeof e === 'object');
+        if (inner.dealerName || inner.accountNumber || inner.isGenuine || inner.verifierName) return [inner];
+      }
+      // Legacy single-entry fallback
+      if (qvPayload.dealerName || qvPayload.accountNumber || qvPayload.isGenuine || qvPayload.verifierName) return [qvPayload];
+      return [];
+    })();
+    const hasQuotationVerification = qvEntries.length > 0;
+
     // Company Snapshot fields (page 4 — boxes layout)
     const csProjectDescription = additionalDetails.projectDescription || '';
     const csProjectLocation = additionalDetails.projectLocation || '';
@@ -1603,6 +1620,7 @@ Format the report professionally with clear headings and bullet points.`;
     const udyamSecNum = hasUdyam ? ++_sn : 0;
     const fieldDataSecNum = hasFieldData ? ++_sn : 0;
     const siteVisitSecNum = hasSiteVisit ? ++_sn : 0;
+    const qvSecNum = hasQuotationVerification ? ++_sn : 0;
     const personalInfoSecNum = hasPersonalInfo ? ++_sn : 0;
     const residentSecNum = hasResident ? ++_sn : 0;
     const overallObsSecNum = overallObservation ? ++_sn : 0;
@@ -3605,6 +3623,118 @@ Format the report professionally with clear headings and bullet points.`;
           html += '</div>';
           return html;
         })()}
+
+        <!-- ═══ QUOTATION VERIFICATION ═══ -->
+        ${hasQuotationVerification ? (() => {
+          let qvHtml = '<div class="page sec" style="page-break-before:always;break-before:page">';
+          qvHtml += '<h2>' + qvSecNum + '. Quotation Verification</h2>';
+          qvHtml += '<div>';
+
+          qvEntries.forEach((qv, qi) => {
+            const qvImages = Array.isArray(qv.images) ? qv.images.filter(img => img && img.dataUrl) : [];
+            if (qi > 0) qvHtml += '<div style="margin-top:28px;border-top:3px solid var(--navy);padding-top:14px"></div>';
+            qvHtml += '<div style="font-weight:800;font-size:12px;color:var(--navy);margin-bottom:10px;letter-spacing:0.5px;break-after:avoid;page-break-after:avoid">QUOTATION ' + (qi + 1) + ' OF ' + qvEntries.length + '</div>';
+
+            // Dealer Details Table
+            qvHtml += '<div style="border:2px solid var(--navy);border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 2px 10px rgba(11,31,58,0.05);break-inside:avoid;page-break-inside:avoid">';
+            qvHtml += '<table style="width:100%;border-collapse:collapse;font-size:11.5px">';
+            qvHtml += '<thead><tr><th colspan="2" style="background:var(--navy);color:#fff;font-weight:800;font-size:11px;padding:10px 14px;text-align:left;letter-spacing:0.5px">DEALER & QUOTATION DETAILS</th></tr></thead>';
+            qvHtml += '<tbody>';
+            const qvRow = (label, value, alt) => value ? '<tr' + (alt ? ' style="background:#fbfcfe"' : '') + '><td style="padding:8px 14px;font-weight:700;color:#475569;width:38%;border-bottom:1px solid #e2e8f0">' + label + '</td><td style="padding:8px 14px;border-bottom:1px solid #e2e8f0">' + safe(value) + '</td></tr>' : '';
+            let qvAlt = false;
+            const qvAdd = (l, v) => { const r = qvRow(l, v, qvAlt); if (r) qvAlt = !qvAlt; return r; };
+            qvHtml += qvAdd('Name of Applicant', qv.applicantName);
+            qvHtml += qvAdd('Name of Dealer', qv.dealerName);
+            qvHtml += qvAdd('Address of Dealer', qv.dealerAddress);
+            qvHtml += qvAdd('Phone', qv.phone);
+            qvHtml += qvAdd('Mobile Number', qv.mobile);
+            qvHtml += qvAdd('Email ID', qv.email);
+            qvHtml += qvAdd('Standing / Duration in Business', qv.standing);
+            qvHtml += qvAdd('Dealership Type', qv.dealershipType);
+            if (qv.isGenuine) {
+              const genuineBadge = qv.isGenuine === 'Yes'
+                ? '<span style="display:inline-block;padding:2px 10px;border-radius:4px;font-weight:700;font-size:10.5px;background:#dcfce7;color:#166534">YES</span>'
+                : '<span style="display:inline-block;padding:2px 10px;border-radius:4px;font-weight:700;font-size:10.5px;background:#fee2e2;color:#991b1b">NO</span>';
+              qvHtml += '<tr' + (qvAlt ? ' style="background:#fbfcfe"' : '') + '><td style="padding:8px 14px;font-weight:700;color:#475569;width:38%;border-bottom:1px solid #e2e8f0">Is Quotation Genuine?</td><td style="padding:8px 14px;border-bottom:1px solid #e2e8f0">' + genuineBadge + '</td></tr>';
+              qvAlt = !qvAlt;
+            }
+            qvHtml += qvAdd('Booking Confirmation — Date', qv.bookingDate);
+            qvHtml += qvAdd('Booking Confirmation — Name', qv.bookingName);
+            qvHtml += '</tbody></table></div>';
+
+            // Dealer Account Details
+            if (qv.accountNumber || qv.ifscCode || qv.accountName) {
+              qvHtml += '<div style="margin-top:16px;border:2px solid var(--navy);border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 2px 10px rgba(11,31,58,0.05);break-inside:avoid;page-break-inside:avoid">';
+              qvHtml += '<table style="width:100%;border-collapse:collapse;font-size:11.5px">';
+              qvHtml += '<thead><tr><th colspan="2" style="background:var(--navy);color:#fff;font-weight:800;font-size:11px;padding:10px 14px;text-align:left;letter-spacing:0.5px">DEALER ACCOUNT DETAILS (AS PER QUOTATION)</th></tr></thead>';
+              qvHtml += '<tbody>';
+              qvAlt = false;
+              qvHtml += qvAdd('Account Number', qv.accountNumber);
+              qvHtml += qvAdd('IFSC Code', qv.ifscCode);
+              qvHtml += qvAdd('Account Opening Date', qv.accountOpeningDate);
+              qvHtml += qvAdd('Account Name', qv.accountName);
+              qvHtml += '</tbody></table></div>';
+            }
+
+            // Verifier & Supervisor
+            if (qv.verifierName || qv.verifierRemarks || qv.supervisorName || qv.supervisorRemarks || qv.negativeRemarks) {
+              qvHtml += '<div style="margin-top:16px;border:2px solid var(--navy);border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 2px 10px rgba(11,31,58,0.05);break-inside:avoid;page-break-inside:avoid">';
+              qvHtml += '<table style="width:100%;border-collapse:collapse;font-size:11.5px">';
+              qvHtml += '<thead><tr><th colspan="2" style="background:var(--navy);color:#fff;font-weight:800;font-size:11px;padding:10px 14px;text-align:left;letter-spacing:0.5px">VERIFIER & SUPERVISOR DETAILS</th></tr></thead>';
+              qvHtml += '<tbody>';
+              qvAlt = false;
+              qvHtml += qvAdd('Name of Verifier', qv.verifierName);
+              if (qv.verifierRemarks) {
+                qvHtml += '<tr' + (qvAlt ? ' style="background:#fbfcfe"' : '') + '><td style="padding:8px 14px;font-weight:700;color:#475569;width:38%;border-bottom:1px solid #e2e8f0">Verifier Remarks</td><td style="padding:8px 14px;border-bottom:1px solid #e2e8f0;white-space:pre-wrap">' + safe(qv.verifierRemarks) + '</td></tr>';
+                qvAlt = !qvAlt;
+              }
+              qvHtml += qvAdd('Name of Supervisor', qv.supervisorName);
+              if (qv.supervisorRemarks) {
+                qvHtml += '<tr' + (qvAlt ? ' style="background:#fbfcfe"' : '') + '><td style="padding:8px 14px;font-weight:700;color:#475569;width:38%;border-bottom:1px solid #e2e8f0">Supervisor Remarks</td><td style="padding:8px 14px;border-bottom:1px solid #e2e8f0;white-space:pre-wrap">' + safe(qv.supervisorRemarks) + '</td></tr>';
+                qvAlt = !qvAlt;
+              }
+              if (qv.negativeRemarks) {
+                qvHtml += '<tr' + (qvAlt ? ' style="background:#fbfcfe"' : '') + '><td style="padding:8px 14px;font-weight:700;color:#475569;width:38%;border-bottom:1px solid #e2e8f0">Remarks in Detail (Negative)</td><td style="padding:8px 14px;border-bottom:1px solid #e2e8f0;white-space:pre-wrap;color:#991b1b">' + safe(qv.negativeRemarks) + '</td></tr>';
+                qvAlt = !qvAlt;
+              }
+              qvHtml += '</tbody></table></div>';
+            }
+
+            // Overall Opinion
+            if (qv.overallOpinion) {
+              const opColor = qv.overallOpinion === 'Satisfactory' ? 'background:#dcfce7;color:#166534;border-color:#16a34a' : 'background:#fee2e2;color:#991b1b;border-color:#dc2626';
+              qvHtml += '<table style="width:100%;margin-top:16px;border-collapse:collapse;break-inside:avoid;page-break-inside:avoid"><tr><td style="text-align:center;padding:14px 0;border:2px solid var(--navy);border-radius:10px;background:#fff">';
+              qvHtml += '<div style="font-weight:800;font-size:11px;color:var(--navy);margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase">OVERALL OPINION</div>';
+              qvHtml += '<div style="display:inline-block;padding:8px 24px;border-radius:8px;font-weight:800;font-size:13px;letter-spacing:0.5px;border:2px solid;' + opColor + '">' + safe(qv.overallOpinion.toUpperCase()) + '</div>';
+              qvHtml += '</td></tr></table>';
+            }
+
+            // Photos
+            if (qvImages.length) {
+              qvHtml += '<div style="margin-top:16px">';
+              qvHtml += '<div style="font-weight:800;font-size:11px;color:var(--navy);margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase;break-after:avoid;page-break-after:avoid">PHOTOGRAPHS</div>';
+              qvHtml += '<div style="display:flex;flex-wrap:wrap;gap:12px">';
+              qvImages.forEach(img => {
+                qvHtml += '<div style="break-inside:avoid;page-break-inside:avoid;width:calc(50% - 6px);border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;background:#fbfcfe">';
+                qvHtml += '<img src="' + img.dataUrl + '" style="width:100%;max-height:300px;object-fit:cover" />';
+                qvHtml += '<div style="padding:6px 10px;font-size:10px;font-weight:700;color:#475569;text-align:center">' + safe(img.label || img.fileName || 'Photo') + '</div>';
+                qvHtml += '</div>';
+              });
+              qvHtml += '</div></div>';
+            }
+
+            // Verification Summary
+            if (qv.verificationSummary) {
+              qvHtml += '<div style="margin-top:16px;padding:14px 16px;background:#f0f4ff;border:2px solid #1b2559;border-radius:10px;box-shadow:0 2px 8px rgba(27,37,89,0.08);break-inside:avoid;page-break-inside:avoid">';
+              qvHtml += '<div style="font-weight:800;font-size:11px;color:var(--navy);margin-bottom:6px;letter-spacing:0.5px;text-transform:uppercase">VERIFICATION SUMMARY</div>';
+              qvHtml += '<div style="font-size:11.5px;line-height:1.65;white-space:pre-wrap">' + safe(qv.verificationSummary) + '</div>';
+              qvHtml += '</div>';
+            }
+          }); // end forEach entry
+
+          qvHtml += '</div></div>';
+          return qvHtml;
+        })() : ''}
 
         <!-- ═══ PERSONAL INFORMATION — APPLICANT & KYC PAGES ═══ -->
         ${personalInfoHtml}

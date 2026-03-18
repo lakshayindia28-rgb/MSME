@@ -194,6 +194,12 @@ async function hydrateDueDiligencePayloadFromCase(rawPayload) {
     if (data != null) modules[key] = data;
   }
 
+  // Always hydrate quotation_verification from DB if not already in payload
+  if (modules.quotation_verification == null) {
+    const qvData = await readLatestCaseModuleSnapshot(caseId, 'quotation_verification');
+    if (qvData != null) modules.quotation_verification = qvData;
+  }
+
   // Always hydrate PAN data so Business Entity page can render PAN regardless of module selection
   if (modules.pan == null) {
     const panData = await readLatestCaseModuleSnapshot(caseId, 'pan');
@@ -1206,6 +1212,16 @@ app.post('/api/case/save-snapshot', async (req, res) => {
     }
 
     const result = await saveSnapshot(caseId, moduleKey, data);
+
+    // Also persist to disk so report.js static file loader can access it
+    try {
+      const snapDir = path.join(CASES_DATA_DIR, caseId, 'snapshots');
+      await fs.mkdir(snapDir, { recursive: true });
+      const filePayload = JSON.stringify({ data, savedAt: result.savedAt }, null, 2);
+      await fs.writeFile(path.join(snapDir, `${moduleKey}.latest.json`), filePayload, 'utf8');
+    } catch (diskErr) {
+      logger.warn(`Disk snapshot write failed for ${moduleKey}:`, diskErr?.message || diskErr);
+    }
 
     res.json({
       success: true,

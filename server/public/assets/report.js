@@ -15,6 +15,7 @@
     { key: 'bank_statement', label: 'Bank Statement', desc: 'Bank statement extraction' },
     { key: 'financial', label: 'Financial', desc: 'Financial analysis & reconciliation' },
     { key: 'field_data', label: 'Business Field Data', desc: 'Site photos, shop images, field images' },
+    { key: 'quotation_verification', label: 'Quotation Verification', desc: 'Dealer quotation verification details' },
     { key: 'resident_verification', label: 'Resident Verification', desc: 'Applicant address & residence verification photos' }
   ];
 
@@ -521,6 +522,7 @@
       modules[key] = getFilteredModuleData(key) || {};
     }
 
+
     const fieldImages = state.selectedModules.has('field_data')
       ? state.fieldImages.map((img) => ({
           id: img.id,
@@ -642,6 +644,17 @@
           const data = json?.data?.data || json?.data?.raw?.data || json?.data?.raw || json?.data || json;
           if (data && typeof data === 'object') {
             state.moduleData[key] = data;
+          }
+        }
+        // Fallback: if static file not found, try API (reads from MongoDB)
+        if (!state.moduleData[key]) {
+          const apiRes = await fetch(`/api/case/${encodeURIComponent(state.caseId)}/snapshot/${key}`);
+          if (apiRes.ok) {
+            const apiJson = await apiRes.json();
+            const apiData = apiJson?.data?.data || apiJson?.data || null;
+            if (apiData && typeof apiData === 'object' && Object.keys(apiData).length) {
+              state.moduleData[key] = apiData;
+            }
           }
         }
       } catch {
@@ -816,6 +829,11 @@
           state.selectedModules.add(key);
         }
       }
+    }
+
+    // Always auto-select quotation_verification if it has data (even if not marked completed)
+    if (state.moduleData.quotation_verification && Object.keys(state.moduleData.quotation_verification).length > 0) {
+      state.selectedModules.add('quotation_verification');
     }
 
     state.caseLoaded = true;

@@ -1353,6 +1353,9 @@ body.header-collapsed .app-header {
 .content[data-view="single"][data-active-block="business"][data-active-module="additional_details"] .module[data-module-section="additional_details"] {
   display: block;
 }
+.content[data-view="single"][data-active-block="business"][data-active-module="quotation_verification"] .module[data-module-section="quotation_verification"] {
+  display: block;
+}
 
 /* Personal block: show one personal module at a time in single view. */
 .content[data-view="single"][data-active-block="personal"][data-active-personal-module="applicant"] [data-block="personal"] .module[data-personal-section="applicant"],

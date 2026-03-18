@@ -82,7 +82,8 @@ const ALLOWED_MODULES = new Set([
   'personal_aadhaar', 'personal_resident_verification', 'personal_personal_itr', 'personal_info',
   'report_config', 'ai_summary', 'gst_report_selection', 'case_overview',
   'selected_mca_directors', 'report_images', 'personal_module_completion',
-  'financial_remark', 'overall_observation', 'field_data_summary'
+  'financial_remark', 'overall_observation', 'field_data_summary',
+  'quotation_verification'
 ]);
 
 export async function saveSnapshot(caseId, moduleKey, data) {
@@ -177,7 +178,8 @@ export async function getSnapshotHistory(caseId, moduleKey, limit = 20) {
 export async function getCaseMeta(caseId) {
   const defaultModuleKeys = [
     'gst', 'mca', 'compliance', 'pan', 'udyam',
-    'itr', 'bank_statement', 'financial', 'field_data'
+    'itr', 'bank_statement', 'financial', 'field_data',
+    'quotation_verification'
   ];
 
   // Read module statuses from latest snapshot

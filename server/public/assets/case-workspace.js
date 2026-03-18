@@ -1,5 +1,5 @@
 (function () {
-  const MODULE_KEYS = ['gst', 'mca', 'compliance', 'pan', 'udyam', 'itr', 'bank_statement', 'financial', 'field_data', 'business_summary', 'additional_details'];
+  const MODULE_KEYS = ['gst', 'mca', 'compliance', 'pan', 'udyam', 'itr', 'bank_statement', 'financial', 'field_data', 'business_summary', 'additional_details', 'quotation_verification'];
   const PERSONAL_MODULE_KEYS = ['applicant', 'pan', 'aadhaar', 'resident_verification', 'personal_itr'];
   const AI_SUMMARY_STORAGE = 'integration.moduleAISummaries';
   const REPORT_CONFIG_STORAGE = 'integration.reportConfig';
@@ -12,6 +12,8 @@
   let _adLoadingCounter = 0;
   // Guard flag: prevent auto-save until AD data has been loaded at least once from server/storage
   let _adDataLoadedOnce = false;
+  // Global guard: suppress status-reset (completed→pending) while page is restoring data from server
+  let _isRestoringFromServer = false;
   function _adBeginLoading() { _adLoadingCounter++; }
   function _adEndLoading() { _adLoadingCounter = Math.max(0, _adLoadingCounter - 1); }
   const STATUS = {
@@ -1612,6 +1614,313 @@
         // No saved business summary
       }
     })();
+  }
+
+  /* ── Quotation Verification Module (Multi-Entry) ── */
+  let qvEntries = []; // Array of quotation entry objects
+  let qvCurrentImages = []; // Images for the entry currently being edited
+  let qvEditIndex = -1; // -1 = new entry, >=0 = editing existing
+
+  const QV_FIELDS = ['applicantName', 'dealerName', 'dealerAddress', 'phone', 'mobile', 'email', 'standing',
+    'dealershipType', 'isGenuine', 'bookingDate', 'bookingName',
+    'accountNumber', 'ifscCode', 'accountOpeningDate', 'accountName',
+    'verifierName', 'verifierRemarks', 'supervisorName', 'supervisorRemarks', 'negativeRemarks'];
+
+  function collectQvFormData() {
+    const section = qs('#module-quotation_verification');
+    if (!section) return {};
+    const val = (id) => { const el = qs('#' + id, section); return el ? el.value.trim() : ''; };
+    const opinion = (() => { const r = section.querySelector('input[name="qv_overallOpinion"]:checked'); return r ? r.value : ''; })();
+    const data = {};
+    QV_FIELDS.forEach(f => { data[f] = val('qv_' + f); });
+    data.verificationSummary = val('qvVerificationSummary');
+    data.overallOpinion = opinion;
+    data.images = qvCurrentImages.slice();
+    return data;
+  }
+
+  function clearQvForm() {
+    const section = qs('#module-quotation_verification');
+    if (!section) return;
+    QV_FIELDS.forEach(f => {
+      const el = qs('#qv_' + f, section);
+      if (el) el.value = '';
+    });
+    const summaryEl = qs('#qvVerificationSummary', section);
+    if (summaryEl) summaryEl.value = '';
+    section.querySelectorAll('input[name="qv_overallOpinion"]').forEach(r => r.checked = false);
+    qvCurrentImages = [];
+    qvEditIndex = -1;
+    const badge = qs('#qvEditingBadge', section);
+    if (badge) badge.style.display = 'none';
+    const titleEl = qs('#qvFormTitle', section);
+    if (titleEl) titleEl.textContent = 'New Quotation';
+    const cancelBtn = qs('#btnCancelQvEdit', section);
+    if (cancelBtn) cancelBtn.style.display = 'none';
+    renderQvImages();
+  }
+
+  function fillQvForm(entry) {
+    const section = qs('#module-quotation_verification');
+    if (!section) return;
+    QV_FIELDS.forEach(f => {
+      const el = qs('#qv_' + f, section);
+      if (el && entry[f] !== undefined && entry[f] !== null) el.value = entry[f];
+    });
+    const summaryEl = qs('#qvVerificationSummary', section);
+    if (summaryEl && entry.verificationSummary) summaryEl.value = entry.verificationSummary;
+    if (entry.overallOpinion) {
+      section.querySelectorAll('input[name="qv_overallOpinion"]').forEach(r => { r.checked = r.value === entry.overallOpinion; });
+    }
+    qvCurrentImages = Array.isArray(entry.images) ? entry.images.slice() : [];
+    renderQvImages();
+  }
+
+  function saveQvEntry(andAddNext) {
+    const data = collectQvFormData();
+    if (!data.applicantName && !data.dealerName) { alert('Please enter at least the Applicant Name or Dealer Name.'); return false; }
+    if (qvEditIndex >= 0 && qvEditIndex < qvEntries.length) {
+      qvEntries[qvEditIndex] = data;
+    } else {
+      qvEntries.push(data);
+    }
+    renderQvPreviewTable();
+    persistQvToServer();
+    if (andAddNext) {
+      clearQvForm();
+    } else {
+      // Stay on current but show success
+      qvEditIndex = -1;
+      clearQvForm();
+    }
+    return true;
+  }
+
+  function persistQvToServer() {
+    const payload = { entries: qvEntries };
+    try { STORAGE.setItem(storageKey('integration.quotationVerification'), JSON.stringify(payload)); } catch {}
+    if (HAS_CASE_ID) saveSnapshotToServer('quotation_verification', JSON.stringify(payload)).catch(() => {});
+  }
+
+  function renderQvPreviewTable() {
+    const section = qs('#module-quotation_verification');
+    if (!section) return;
+    const tbody = qs('[data-qv-rows]', section);
+    const emptyRow = qs('[data-qv-empty]', section);
+    if (!tbody) return;
+
+    if (!qvEntries.length) {
+      tbody.innerHTML = '<tr data-qv-empty><td colspan="8" class="muted" style="padding:12px;text-align:center">No quotations saved yet. Fill the form below and click "Save Quotation".</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = qvEntries.map((e, i) => {
+      const genuineBadge = e.isGenuine === 'Yes' ? '<span style="color:#16a34a;font-weight:700">Yes</span>'
+        : e.isGenuine === 'No' ? '<span style="color:#dc2626;font-weight:700">No</span>' : '—';
+      const opinionBadge = e.overallOpinion === 'Satisfactory' ? '<span style="background:#dcfce7;color:#166534;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10px">SAT</span>'
+        : e.overallOpinion === 'Not Satisfactory' ? '<span style="background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10px">NOT SAT</span>' : '—';
+      const imgCount = Array.isArray(e.images) ? e.images.length : 0;
+      const bg = i % 2 === 0 ? '' : ' style="background:#fbfcfe"';
+      return '<tr' + bg + '>' +
+        '<td style="padding:7px 10px;border-bottom:1px solid #e2e8f0;font-weight:700">' + (i + 1) + '</td>' +
+        '<td style="padding:7px 10px;border-bottom:1px solid #e2e8f0;font-weight:600">' + (e.applicantName || '—') + '</td>' +
+        '<td style="padding:7px 10px;border-bottom:1px solid #e2e8f0;font-weight:600">' + (e.dealerName || '—') + '</td>' +
+        '<td style="padding:7px 10px;border-bottom:1px solid #e2e8f0">' + (e.dealershipType || '—') + '</td>' +
+        '<td style="padding:7px 10px;border-bottom:1px solid #e2e8f0">' + genuineBadge + '</td>' +
+        '<td style="padding:7px 10px;border-bottom:1px solid #e2e8f0">' + opinionBadge + '</td>' +
+        '<td style="padding:7px 10px;border-bottom:1px solid #e2e8f0">' + imgCount + '</td>' +
+        '<td style="padding:7px 10px;border-bottom:1px solid #e2e8f0;text-align:center">' +
+          '<button type="button" data-qv-edit="' + i + '" style="background:none;border:none;color:#3b82f6;cursor:pointer;font-size:12px;font-weight:700;padding:2px 6px">Edit</button>' +
+          '<button type="button" data-qv-delete="' + i + '" style="background:none;border:none;color:#dc2626;cursor:pointer;font-size:12px;font-weight:700;padding:2px 6px;margin-left:4px">Delete</button>' +
+        '</td></tr>';
+    }).join('');
+
+    // Bind edit/delete
+    tbody.querySelectorAll('[data-qv-edit]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.getAttribute('data-qv-edit'));
+        if (idx >= 0 && idx < qvEntries.length) {
+          qvEditIndex = idx;
+          clearQvForm();
+          qvEditIndex = idx;
+          fillQvForm(qvEntries[idx]);
+          const badge = qs('#qvEditingBadge', section);
+          if (badge) { badge.style.display = ''; qs('#qvEditingIndex', section).textContent = String(idx + 1); }
+          const titleEl = qs('#qvFormTitle', section);
+          if (titleEl) titleEl.textContent = 'Edit Quotation #' + (idx + 1);
+          const cancelBtn = qs('#btnCancelQvEdit', section);
+          if (cancelBtn) cancelBtn.style.display = '';
+          const formPanel = qs('#qvEntryFormPanel', section);
+          if (formPanel) formPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+    tbody.querySelectorAll('[data-qv-delete]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.getAttribute('data-qv-delete'));
+        if (idx >= 0 && idx < qvEntries.length) {
+          if (!confirm('Delete quotation #' + (idx + 1) + ' (' + (qvEntries[idx].dealerName || 'unnamed') + ')?')) return;
+          qvEntries.splice(idx, 1);
+          if (qvEditIndex === idx) clearQvForm();
+          else if (qvEditIndex > idx) qvEditIndex--;
+          renderQvPreviewTable();
+          persistQvToServer();
+        }
+      });
+    });
+  }
+
+  function restoreQuotationVerificationForm(data) {
+    if (!data || typeof data !== 'object') return;
+    // Support new multi-entry format
+    if (Array.isArray(data.entries)) {
+      qvEntries = data.entries.filter(e => e && typeof e === 'object');
+      renderQvPreviewTable();
+      return;
+    }
+    // Legacy single-entry: migrate to entries array
+    if (data.dealerName || data.isGenuine || data.verifierName) {
+      qvEntries = [data];
+      renderQvPreviewTable();
+      return;
+    }
+  }
+
+  function renderQvImages() {
+    const section = qs('#module-quotation_verification');
+    if (!section) return;
+    const listEl = qs('[data-qv-img-list]', section);
+    const emptyEl = qs('[data-qv-img-empty]', section);
+    const countEl = qs('[data-qv-img-count]', section);
+    if (!listEl) return;
+
+    if (!qvCurrentImages.length) {
+      listEl.innerHTML = '';
+      if (emptyEl) emptyEl.hidden = false;
+      if (countEl) countEl.textContent = '0';
+      return;
+    }
+    if (emptyEl) emptyEl.hidden = true;
+    if (countEl) countEl.textContent = String(qvCurrentImages.length);
+
+    let dragSrcIdx = null;
+    listEl.innerHTML = qvCurrentImages.map((img, idx) => `
+      <div class="field-img-card" draggable="true" data-drag-idx="${idx}" style="border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface);cursor:grab;transition:opacity 0.2s,transform 0.15s">
+        <img src="${img.dataUrl}" alt="${img.label || img.fileName}" style="width:100%;height:130px;object-fit:cover;pointer-events:none" />
+        <div style="padding:6px 8px;display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:12px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:120px" title="${img.label || img.fileName}">${img.label || img.fileName}</span>
+          <button type="button" data-remove-qv-img="${img.id}" style="background:none;border:none;color:var(--danger,#e74c3c);cursor:pointer;font-size:14px;padding:2px 4px" title="Remove">&times;</button>
+        </div>
+      </div>
+    `).join('');
+
+    listEl.querySelectorAll('[data-remove-qv-img]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        qvCurrentImages = qvCurrentImages.filter(i => i.id !== btn.getAttribute('data-remove-qv-img'));
+        renderQvImages();
+      });
+    });
+
+    listEl.querySelectorAll('.field-img-card').forEach(card => {
+      card.addEventListener('dragstart', e => { dragSrcIdx = parseInt(card.dataset.dragIdx); card.style.opacity = '0.4'; e.dataTransfer.effectAllowed = 'move'; });
+      card.addEventListener('dragend', () => { card.style.opacity = '1'; listEl.querySelectorAll('.field-img-card').forEach(c => c.style.border = '1px solid var(--border)'); });
+      card.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; card.style.border = '2px solid #3b82f6'; });
+      card.addEventListener('dragleave', () => { card.style.border = '1px solid var(--border)'; });
+      card.addEventListener('drop', e => {
+        e.preventDefault();
+        const dropIdx = parseInt(card.dataset.dragIdx);
+        if (dragSrcIdx !== null && dragSrcIdx !== dropIdx) {
+          const moved = qvCurrentImages.splice(dragSrcIdx, 1)[0];
+          qvCurrentImages.splice(dropIdx, 0, moved);
+          renderQvImages();
+        }
+        dragSrcIdx = null;
+      });
+    });
+  }
+
+  function initQuotationVerificationModule() {
+    const section = qs('#module-quotation_verification');
+    if (!section) return;
+
+    const labelInput = qs('[data-qv-img-label]', section);
+    const fileInput = qs('[data-qv-img-file]', section);
+    const addImgBtn = qs('[data-action="add-qv-image"]', section);
+    const saveBtn = qs('#btnSaveQvEntry', section);
+    const saveNextBtn = qs('#btnSaveAndNextQv', section);
+    const cancelBtn = qs('#btnCancelQvEdit', section);
+    const statusEl = qs('#qvSaveStatus', section);
+
+    // Add image(s)
+    if (addImgBtn) {
+      addImgBtn.addEventListener('click', () => {
+        const files = fileInput?.files;
+        if (!files || !files.length) return alert('Please select one or more image files first.');
+        const baseLabel = (labelInput?.value || '').trim();
+        const fileList = Array.from(files);
+        let loaded = 0;
+        fileList.forEach((file, i) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6) + i;
+            const label = fileList.length === 1 ? (baseLabel || file.name) : (baseLabel ? `${baseLabel} ${i + 1}` : file.name);
+            qvCurrentImages.push({ id, label, fileName: file.name, dataUrl: reader.result, mimeType: file.type || 'image/jpeg' });
+            loaded++;
+            if (loaded === fileList.length) {
+              if (labelInput) labelInput.value = '';
+              if (fileInput) fileInput.value = '';
+              renderQvImages();
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+    }
+
+    // Save Quotation
+    if (saveBtn) {
+      saveBtn.addEventListener('click', () => {
+        if (saveQvEntry(false)) {
+          if (statusEl) { statusEl.textContent = 'Saved ✓'; setTimeout(() => statusEl.textContent = '', 3000); }
+        }
+      });
+    }
+
+    // Save & Add Next
+    if (saveNextBtn) {
+      saveNextBtn.addEventListener('click', () => {
+        if (saveQvEntry(true)) {
+          if (statusEl) { statusEl.textContent = 'Saved ✓ — form cleared for next quotation'; setTimeout(() => statusEl.textContent = '', 3000); }
+        }
+      });
+    }
+
+    // Cancel Edit
+    if (cancelBtn) {
+      cancelBtn.addEventListener('click', () => {
+        clearQvForm();
+        if (statusEl) { statusEl.textContent = 'Edit cancelled'; setTimeout(() => statusEl.textContent = '', 2000); }
+      });
+    }
+
+    // Load from server
+    (async () => {
+      try {
+        const caseId = (q.caseId || '').toString().trim();
+        if (!caseId || caseId.toLowerCase() === 'default') return;
+        const res = await fetch(`/api/case/${encodeURIComponent(caseId)}/snapshot/quotation_verification`);
+        if (res.ok) {
+          const json = await res.json();
+          const payload = json?.data?.data || json?.data || json || {};
+          if (payload && typeof payload === 'object' && Object.keys(payload).length) {
+            restoreQuotationVerificationForm(payload);
+          }
+        }
+      } catch { /* no saved data */ }
+    })();
+
+    renderQvImages();
+    renderQvPreviewTable();
   }
 
   /* ── Resident Verification — Multi-Image Upload with Drag & Drop Reorder ── */
@@ -5198,12 +5507,13 @@
         };
         const snap = (key) => fetch(`/api/case/${encodeURIComponent(caseId)}/snapshot/${key}`, { method: 'GET' }).then(r => r.json()).catch(() => ({}));
 
+        _isRestoringFromServer = true;
         try {
           // ── Phase 1: Fetch ALL snapshots in parallel for speed ──
           const [
             gstR, mcaR, compR, finR, statusR, aiR, rcR, gstSelR,
             adR, coR, smdR, piR, itrR, bsR, udyamR, panR, fdR, rvR, riR,
-            bsumR, pitrR, pmcR, ooR, fdsR
+            bsumR, pitrR, pmcR, ooR, fdsR, qvR
           ] = await Promise.allSettled([
             snap('gst'), snap('mca'), snap('compliance'), snap('financial'),
             snap('module_statuses'), snap('ai_summary'), snap('report_config'), snap('gst_report_selection'),
@@ -5211,7 +5521,7 @@
             snap('itr'), snap('bank_statement'), snap('udyam'), snap('pan'),
             snap('field_data'), snap('resident_verification_images'), snap('report_images'),
             snap('business_summary'), snap('personal_personal_itr'), snap('personal_module_completion'),
-            snap('overall_observation'), snap('field_data_summary')
+            snap('overall_observation'), snap('field_data_summary'), snap('quotation_verification')
           ]);
 
           // ── Phase 2: Write all results into localStorage and re-render UI ──
@@ -5453,6 +5763,13 @@
             }
           }
 
+          // Quotation Verification
+          const qvD = extractData(val(qvR));
+          if (qvD && typeof qvD === 'object' && Object.keys(qvD).length) {
+            STORAGE.setItem(storageKey('integration.quotationVerification'), JSON.stringify(qvD));
+            restoreQuotationVerificationForm(qvD);
+          }
+
           // Personal ITR (per-person ITR entries)
           const pitrD = extractData(val(pitrR));
           if (pitrD && typeof pitrD === 'object' && Object.keys(pitrD).length) {
@@ -5516,6 +5833,7 @@
         } catch (err) {
           console.warn('[loadSnapshots] Server restore failed:', err);
         } finally {
+          _isRestoringFromServer = false;
           // Always re-render report builder after server data is loaded
           renderReportBuilderPreview();
           renderGstFromIntegration();
@@ -6344,7 +6662,7 @@
     gst: 'gst', mca: 'mca', compliance: 'compliance', pan: 'pan', udyam: 'udyam',
     itr: 'itr', bank_statement: 'bank_statement', financial: 'financial',
     field_data: 'field_data', business_summary: 'business_summary',
-    additional_details: 'additional_details'
+    additional_details: 'additional_details', quotation_verification: 'quotation_verification'
   };
 
   async function saveSnapshotToServer(moduleKey, jsonText) {
@@ -6368,8 +6686,9 @@
     if (!out?.success) throw new Error(out?.error || 'Save failed');
 
     // If this module was marked completed, reset it to pending (user re-saved data)
+    // BUT skip during initial server restore — completed should stay completed on page load
     const statusKey = SNAPSHOT_TO_MODULE[moduleKey];
-    if (statusKey && moduleKey !== 'module_statuses' && moduleKey !== 'personal_module_completion') {
+    if (statusKey && moduleKey !== 'module_statuses' && moduleKey !== 'personal_module_completion' && !_isRestoringFromServer) {
       const current = readModuleStatuses();
       if (current[statusKey] === STATUS.completed) {
         const next = { ...current, [statusKey]: STATUS.pending };
@@ -6571,6 +6890,12 @@
         return financial.analysis;
       }
       return getAISummaryPayloadFromIntegration(financial);
+    }
+    if (moduleKey === 'quotation_verification') {
+      const raw = STORAGE.getItem(storageKey('integration.quotationVerification'));
+      const parsed = safeJSONParse(raw, null);
+      if (parsed && typeof parsed === 'object') return parsed;
+      return {};
     }
     return {};
   }
@@ -10114,6 +10439,8 @@
     initFieldDataModule();
 
     initBusinessSummaryModule();
+
+    initQuotationVerificationModule();
 
     initResidentVerificationImages();
 

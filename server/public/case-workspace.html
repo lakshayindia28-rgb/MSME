@@ -246,6 +246,14 @@
           </span>
         </button>
 
+        <button class="tracker-item" type="button" data-module="quotation_verification">
+          <span class="tracker-dot" data-status-dot></span>
+          <span class="tracker-text">
+            <span class="tracker-name">Quotation Verification</span>
+            <span class="tracker-status" data-status-text>Pending</span>
+          </span>
+        </button>
+
       </nav>
 
       <nav class="tracker tracker-tabs" aria-label="Personal information modules" data-tracker="personal" hidden>
@@ -1924,6 +1932,215 @@
 
           </div>
         </section>
+
+        <!-- ── Quotation Verification Module ── -->
+        <section class="module" id="module-quotation_verification" data-module-section="quotation_verification">
+          <header class="module-head">
+            <div>
+              <h2 class="module-title">Quotation Verification</h2>
+              <p class="module-subtitle">Verify dealer quotation details, genuineness, booking confirmation, and dealer account information. Add multiple quotations.</p>
+            </div>
+            <div class="module-head-actions">
+              <span class="status-pill" data-module-status="quotation_verification" data-status="pending">Pending</span>
+              <label class="select">
+                <span class="sr-only">Quotation Verification status</span>
+                <select data-status-select="quotation_verification">
+                  <option value="pending">Pending</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </label>
+              <button class="btn btn-secondary" type="button" id="btnSaveQvEntry" style="font-size:12px">Save Quotation</button>
+              <button class="btn btn-primary" type="button" id="btnSaveAndNextQv" style="background:#059669;font-size:12px">+ Save &amp; Add Next</button>
+            </div>
+          </header>
+
+          <div class="module-body">
+            <!-- Saved Quotations Preview Table -->
+            <div class="panel" id="qvPreviewPanel">
+              <div class="panel-title">Saved Quotations</div>
+              <div class="panel-subtitle">All saved quotation entries. Click Edit to modify, or Delete to remove.</div>
+              <div style="overflow-x:auto;margin-top:10px">
+                <table style="width:100%;border-collapse:collapse;font-size:12px" aria-label="Saved quotations table">
+                  <thead>
+                    <tr style="background:var(--navy,#1b2559);color:#fff">
+                      <th style="padding:8px 10px;text-align:left;font-size:11px;letter-spacing:0.5px">#</th>
+                      <th style="padding:8px 10px;text-align:left;font-size:11px;letter-spacing:0.5px">Applicant</th>
+                      <th style="padding:8px 10px;text-align:left;font-size:11px;letter-spacing:0.5px">Dealer Name</th>
+                      <th style="padding:8px 10px;text-align:left;font-size:11px;letter-spacing:0.5px">Dealership Type</th>
+                      <th style="padding:8px 10px;text-align:left;font-size:11px;letter-spacing:0.5px">Genuine?</th>
+                      <th style="padding:8px 10px;text-align:left;font-size:11px;letter-spacing:0.5px">Opinion</th>
+                      <th style="padding:8px 10px;text-align:left;font-size:11px;letter-spacing:0.5px">Photos</th>
+                      <th style="padding:8px 10px;text-align:center;font-size:11px;width:120px">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody data-qv-rows>
+                    <tr data-qv-empty><td colspan="8" class="muted" style="padding:12px;text-align:center">No quotations saved yet. Fill the form below and click "Save Quotation".</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Entry Form -->
+            <div class="panel" style="margin-top:16px;border:2px solid var(--primary-2,#3b82f6);border-radius:10px" id="qvEntryFormPanel">
+              <div class="panel-title" style="display:flex;align-items:center;justify-content:space-between">
+                <span id="qvFormTitle">New Quotation</span>
+                <span class="muted" id="qvEditingBadge" style="font-size:11px;display:none;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:4px;font-weight:700">Editing #<span id="qvEditingIndex">1</span></span>
+              </div>
+
+              <!-- Dealer Details -->
+              <div class="panel-subtitle" style="margin-top:8px;font-weight:700">Dealer Details</div>
+              <div class="form-grid-2col" style="margin-top:8px">
+                <div class="field" style="grid-column:1/-1">
+                  <label class="field-label" for="qv_applicantName">Name of Applicant</label>
+                  <input class="field-input" type="text" id="qv_applicantName" name="applicantName" placeholder="e.g. Ramesh Kumar" autocomplete="off" />
+                </div>
+                <div class="field" style="grid-column:1/-1">
+                  <label class="field-label" for="qv_dealerName">Name of Dealer</label>
+                  <input class="field-input" type="text" id="qv_dealerName" name="dealerName" placeholder="e.g. ABC Motors Pvt Ltd" autocomplete="off" />
+                </div>
+                <div class="field" style="grid-column:1/-1">
+                  <label class="field-label" for="qv_dealerAddress">Address of Dealer</label>
+                  <textarea class="field-input" id="qv_dealerAddress" name="dealerAddress" rows="2" style="width:100%;resize:vertical" placeholder="e.g. Plot No. 12, Industrial Area, Jaipur"></textarea>
+                </div>
+                <div class="field">
+                  <label class="field-label" for="qv_phone">Phone</label>
+                  <input class="field-input" type="text" id="qv_phone" name="phone" placeholder="e.g. 011-23456789" autocomplete="off" />
+                </div>
+                <div class="field">
+                  <label class="field-label" for="qv_mobile">Mobile Number</label>
+                  <input class="field-input" type="text" id="qv_mobile" name="mobile" placeholder="e.g. 9876543210" autocomplete="off" />
+                </div>
+                <div class="field">
+                  <label class="field-label" for="qv_email">Email ID</label>
+                  <input class="field-input" type="email" id="qv_email" name="email" placeholder="e.g. dealer@example.com" autocomplete="off" />
+                </div>
+                <div class="field">
+                  <label class="field-label" for="qv_standing">Standing / Duration in Business</label>
+                  <input class="field-input" type="text" id="qv_standing" name="standing" placeholder="e.g. 15 Years" autocomplete="off" />
+                </div>
+                <div class="field">
+                  <label class="field-label" for="qv_dealershipType">Dealership Type</label>
+                  <select class="field-input" id="qv_dealershipType" name="dealershipType">
+                    <option value="">-- Select --</option>
+                    <option value="Authorized">Authorized</option>
+                    <option value="Unauthorized">Unauthorized</option>
+                    <option value="Direct Dealer">Direct Dealer</option>
+                    <option value="Sub-Dealer">Sub-Dealer</option>
+                    <option value="NA">NA</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Quotation Genuineness -->
+              <div class="panel-subtitle" style="margin-top:16px;font-weight:700;padding-top:12px;border-top:1px solid var(--border,#e2e8f0)">Quotation Genuineness</div>
+              <div class="form-grid-2col" style="margin-top:8px">
+                <div class="field">
+                  <label class="field-label" for="qv_isGenuine">Is Quotation Genuine?</label>
+                  <select class="field-input" id="qv_isGenuine" name="isGenuine">
+                    <option value="">-- Select --</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label class="field-label" for="qv_bookingDate">Confirmation of Booking — Date</label>
+                  <input class="field-input" type="date" id="qv_bookingDate" name="bookingDate" />
+                </div>
+                <div class="field">
+                  <label class="field-label" for="qv_bookingName">Confirmation of Booking — Name</label>
+                  <input class="field-input" type="text" id="qv_bookingName" name="bookingName" placeholder="e.g. Mr. Rahul Sharma" autocomplete="off" />
+                </div>
+              </div>
+
+              <!-- Dealer Account Details -->
+              <div class="panel-subtitle" style="margin-top:16px;font-weight:700;padding-top:12px;border-top:1px solid var(--border,#e2e8f0)">Dealer Account Details (as per Quotation)</div>
+              <div class="form-grid-2col" style="margin-top:8px">
+                <div class="field">
+                  <label class="field-label" for="qv_accountNumber">Account Number</label>
+                  <input class="field-input" type="text" id="qv_accountNumber" name="accountNumber" placeholder="e.g. 1234567890123" autocomplete="off" />
+                </div>
+                <div class="field">
+                  <label class="field-label" for="qv_ifscCode">IFSC Code</label>
+                  <input class="field-input" type="text" id="qv_ifscCode" name="ifscCode" placeholder="e.g. SBIN0001234" autocomplete="off" />
+                </div>
+                <div class="field">
+                  <label class="field-label" for="qv_accountOpeningDate">Account Opening Date</label>
+                  <input class="field-input" type="date" id="qv_accountOpeningDate" name="accountOpeningDate" />
+                </div>
+                <div class="field">
+                  <label class="field-label" for="qv_accountName">Account Name</label>
+                  <input class="field-input" type="text" id="qv_accountName" name="accountName" placeholder="e.g. ABC Motors Pvt Ltd" autocomplete="off" />
+                </div>
+              </div>
+
+              <!-- Verifier & Supervisor -->
+              <div class="panel-subtitle" style="margin-top:16px;font-weight:700;padding-top:12px;border-top:1px solid var(--border,#e2e8f0)">Verifier & Supervisor</div>
+              <div class="form-grid-2col" style="margin-top:8px">
+                <div class="field">
+                  <label class="field-label" for="qv_verifierName">Name of Verifier</label>
+                  <input class="field-input" type="text" id="qv_verifierName" name="verifierName" placeholder="e.g. Aniket Chalke" autocomplete="off" />
+                </div>
+                <div class="field" style="grid-column:1/-1">
+                  <label class="field-label" for="qv_verifierRemarks">Verifier Remarks</label>
+                  <textarea class="field-input" id="qv_verifierRemarks" name="verifierRemarks" rows="3" style="width:100%;resize:vertical" placeholder="Enter verifier remarks…"></textarea>
+                </div>
+                <div class="field">
+                  <label class="field-label" for="qv_supervisorName">Name of Supervisor</label>
+                  <input class="field-input" type="text" id="qv_supervisorName" name="supervisorName" placeholder="e.g. Sunil Kumar" autocomplete="off" />
+                </div>
+                <div class="field" style="grid-column:1/-1">
+                  <label class="field-label" for="qv_supervisorRemarks">Supervisor Remarks</label>
+                  <textarea class="field-input" id="qv_supervisorRemarks" name="supervisorRemarks" rows="3" style="width:100%;resize:vertical" placeholder="Enter supervisor remarks…"></textarea>
+                </div>
+                <div class="field" style="grid-column:1/-1">
+                  <label class="field-label" for="qv_negativeRemarks">Remarks in Detail (if Negative)</label>
+                  <textarea class="field-input" id="qv_negativeRemarks" name="negativeRemarks" rows="3" style="width:100%;resize:vertical" placeholder="Enter detailed remarks if verification is negative…"></textarea>
+                </div>
+              </div>
+
+              <!-- Photo Upload -->
+              <div class="panel-subtitle" style="margin-top:16px;font-weight:700;padding-top:12px;border-top:1px solid var(--border,#e2e8f0)">Photos</div>
+              <div style="display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin-top:8px">
+                <label style="flex:1;min-width:180px">
+                  <span class="muted" style="font-size:12px;display:block;margin-bottom:4px">Image Label</span>
+                  <input type="text" data-qv-img-label placeholder="e.g. Dealer Showroom, Quotation Copy…" style="width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;background:var(--surface);color:var(--text)" />
+                </label>
+                <label style="flex:0 0 auto">
+                  <span class="muted" style="font-size:12px;display:block;margin-bottom:4px">Image Files</span>
+                  <input type="file" data-qv-img-file accept="image/*" multiple style="font-size:13px" />
+                </label>
+                <button class="btn btn-secondary" type="button" data-action="add-qv-image" style="height:36px">+ Add Images</button>
+              </div>
+              <div data-qv-img-list style="margin-top:10px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px"></div>
+              <div data-qv-img-empty class="muted" style="margin-top:6px;font-size:13px">No images added for this quotation.</div>
+              <span class="muted" style="font-size:12px">Total: <strong data-qv-img-count>0</strong></span>
+
+              <!-- Verification Summary & Opinion -->
+              <div class="panel-subtitle" style="margin-top:16px;font-weight:700;padding-top:12px;border-top:1px solid var(--border,#e2e8f0)">Verification Summary & Opinion</div>
+              <div style="margin-top:8px">
+                <textarea id="qvVerificationSummary" class="field-input" rows="4" style="width:100%;resize:vertical;font-size:12px;line-height:1.7" placeholder="Enter a summary of this quotation verification…"></textarea>
+              </div>
+              <div style="margin-top:10px;display:flex;gap:20px;align-items:center">
+                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:600">
+                  <input type="radio" name="qv_overallOpinion" value="Satisfactory" style="accent-color:#16a34a" />
+                  <span style="color:#16a34a">Satisfactory</span>
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:600">
+                  <input type="radio" name="qv_overallOpinion" value="Not Satisfactory" style="accent-color:#dc2626" />
+                  <span style="color:#dc2626">Not Satisfactory</span>
+                </label>
+              </div>
+
+              <!-- Form Actions -->
+              <div style="margin-top:14px;display:flex;gap:8px;align-items:center">
+                <button class="btn btn-secondary" type="button" id="btnCancelQvEdit" style="font-size:12px;display:none">Cancel Edit</button>
+                <span class="muted" id="qvSaveStatus" style="font-size:12px"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
           </div>
         </section>
 
@@ -2065,6 +2282,7 @@
                   <option value="bank_statement">Bank Statement</option>
                   <option value="financial">Financial</option>
                   <option value="additional_details">Additional Details</option>
+                  <option value="quotation_verification">Quotation Verification</option>
                   <option value="report">Report Block</option>
                 </select>
               </label>
