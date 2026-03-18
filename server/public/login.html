@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CrediVerify 360 — Login</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <script>
   // Instant redirect if already logged in (before any rendering)
   try{var s=sessionStorage.getItem('cv360:auth:session')||localStorage.getItem('cv360:auth:session');if(s&&JSON.parse(s).userId){window.location.replace('/dashboard');document.write('');}}catch(e){}
