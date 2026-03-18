@@ -393,24 +393,31 @@ class ZaubaService {
       }
 
       const directorUrl = `${this.baseUrl}/director/${din}`;
-      
-      const response = await axios.get(directorUrl, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0',
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-          'Accept-Language': 'en-US,en;q=0.5',
-          'Connection': 'keep-alive',
-          'Upgrade-Insecure-Requests': '1'
-        },
-        timeout: 15000,
-        validateStatus: (status) => status < 500
-      });
 
-      if (response.status !== 200) {
-        throw new Error(`Failed to fetch director data. Status: ${response.status}`);
+      let html;
+      try {
+        // Try Puppeteer first (bypasses Cloudflare)
+        html = await this._fetchWithBrowser(directorUrl);
+      } catch (browserErr) {
+        logger.warn(`Puppeteer fetch failed for director, falling back to axios: ${browserErr.message}`);
+        const axiosOpts = {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.5',
+          },
+          timeout: 20000,
+          maxRedirects: 5
+        };
+        if (this.proxy) axiosOpts.proxy = this.proxy;
+        const response = await axios.get(directorUrl, axiosOpts);
+        if (response.status !== 200) {
+          throw new Error(`Failed to fetch director data. Status: ${response.status}`);
+        }
+        html = response.data;
       }
 
-      const directorData = this.parseDirectorHTML(response.data, din);
+      const directorData = this.parseDirectorHTML(html, din);
       
       logger.info(`✓ Director data fetched successfully for DIN: ${din}`);
       
